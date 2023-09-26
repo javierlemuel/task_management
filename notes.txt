@@ -1,0 +1,102 @@
+Task
+-Comment or description
+-Subtasks
+-Start and end date
+-Status (Pending, In Progress, 
+	Complete, Cancelled/Quit)
+
+
+Real notifications for task updates
+-If a task is updated or completed or something?
+
+
+
+Two types of users: 
+-Employee
+-Administrator
+
+
+
+
+*Employee can:
+-login/register
+-realize tasks, editing the status as it goes
+-add subtasks to a task?
+-set priority tasks
+-divide tasks into categories
+-generate reports?
+(Any time a task is updated by admin or a
+user, receive a notif in system)
+(Tasks can be viewed in list format by category
+or in calendar view)
+
+
+Administrator can:
+-create employee and admin accounts
+-create tasks and assign/remove employees in them
+-edit task names, descriptions, employees and 	
+	timelines
+
+
+
+
+User and Pages -> Users -> Account Settings
+-para las paginas de account management
+
+Apps -> Todo list
+-para los tasks en lista
+
+Apps -> Calendar
+-para los tasks en calendar view
+
+Dashboard ->
+-para los reportes o whatever
+
+
+
+
+
+
+*Requirements:
+1) Employee
+	-Login/Register
+	-Handle task
+	-Set priority tasks
+	-Categorize tasks
+	-Generate reports
+2) Administrator
+	-Login
+	-Create and edit accounts
+	-Create tasks
+	-Assign employees to tasks
+	-Edit tasks
+
+
+Login/register (user)
+Task list (user)
+Report page (user)
+Calendar page (user)
+Login (admin)
+Users list page (admin)
+User tasks (admin)
+Create account (admin)
+Tasks list (admin)
+Report page (admin)
+Calendar page (admin)
+
+
+
+*Create a detailed project proposal that includes 
+requirements, system design, algorithms, 
+architecture, and implementation details.
+*Outline the key features and functionalities 
+of your project.
+-Task management with employee assignments
+-Task categorization and prioritization
+-Calendar or list view of tasks
+-Live notifications of changes in tasks
+-Task report generation
+*Define user roles and their respective 
+responsibilities.
+*Specify the technologies, libraries, and 
+tools you plan to use.
