@@ -1225,6 +1225,7 @@
                                                             <path opacity="0.5" d="M2 9H22" stroke="currentColor"
                                                                 stroke-width="1.5" stroke-linecap="round" />
                                                         </svg>
+                                                        <!-- Campo nuevo de dueDate (Ruben) -->
                                                         <div style="display: flex; flex-direction: row; gap: 10px;">
                                                             <span>Due Date: </span>
                                                             <span x-text="task.dueDate"></span>
@@ -1855,7 +1856,7 @@
                             id: maxid + 1,
                             title: this.paramsTask.title,
                             description: this.paramsTask.description,
-                            dueDate: this.paramsTask.dueDate,
+                            dueDate: this.paramsTask.dueDate,  //added due date (Ruben)
                             date: dd + ' ' + monthNames[mm] + ', ' + yyyy,
                             tags: this.paramsTask.tags?.length > 0 ? this.paramsTask.tags.split(',') : [],
                         };
