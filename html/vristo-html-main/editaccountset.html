@@ -382,244 +382,96 @@
                 <div class="animate__animated p-6" :class="[$store.app.animation]">
                     <!-- start main content section -->
                     <div>
-                            <!-- start main content section -->
-                <div x-data="contacts">
-                    <div class="flex flex-wrap items-center justify-between gap-4">
-                        <h2 class="text-xl">Employee Accounts</h2>
-                        <div class="flex w-full flex-col gap-4 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
-                            <div class="flex gap-3">
-                                <div>
-                                    <button type="button" class="btn btn-primary" @click="editUser">
-                                        <svg
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            class="h-5 w-5 ltr:mr-2 rtl:ml-2"
-                                        >
-                                            <circle cx="10" cy="6" r="4" stroke="currentColor" stroke-width="1.5" />
-                                            <path
-                                                opacity="0.5"
-                                                d="M18 17.5C18 19.9853 18 22 10 22C2 22 2 19.9853 2 17.5C2 15.0147 5.58172 13 10 13C14.4183 13 18 15.0147 18 17.5Z"
-                                                stroke="currentColor"
-                                                stroke-width="1.5"
-                                            />
-                                            <path
-                                                d="M21 10H19M19 10H17M19 10L19 8M19 10L19 12"
-                                                stroke="currentColor"
-                                                stroke-width="1.5"
-                                                stroke-linecap="round"
-                                            />
-                                        </svg>
-                                        Create Employee Account
-                                    </button>
-                                    <div class="fixed inset-0 z-[999] hidden overflow-y-auto bg-[black]/60" :class="addContactModal && '!block'">
-                                        <div class="flex min-h-screen items-center justify-center px-4" @click.self="addContactModal = false">
-                                            <div
-                                                x-show="addContactModal"
-                                                x-transition
-                                                x-transition.duration.300
-                                                class="panel my-8 w-[90%] max-w-lg overflow-hidden rounded-lg border-0 p-0 md:w-full"
+                            
+                        <div>
+                            <ul class="flex space-x-2 rtl:space-x-reverse">
+                                <li>
+                                    <a href="javascript:;" class="text-primary hover:underline">Users</a>
+                                </li>
+                                <li class="before:content-['/'] ltr:before:mr-1 rtl:before:ml-1">
+                                    <span>Account Settings</span>
+                                </li>
+                            </ul>
+                            <div class="pt-5">
+                                <div class="mb-5 flex items-center justify-between">
+                                    <h5 class="text-lg font-semibold dark:text-white-light">Settings</h5>
+                                </div>
+                                <div x-data="{tab: 'home'}">
+                                    <ul class="mb-5 overflow-y-auto whitespace-nowrap border-b border-[#ebedf2] font-semibold dark:border-[#191e3a] sm:flex">
+                                        <li class="inline-block">
+                                            <a
+                                                href="javascript:;"
+                                                class="flex gap-2 border-b border-transparent p-4 hover:border-primary hover:text-primary"
+                                                :class="{'!border-primary text-primary' : tab == 'home'}"
+                                                @click="tab='home'"
                                             >
-                                                <button
-                                                    type="button"
-                                                    class="absolute top-4 text-white-dark hover:text-dark ltr:right-4 rtl:left-4"
-                                                    @click="addContactModal = false"
-                                                >
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="24px"
-                                                        height="24px"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5">
+                                                    <path
+                                                        opacity="0.5"
+                                                        d="M2 12.2039C2 9.91549 2 8.77128 2.5192 7.82274C3.0384 6.87421 3.98695 6.28551 5.88403 5.10813L7.88403 3.86687C9.88939 2.62229 10.8921 2 12 2C13.1079 2 14.1106 2.62229 16.116 3.86687L18.116 5.10812C20.0131 6.28551 20.9616 6.87421 21.4808 7.82274C22 8.77128 22 9.91549 22 12.2039V13.725C22 17.6258 22 19.5763 20.8284 20.7881C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.7881C2 19.5763 2 17.6258 2 13.725V12.2039Z"
                                                         stroke="currentColor"
                                                         stroke-width="1.5"
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        class="h-6 w-6"
-                                                    >
-                                                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                                                    </svg>
-                                                </button>
-                                                <h3
-                                                    class="bg-[#fbfbfb] py-3 text-lg font-medium ltr:pl-5 ltr:pr-[50px] rtl:pr-5 rtl:pl-[50px] dark:bg-[#121c2c]"
-                                                    x-text="params.id ? 'Editar estudiante' : 'Crear estudiante'"
-                                                ></h3>
-                                                <div class="p-5">
-                                                    <form @submit.prevent="saveUser">
-                                                        <div class="mb-5">
-                                                            <label for="email">Email</label>
-                                                            <input
-                                                                id="email"
-                                                                type="email"
-                                                                placeholder="yeyo.soto2@upr.edu"
-                                                                class="form-input"
-                                                                x-model="params.email"
-                                                            />
+                                                    />
+                                                    <path d="M12 15L12 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                </svg>
+                                                Details
+                                            </a>
+                                        </li>
+                                        <li class="inline-block">
+                                            <a
+                                                href="javascript:;"
+                                                class="flex gap-2 border-b border-transparent p-4 hover:border-primary hover:text-primary"
+                                                :class="{'!border-primary text-primary' : tab == 'preferences'}"
+                                                @click="tab='preferences'"
+                                            >
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5">
+                                                    <circle cx="12" cy="6" r="4" stroke="currentColor" stroke-width="1.5" />
+                                                    <ellipse opacity="0.5" cx="12" cy="17" rx="7" ry="4" stroke="currentColor" stroke-width="1.5" />
+                                                </svg>
+                                                Tasks
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <template x-if="tab === 'home'">
+                                        <div>
+                                            <form class="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-[#0e1726]">
+                                                <h6 class="mb-5 text-lg font-bold">General Information</h6>
+                                                <div class="flex flex-col sm:flex-row">
+                                                    <div class="grid flex-1 grid-cols-1 gap-5 sm:grid-cols-2">
+                                                        <div>
+                                                            <label for="email">Email Address</label>
+                                                            <input id="email" type="text" placeholder="" class="form-input" />
                                                         </div>
-                                                        <div class="mb-5">
-                                                            <label for="password">password</label>
-                                                            <input
-                                                                id="password"
-                                                                type="password"
-                                                                placeholder="*********"
-                                                                class="form-input"
-                                                                x-model="params.password"
-                                                            />
+                                                        <div>
+                                                            <label for="password">Password</label>
+                                                            <input id="password" type="text" placeholder="" class="form-input" />
                                                         </div>
-                                                        
-                                                        <div class="mt-8 flex items-center justify-end">
-                                                            <button type="button" class="btn btn-outline-danger" @click="addContactModal = false">
-                                                                Cancel
-                                                            </button>
-                                                            <button
-                                                                type="submit"
-                                                                class="btn btn-primary ltr:ml-4 rtl:mr-4"
-                                                                x-text="params.id ? 'Update' : 'Add'"
-                                                            ></button>
+                                                        <div>
+                                                            <label for="status">Status</label>
+                                                            <select id="status" class="form-select text-white-dark">
+                                                                <!-- <option>All Countries</option>
+                                                                <option selected="">United States</option> -->
+                                                            </select>
                                                         </div>
-                                                    </form>
+                                                        <div class="mt-3 sm:col-span-2">
+                                                            <button type="button" class="btn btn-primary">Save</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="relative">
-                                <input
-                                    type="text"
-                                    placeholder="Search by email"
-                                    class="peer form-input py-2 ltr:pr-11 rtl:pl-11"
-                                    x-model="searchUser"
-                                    @keyup="searchContacts"
-                                />
-                                <div class="absolute top-1/2 -translate-y-1/2 peer-focus:text-primary ltr:right-[11px] rtl:left-[11px]">
-                                    <svg class="mx-auto" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="11.5" cy="11.5" r="9.5" stroke="currentColor" stroke-width="1.5" opacity="0.5"></circle>
-                                        <path d="M18.5 18.5L22 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                    </svg>
+                                    </template>
+                                    <template x-if="tab === 'preferences'">
+                                        
+                                         
+                                    </template>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel mt-5 overflow-hidden border-0 p-0">
-                        <template x-if="displayType === 'list'">
-                            <div class="table-responsive">
-                                <table class="table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Email</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <template x-for="contact in filterdContactsList" :key="contact.id">
-                                            <tr>
-                                                <td>
-                                                    <div class="flex w-max items-center">
-                                                        <!-- <div class="flex-none mr-3">
-                                                <div class="p-1 bg-white-dark/30 rounded-full"><img class="h-8 w-8 rounded-full object-cover" src="assets/images/user-profile.jpeg" /></div>
-                                            </div> -->
-                                                        <div x-show="contact.path" class="w-max">
-                                                            <img
-                                                                :src="`assets/images/${contact.path}`"
-                                                                class="h-8 w-8 rounded-full object-cover ltr:mr-2 rtl:ml-2"
-                                                                alt="avatar"
-                                                            />
-                                                        </div>
-                                                        <div
-                                                            x-show="!contact.path && contact.email"
-                                                            class="grid h-8 w-8 place-content-center rounded-full bg-primary text-sm font-semibold text-white ltr:mr-2 rtl:ml-2"
-                                                            x-text="contact.email.charAt(0) + '' + contact.email.charAt(contact.email.indexOf(' ') + 1)"
-                                                        ></div>
-                                                        <div
-                                                            x-show="!contact.path && !contact.email"
-                                                            class="rounded-full border border-gray-300 p-2 ltr:mr-2 rtl:ml-2 dark:border-gray-800"
-                                                        >
-                                                            <svg
-                                                                width="24"
-                                                                height="24"
-                                                                viewBox="0 0 24 24"
-                                                                fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                class="h-4.5 w-4.5"
-                                                            >
-                                                                <circle cx="12" cy="6" r="4" stroke="currentColor" stroke-width="1.5"></circle>
-                                                                <ellipse
-                                                                    opacity="0.5"
-                                                                    cx="12"
-                                                                    cy="17"
-                                                                    rx="7"
-                                                                    ry="4"
-                                                                    stroke="currentColor"
-                                                                    stroke-width="1.5"
-                                                                ></ellipse>
-                                                            </svg>
-                                                        </div>
-                                                        <div x-on:click="editAccount(contact.id)" x-on:mouseenter="style.cursor = 'pointer'"
-                                                        x-on:mouseleave="style.cursor = 'default'"x-text="contact.email"></div>
-                                                    </div>
-                                                </td>
-                                                
-                                                <td class="whitespace-nowrap">
-                                                    <template x-if="contact.status">
-                                                            <div x-data="dropdown" @click.outside="open = false" class="dropdown">
-                                                                <button
-                                                                    type="button"
-                                                                    class="badge rounded-full capitalize hover:top-0 hover:text-white"
-                                                                    x-text="contact.status"
-                                                                    :class="{
-                                                            'badge-outline-primary hover:bg-primary': contact.status === 'active',
-                                                            'badge-outline-warning hover:bg-warning': contact.status === 'inactive',
-                                                            'text-white bg-primary': contact.status === 'active' && open,
-                                                            'text-white bg-warning': contact.status === 'inactive' && open,
-                                                            }"
-                                                                    @click="toggle"
-                                                                ></button>
-                                                                <ul
-                                                                    x-cloak
-                                                                x-show="open"
-                                                                x-transition
-                                                                x-transition.duration.300ms
-                                                                class="text-medium text-sm ltr:right-0 rtl:left-0"
-                                                            >
-                                                                
-                                                                <li>
-                                                                    <button
-                                                                        class="w-full text-primary ltr:text-left rtl:text-right"
-                                                                        @click="toggle;setStatus(contact, 'active')"
-                                                                    >
-                                                                        Active
-                                                                    </button>
-                                                                </li>
-                                                                <li>
-                                                                    <button
-                                                                        class="w-full text-warning ltr:text-left rtl:text-right"
-                                                                        @click="toggle;setStatus(contact, 'inactive')"
-                                                                    >
-                                                                        Inactive
-                                                                    </button>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </template>
-                                                </td>
-                                            </tr>
-                                        </template>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </template>
-                    </div>
-            <!-- end main content section -->
-
-                        
                     <!-- end main content section -->
 
-                </div>
+
+                    </div>
 
                 <!-- start footer section -->
                 <div class="p-6 pt-0 mt-auto text-center dark:text-white-dark ltr:sm:text-left rtl:sm:text-right">
@@ -737,35 +589,7 @@
                     },
                 }));
             });
-        // elec script
 
-        const clearCourse = (course, elements, category) => {
-            var query = document.getElementById(course).value; /* Value inputted by user */
-            var elements = document.getElementsByClassName(elements); /* Get the li elements in the list */
-            var myList = document.getElementById(category); /* Var to reference the list */
-            var length = (document.getElementsByClassName(element).length); /* # of li elements */
-            var checker = 'false'; /* boolean-ish value to determine if value was found */
-
-            myList.querySelectorAll('li').forEach(function(item) {
-                if (item.innerHTML.indexOf(query) !== -1)
-                    item.remove();
-            });
-        }
-
-        const clearCourses = (courses) => {
-            document.getElementById(courses).innerHTML = "";
-        }
-
-        const editAccount = (id) => {  
-            //alert(id);  
-            var uid = id - 1;
-            //alert(uid);
-
-            const newUrl = `editaccount.html?id=${uid}`;
-
-            // Redirect to the new URL
-            window.location.href = newUrl;
-        }
 
         document.addEventListener("alpine:init", () => {
             Alpine.data("collapse", () => ({
@@ -783,193 +607,40 @@
                     this.open = !this.open;
                 },
             }));
+        });
+
+        $("document").ready(() => {
+            const queryParams = new URLSearchParams(window.location.search);
+
+            // Get the value of 'paramName'
+            const paramName = 'id';
+            const id = queryParams.get(paramName);
 
             var cookie = getCookie("users");
             users = JSON.parse(cookie);
-            //const users =  JSON.parse(sessionStorage.getItem("users"));
 
-            // for(var i = 0; i < users.length; i++)
-            // {
-            //     //addUser(i, users[i]['email'], users[i]['password'])
-            // }
-            // const contacts = [];
-            // for(var i = 0; i < users.length(); i++)
-            // {
-            //     contacts.push(id= i,
-            //                 path= 'profile-35.png',
-            //                 email= users[i]['email'],
-            //                 password= users[i]['password'],
-            //                 status= 'active',)
-            // }
-            //alert(users[0]);
-
-            //contacts
-            Alpine.data('contacts', () => ({
-                    defaultParams: {
-                        id: null,
-                        email: '',
-                        password: '',
-                        status: '',
-                    },
-                    displayType: 'list',
-                    addContactModal: false,
-                    params: {
-                        id: null,
-                        email: '',
-                        password: '',
-                        status: '',
-                    },
-                    filterdContactsList: [],
-                    searchUser: '',
-                    
-
-                    contactList: [
-                        
-                    ],
-
-                    init() {
-                        this.searchContacts();
-
-                        for(var i = 0; i < users.length; i++)
-                            this.addUser(i, users[i]['email'], users[i]['password'], users[i]['status']);
-                    },
-
-                    searchContacts() {
-                        this.filterdContactsList = this.contactList.filter((d) => d.email.toLowerCase().includes(this.searchUser.toLowerCase()));
-                    },
-
-                    editUser(user) {
-                        this.params = this.defaultParams;
-                        if (user) {
-                            this.params = JSON.parse(JSON.stringify(user));
-                        }
-
-                        this.addContactModal = true;
-                    },
-
-                    addUser(id, themail, pass, thestatus) {
-                        let maxUserId = this.contactList.length
-                                ? this.contactList.reduce((max, character) => (character.id > max ? character.id : max), this.contactList[0].id)
-                                : 0;
-
-                            // const user1 = new EMPLOYEE(this.params.email, this.params.password);
-                            // users.push(user1);
-                            // sessionStorage.setItem('users', JSON.stringify(users));
-
-                            let user = {
-                                id: maxUserId + 1,
-                                path: 'profile-35.png',
-                                email: themail,
-                                password: password,
-                                status: thestatus,
-                            };
-                            this.contactList.splice(0, 0, user);
-                            this.searchContacts();
-                    },
-
-                    saveUser() {
-                        if (!this.params.email) {
-                            this.showMessage('Email is required.', 'error');
-                            return true;
-                        }
-                        if (!this.params.password) {
-                            this.showMessage('Password is required.', 'error');
-                            return true;
-                        }
-
-                        if (this.params.id) {
-                            //update user
-                            let user = this.contactList.find((d) => d.id === this.params.id);
-                            user.email = this.params.email;
-                            user.password = this.params.password;
-                            user.status = 'active';
-                        } else {
-                            //add user
-                            let maxUserId = this.contactList.length
-                                ? this.contactList.reduce((max, character) => (character.id > max ? character.id : max), this.contactList[0].id)
-                                : 0;
-
-                            const user1 = new EMPLOYEE(this.params.email, this.params.password);
-                            users.push(user1);
-                            sessionStorage.setItem('users', JSON.stringify(users));
-
-                            let user = {
-                                id: maxUserId + 1,
-                                path: 'profile-35.png',
-                                email: this.params.email,
-                                password: this.params.password,
-                                status: 'active',
-                            };
-                            this.contactList.splice(0, 0, user);
-                            this.searchContacts();
-                        }
-
-                        this.showMessage('User has been saved successfully.');
-                        this.addContactModal = false;
-                    },
-
-                    deleteUser(user) {
-                        this.contactList = this.contactList.filter((d) => d.id != user.id);
-                        // this.ids = this.ids.filter((d) => d != user.id);
-                        this.searchContacts();
-                        this.showMessage('User has been deleted successfully.');
-                    },
-
-                    showMessage(msg = '', type = 'success') {
-                        const toast = window.Swal.mixin({
-                            toast: true,
-                            position: 'top',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
-                        toast.fire({
-                            icon: type,
-                            title: msg,
-                            padding: '10px 20px',
-                        });
-                    },
-
-                    setStatus(contact, nombre) {
-                        let item = this.filterdContactsList.find((d) => {
-                            return d.id === contact.id;
-                            
-                        });
-
-                        if(item)
-                        {
-                            //console.log(this.email);
-                            users[contact.id-1]['status'] = nombre;
-                            let usersJSON = JSON.stringify(users);
-                            //sessionStorage.setItem("users", JSON.stringify(users));
-                            document.cookie = `users=${usersJSON}; path=/`;
-                            item.status = nombre;
-                        }
-                        
-                        //alert("item: " + item);
-
-                        
-                        this.searchContacts(false);
-                    },
-
-                    
-                }));
-
+            loadInfo(users, id);
         });
 
+        const loadInfo = (users, id) => {
+            $("#email").val(users[id]['email']);
+            $("#password").val(users[id]['password']);
+            let status = users[id]['status'];
+            let html = "";
+
+            if(status == 'active')
+            {
+                html += "<option selected=''>Active</option>" +
+                "<option >Inactive</option>";
+            }
+            else if(status == 'inactive')
+            {
+                html += "<option>Active</option>" +
+                "<option selected='' >Inactive</option>";
+            }
+            $("#status").html(html);
+        }
         
-
-        // document.addEventListener("DOMContentLoaded", () => {
-        //     //Necessary to check these buttons exist at moment of loading
-        //     // hook up click events for both buttons
-        //     //document.querySelector("#images/espresso_info.jpg").addEventListener("click", joinList("espresso"));
-        //     //$("#clear_form").addEventListener("click", clearForm);
-        //     document.querySelector(".elec").addEventListener("click") => {
-        //         document.getElementById("elec").innerHTML = "";
-        //     }
-
-        //     // set focus on first text box after the form loads
-        //     //$("#email_1").focus();
-        // });
         </script>
     </body>
 </html>
