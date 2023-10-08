@@ -1876,6 +1876,39 @@
                     },
                 }));
             });
+
+            $("document").ready(() => {
+            const queryParams = new URLSearchParams(window.location.search);
+
+            // Get the value of 'paramName'
+            const paramName = 'id';
+            const id = queryParams.get(paramName);
+
+            var cookie = getCookie("users");
+            users = JSON.parse(cookie);
+
+            loadInfo(users, id);
+        });
+
+        const loadInfo = (users, id) => {
+            $("#email").val(users[id]['email']);
+            $("#password").val(users[id]['password']);
+            let status = users[id]['status'];
+            let html = "";
+
+            if(status == 'active')
+            {
+                html += "<option selected=''>Active</option>" +
+                "<option >Inactive</option>";
+            }
+            else if(status == 'inactive')
+            {
+                html += "<option>Active</option>" +
+                "<option selected='' >Inactive</option>";
+            }
+            $("#status").html(html);
+        }
+        
         
         </script>
     </body>
