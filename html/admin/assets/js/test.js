@@ -1,5 +1,38 @@
 "use strict";
 
+function login() {
+    //get input from email and password inputs
+    const email = $("#Email").val();
+    const password = $("#Password").val();
+    console.log("email: ", email);
+    console.log("pass: ", password);
+
+    //get stored user data
+    let admins = JSON.parse(getCookie("admins"));
+    //console.log("stored admin: ", admins[0]);
+
+    const admin = admins.find(admin => admin.email === email && admin.password === password);
+    if (admin) {
+        console.log("login: ", admin.password);
+        alert("Welcome back "+ email + "!");
+    //   // Create a session token (in a real application, make it more secure)
+    //   const sessionToken = generateSessionToken();
+    //   // Store the session token in a cookie
+    //   setCookie("sessionToken", sessionToken, 1); // Expires in 1 day
+    //   return true; // Successful login
+    } else {
+        if (email === "" || email === "null" || email === "undefined") {
+          alert("Username required.");
+        } else if (password === "" || password === "null" || password === "undefined") {
+          alert("Password required.");
+        } else {
+          alert("Invalid email or password. Please try again.");
+        }
+      }
+    
+      
+  };
+
 $(document).ready( () => {
 
     const admin1 = new ADMIN("javier.quinones3@upr.edu", "pass1234");
@@ -8,9 +41,8 @@ $(document).ready( () => {
     var admins = [admin1, admin2];
 
     admins = JSON.stringify(admins);
-
+    //create admin cookie
     document.cookie = `admins=${admins}; path=/`;
-
 
     if(!checkCookieExists("users"))
     {
@@ -23,8 +55,6 @@ $(document).ready( () => {
 
         document.cookie = `users=${users}; path=/`;
     }
-
-
 
     if(!checkCookieExists("tasks"))
     {
@@ -41,6 +71,8 @@ $(document).ready( () => {
 
         document.cookie = `tasks=${tasks}; path=/`;
     }
+
+    $("#loginBtn").click(login);  
 
 });
 
