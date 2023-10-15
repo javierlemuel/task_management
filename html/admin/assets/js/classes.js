@@ -1,7 +1,11 @@
 class ADMIN {
-    constructor(email, pass) {
+    constructor(id, email, pass) {
+        this.id = id;
         this.email = email;
         this.password = pass;
+        this.userlist = [];
+        this.notifications = [];
+        this.status = 'active';
     }
 }
 
@@ -52,3 +56,8 @@ function getCookie(cookieName) {
     }
     return false; // Cookie not found
   }
+
+function setCookie(name, value) {
+  value = JSON.stringify(value);
+    document.cookie = name + '=' + value + ';path=/';
+}
