@@ -2,14 +2,23 @@
 
 $(document).ready( () => {
 
-    const admin1 = new ADMIN("javier.quinones3@upr.edu", "pass1234");
-    const admin2 = new ADMIN("natasha.ramos8@upr.edu", "enterpass");
+    sessionStorage.setItem("adminID", 1);
 
-    var admins = [admin1, admin2];
+    if(!checkCookieExists("admins"))
+    {
+        const admin1 = new ADMIN(1, "javier.quinones3@upr.edu", "pass1234");
+        const admin2 = new ADMIN(2, "natasha.ramos8@upr.edu", "enterpass");
+        admin1.notifications.push("Elena has finished a task!");
 
-    admins = JSON.stringify(admins);
+        var admins = [admin1, admin2];
+        admins[0]['userlist'].push(1);
+        admins[1]['userlist'].push(2);
 
-    document.cookie = `admins=${admins}; path=/`;
+        admins = JSON.stringify(admins);
+
+        document.cookie = `admins=${admins}; path=/`;
+    }
+    
 
 
     if(!checkCookieExists("users"))

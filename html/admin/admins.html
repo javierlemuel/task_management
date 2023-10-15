@@ -104,7 +104,7 @@
                         </div>
                         <ul
                             class="perfect-scrollbar relative h-[calc(100vh-80px)] space-y-0.5 overflow-y-auto overflow-x-hidden p-4 py-0 font-semibold"
-                            x-data="{ activeDropdown: 'users' }"
+                            x-data="{ activeDropdown: 'admins' }"
                         >
                         <li class="nav-item">
                             <ul>
@@ -185,6 +185,7 @@
             <!-- end sidebar section -->
 
             <div class="main-content flex flex-col min-h-screen">
+                <!-- start header section -->
                 <!-- start header section -->
                 <header class="z-40" :class="{'dark' : $store.app.semidark && $store.app.menu === 'horizontal'}">
                     <div class="shadow-sm">
@@ -386,11 +387,11 @@
                             <!-- start main content section -->
                 <div x-data="contacts">
                     <div class="flex flex-wrap items-center justify-between gap-4">
-                        <h2 class="text-xl">Employee Accounts</h2>
+                        <h2 class="text-xl">Administrator Accounts</h2>
                         <div class="flex w-full flex-col gap-4 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
                             <div class="flex gap-3">
                                 <div>
-                                    <button type="button" class="btn btn-primary" @click="editUser">
+                                    <button type="button" class="btn btn-primary" @click="editadmin">
                                         <svg
                                             width="24"
                                             height="24"
@@ -413,7 +414,7 @@
                                                 stroke-linecap="round"
                                             />
                                         </svg>
-                                        Create Employee Account
+                                        Create Admin Account
                                     </button>
                                     <div class="fixed inset-0 z-[999] hidden overflow-y-auto bg-[black]/60" :class="addContactModal && '!block'">
                                         <div class="flex min-h-screen items-center justify-center px-4" @click.self="addContactModal = false">
@@ -449,7 +450,7 @@
                                                     x-text="params.id ? 'Editar estudiante' : 'Crear estudiante'"
                                                 ></h3>
                                                 <div class="p-5">
-                                                    <form @submit.prevent="saveUser">
+                                                    <form @submit.prevent="saveadmin">
                                                         <div class="mb-5">
                                                             <label for="email">Email</label>
                                                             <input
@@ -494,7 +495,7 @@
                                     type="text"
                                     placeholder="Search by email"
                                     class="peer form-input py-2 ltr:pr-11 rtl:pl-11"
-                                    x-model="searchUser"
+                                    x-model="searchadmin"
                                     @keyup="searchContacts"
                                 />
                                 <div class="absolute top-1/2 -translate-y-1/2 peer-focus:text-primary ltr:right-[11px] rtl:left-[11px]">
@@ -522,7 +523,7 @@
                                                 <td>
                                                     <div class="flex w-max items-center">
                                                         <!-- <div class="flex-none mr-3">
-                                                <div class="p-1 bg-white-dark/30 rounded-full"><img class="h-8 w-8 rounded-full object-cover" src="assets/images/user-profile.jpeg" /></div>
+                                                <div class="p-1 bg-white-dark/30 rounded-full"><img class="h-8 w-8 rounded-full object-cover" src="assets/images/admin-profile.jpeg" /></div>
                                             </div> -->
                                                         <div x-show="contact.path" class="w-max">
                                                             <img
@@ -560,14 +561,13 @@
                                                                 ></ellipse>
                                                             </svg>
                                                         </div>
-                                                        <div x-on:click="editAccount(contact.cookieUserID)" x-on:mouseenter="style.cursor = 'pointer'"
+                                                        <div x-on:click="editAccount(contact.id)" x-on:mouseenter="style.cursor = 'pointer'"
                                                         x-on:mouseleave="style.cursor = 'default'"x-text="contact.email"></div>
                                                     </div>
                                                 </td>
                                                 
-                                                <td class="w-1">
-                                                    <div class="flex items-center space-x-2 ltr:justify-end rtl:justify-start rtl:space-x-reverse">
-                                                        <template x-if="contact.status">
+                                                <td class="whitespace-nowrap">
+                                                    <template x-if="contact.status">
                                                             <div x-data="dropdown" @click.outside="open = false" class="dropdown">
                                                                 <button
                                                                     type="button"
@@ -578,37 +578,36 @@
                                                             'badge-outline-warning hover:bg-warning': contact.status === 'inactive',
                                                             'text-white bg-primary': contact.status === 'active' && open,
                                                             'text-white bg-warning': contact.status === 'inactive' && open,
-                                                        }"
+                                                            }"
                                                                     @click="toggle"
                                                                 ></button>
                                                                 <ul
                                                                     x-cloak
-                                                                    x-show="open"
-                                                                    x-transition
-                                                                    x-transition.duration.300ms
-                                                                    class="text-medium text-sm ltr:right-0 rtl:left-0"
-                                                                >
-                                                                    <li>
-                                                                        <button
-                                                                            class="w-full text-primary ltr:text-left rtl:text-right"
-                                                                            @click="toggle,setStatus(contact, 'active')"
-                                                                        >
-                                                                            Active
-                                                                        </button>
-                                                                    </li>
-                                                                    <li>
-                                                                        <button
-                                                                            class="w-full text-warning ltr:text-left rtl:text-right"
-                                                                            @click="toggle,setStatus(contact, 'inactive')"
-                                                                        >
-                                                                            Inactive
-                                                                        </button>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </template>
-                                                       
-                                                    </div>
+                                                                x-show="open"
+                                                                x-transition
+                                                                x-transition.duration.300ms
+                                                                class="text-medium text-sm ltr:right-0 rtl:left-0"
+                                                            >
+                                                                
+                                                                <li>
+                                                                    <button
+                                                                        class="w-full text-primary ltr:text-left rtl:text-right"
+                                                                        @click="toggle;setStatus(contact, 'active')"
+                                                                    >
+                                                                        Active
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <button
+                                                                        class="w-full text-warning ltr:text-left rtl:text-right"
+                                                                        @click="toggle;setStatus(contact, 'inactive')"
+                                                                    >
+                                                                        Inactive
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </template>
                                                 </td>
                                             </tr>
                                         </template>
@@ -755,13 +754,13 @@
                     },
                 }));
             });
-        
+
         const editAccount = (id) => {  
             //alert(id);  
             var uid = id;
             //alert(uid);
 
-            const newUrl = `editaccount.html?id=${uid}`;
+            const newUrl = `editadmin.html?id=${uid}`;
 
             // Redirect to the new URL
             window.location.href = newUrl;
@@ -784,17 +783,16 @@
                 },
             }));
 
-            var users = JSON.parse(getCookie("users"));
-            var admins = JSON.parse(getCookie("admins"));
-            var adminID = JSON.parse(sessionStorage.getItem("adminID"));
-            
+            var cookie = getCookie("admins");
+            admins = JSON.parse(cookie);
+
+            //contacts
             Alpine.data('contacts', () => ({
                     defaultParams: {
                         id: null,
                         email: '',
                         password: '',
                         status: '',
-                        cookieUserID: '',
                     },
                     displayType: 'list',
                     addContactModal: false,
@@ -803,10 +801,9 @@
                         email: '',
                         password: '',
                         status: '',
-                        cookieUserID: '',
                     },
                     filterdContactsList: [],
-                    searchUser: '',
+                    searchadmin: '',
                     
 
                     contactList: [
@@ -815,56 +812,45 @@
 
                     init() {
                         this.searchContacts();
-                        //var length = admins[adminID]['userlist'].length;
-                        list = admins[adminID-1]['userlist'];
-                        length = list.length;
-                        for(var i = 0; i < length; i++)
-                        {
-                            id = list[i];
-                            //alert(id);
-                            this.addUser(id-1, users[id-1]['email'], users[id-1]['password'], users[id-1]['status'], users[id-1]['id']);
-                        }
 
+                        for(var i = 0; i < admins.length; i++)
+                            this.addadmin(i, admins[i]['email'], admins[i]['password'], admins[i]['status']);
+                    },
 
-                        // for(var i = 0; i < users.length; i++)
-                        //     this.addUser(i, users[i]['email'], users[i]['password'], users[i]['status']);
+                    setCookie(name, value) {
+                        document.cookie = name + '=' + value + ';path=/';
                     },
 
                     searchContacts() {
-                        this.filterdContactsList = this.contactList.filter((d) => d.email.toLowerCase().includes(this.searchUser.toLowerCase()));
+                        this.filterdContactsList = this.contactList.filter((d) => d.email.toLowerCase().includes(this.searchadmin.toLowerCase()));
                     },
 
-                    editUser(user) {
+                    editadmin(admin) {
                         this.params = this.defaultParams;
-                        if (user) {
-                            this.params = JSON.parse(JSON.stringify(user));
+                        if (admin) {
+                            this.params = JSON.parse(JSON.stringify(admin));
                         }
 
                         this.addContactModal = true;
                     },
 
-                    addUser(id, themail, pass, thestatus, userid) {
-                        let maxUserId = this.contactList.length
+                    addadmin(id, themail, pass, thestatus) {
+                        let maxadminId = this.contactList.length
                                 ? this.contactList.reduce((max, character) => (character.id > max ? character.id : max), this.contactList[0].id)
                                 : 0;
 
-                            // const user1 = new EMPLOYEE(this.params.email, this.params.password);
-                            // users.push(user1);
-                            // sessionStorage.setItem('users', JSON.stringify(users));
-
-                            let user = {
-                                id: maxUserId + 1,
+                            let admin = {
+                                id: maxadminId + 1,
                                 path: 'profile-35.png',
                                 email: themail,
                                 password: password,
                                 status: thestatus,
-                                cookieUserID: userid,
                             };
-                            this.contactList.splice(0, 0, user);
+                            this.contactList.splice(0, 0, admin);
                             this.searchContacts();
                     },
 
-                    saveUser() {
+                    saveadmin() {
                         if (!this.params.email) {
                             this.showMessage('Email is required.', 'error');
                             return true;
@@ -875,41 +861,41 @@
                         }
 
                         if (this.params.id) {
-                            //update user
-                            let user = this.contactList.find((d) => d.id === this.params.id);
-                            user.email = this.params.email;
-                            user.password = this.params.password;
-                            user.status = 'active';
+                            //update admin
+                            let admin = this.contactList.find((d) => d.id === this.params.id);
+                            admin.email = this.params.email;
+                            admin.password = this.params.password;
+                            admin.status = 'active';
                         } else {
-                            //add user
-                            let maxUserId = this.contactList.length
+                            //add admin
+                            let maxadminId = this.contactList.length
                                 ? this.contactList.reduce((max, character) => (character.id > max ? character.id : max), this.contactList[0].id)
                                 : 0;
 
-                            const user1 = new EMPLOYEE(users.length + 1, this.params.email, this.params.password);
-                            users.push(user1);
+                            const admin1 = new EMPLOYEE(admins.length + 1, this.params.email, this.params.password);
+                            admins.push(admin1);
 
-                            let user = {
-                                id: maxUserId + 1,
+                            let admin = {
+                                id: maxadminId + 1,
                                 path: 'profile-35.png',
                                 email: this.params.email,
                                 password: this.params.password,
                                 status: 'active',
                             };
-                            this.contactList.splice(0, 0, user);
+                            this.contactList.splice(0, 0, admin);
                             this.searchContacts();
 
-                            setCookie("users", users);
+                            this.setCookie("admins", JSON.stringify(admins));
                         }
 
-                        this.showMessage('User has been saved successfully.');
+                        this.showMessage('admin has been saved successfully.');
                         this.addContactModal = false;
                     },
 
-                    deleteUser(user) {
-                        this.contactList = this.contactList.filter((d) => d.id != user.id);
+                    deleteadmin(admin) {
+                        this.contactList = this.contactList.filter((d) => d.id != admin.id);
                         this.searchContacts();
-                        this.showMessage('User has been deleted successfully.');
+                        this.showMessage('admin has been deleted successfully.');
                     },
 
                     showMessage(msg = '', type = 'success') {
@@ -934,16 +920,12 @@
 
                         if(item)
                         {
-                            //console.log(this.email);
-                            users[contact.id-1]['status'] = nombre;
-                            let usersJSON = JSON.stringify(users);
-                            //sessionStorage.setItem("users", JSON.stringify(users));
-                            document.cookie = `users=${usersJSON}; path=/`;
+                            admins[contact.id-1]['status'] = nombre;
+                            let adminsJSON = JSON.stringify(admins);
+                            document.cookie = `admins=${adminsJSON}; path=/`;
                             item.status = nombre;
                         }
                         
-                        //alert("item: " + item);
-
                         
                         this.searchContacts(false);
                     },
@@ -952,21 +934,6 @@
                 }));
 
         });
-
-        
-
-        // document.addEventListener("DOMContentLoaded", () => {
-        //     //Necessary to check these buttons exist at moment of loading
-        //     // hook up click events for both buttons
-        //     //document.querySelector("#images/espresso_info.jpg").addEventListener("click", joinList("espresso"));
-        //     //$("#clear_form").addEventListener("click", clearForm);
-        //     document.querySelector(".elec").addEventListener("click") => {
-        //         document.getElementById("elec").innerHTML = "";
-        //     }
-
-        //     // set focus on first text box after the form loads
-        //     //$("#email_1").focus();
-        // });
         </script>
     </body>
 </html>
