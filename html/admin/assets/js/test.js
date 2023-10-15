@@ -1,6 +1,6 @@
 "use strict";
 
-function login() {
+function adminLogin() {
     //get input from email and password inputs
     const email = $("#Email").val();
     const password = $("#Password").val();
@@ -83,7 +83,7 @@ $(document).ready( () => {
         document.cookie = `tasks=${tasks}; path=/`;
     }
 
-    $("#loginBtn").click(login);  
+    $("#loginBtn").click(adminLogin);  
 
 });
 
