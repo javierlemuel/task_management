@@ -57,8 +57,6 @@ $(document).ready( () => {
         admins[0]['userlist'].push(1);
         admins[1]['userlist'].push(2);
 
-
-    admins = JSON.stringify(admins);
     //create admin cookie
     setCookie("admins", admins);
     //document.cookie = `admins=${admins}; path=/`;
@@ -73,7 +71,6 @@ $(document).ready( () => {
 
         var users = [user1, user2];
 
-        users = JSON.stringify(users);
 
         setCookie("users", users);
         //document.cookie = `users=${users}; path=/`;
@@ -81,16 +78,12 @@ $(document).ready( () => {
 
     if(!checkCookieExists("tasks"))
     {
-        const task1 = new TASK(1, 2, "Create a website", "Create a riveting website that \
-        will change the world", "Nov, 10 2023", "medium"); 
-        const task2 = new TASK(2, 2, "Get the admin a coffee", "Get your favorite \
-        administrator a hot black coffee", "Oct, 17 2023", "high");
-        const task3 = new TASK(3, 2, "Take your vitamins", "Do not forget to drink all \
-        your healthy vitamins every morning", "Oct, 15 2023", "low");
+        const task1 = new TASK(1, 2, "Create a website", "Create a riveting website that will change the world", "Nov, 10 2023", "medium"); 
+        const task2 = new TASK(2, 2, "Get the admin a coffee", "Get your favorite administrator a hot black coffee", "Oct, 17 2023", "high");
+        const task3 = new TASK(3, 2, "Take your vitamins", "Do not forget to drink all your healthy vitamins every morning", "Oct, 15 2023", "low");
 
         var tasks = [task1, task2, task3];
 
-        tasks = JSON.stringify(tasks);
 
         setCookie("tasks", tasks)
         //document.cookie = `tasks=${tasks}; path=/`;
