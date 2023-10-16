@@ -1,6 +1,7 @@
 "use strict";
 
-function adminLogin() {
+function adminLogin(evt) {
+    evt.preventDefault();
     //get input from email and password inputs
     const email = $("#Email").val();
     const password = $("#Password").val();
@@ -11,10 +12,12 @@ function adminLogin() {
     let admins = JSON.parse(getCookie("admins"));
     //console.log("stored admin: ", admins[0]);
 
-    const admin = admins.find(admin => admin.email === email && admin.password === password);
+    const admin = admins.find(admin => admin.email == email && admin.password == password);
     if (admin) {
         console.log("login: ", admin.password);
         alert("Welcome back "+ email + "!");
+        sessionStorage.setItem("adminID", admin.id);
+        window.location.href = "accounts.html";
     //   // Create a session token (in a real application, make it more secure)
     //   const sessionToken = generateSessionToken();
     //   // Store the session token in a cookie
@@ -33,9 +36,16 @@ function adminLogin() {
       
   };
 
+function logout(evt) {
+    evt.preventDefault();
+    sessionStorage.clear();
+    window.location.href = "login.html";
+
+};
+
 $(document).ready( () => {
 
-    sessionStorage.setItem("adminID", 1);
+    
 
     if(!checkCookieExists("admins"))
     {
@@ -50,7 +60,8 @@ $(document).ready( () => {
 
     admins = JSON.stringify(admins);
     //create admin cookie
-    document.cookie = `admins=${admins}; path=/`;
+    setCookie("admins", admins);
+    //document.cookie = `admins=${admins}; path=/`;
     }
     
 
@@ -64,7 +75,8 @@ $(document).ready( () => {
 
         users = JSON.stringify(users);
 
-        document.cookie = `users=${users}; path=/`;
+        setCookie("users", users);
+        //document.cookie = `users=${users}; path=/`;
     }
 
     if(!checkCookieExists("tasks"))
@@ -80,10 +92,25 @@ $(document).ready( () => {
 
         tasks = JSON.stringify(tasks);
 
-        document.cookie = `tasks=${tasks}; path=/`;
+        setCookie("tasks", tasks)
+        //document.cookie = `tasks=${tasks}; path=/`;
     }
 
     $("#loginBtn").click(adminLogin);  
+    $("#logoutbtn").click(logout);
+
+    $("#savebtn").click(function() {
+        alert("Account information has been saved!");
+    });
+
+    $(".email_tab").mouseover(function() {
+        $(".email_tab").css("cursor", "pointer");
+    });
+
+    $(".email_tab").mouseout(function() {
+      $(".email_tab").css("cursor", "default");
+  });
+
 
 });
 

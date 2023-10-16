@@ -343,7 +343,7 @@
                                         class="top-11 w-[230px] !py-0 font-semibold text-dark ltr:right-0 rtl:left-0 dark:text-white-dark dark:text-white-light/90"
                                     >
                                         <li class="border-t border-white-light dark:border-white-light/10">
-                                            <a href="auth-boxed-signin.html" class="!py-3 text-danger" @click="toggle">
+                                            <a id="logoutbtn" class="!py-3 text-danger" @click="toggle">
                                                 <svg
                                                     class="h-4.5 w-4.5 rotate-90 ltr:mr-2 rtl:ml-2"
                                                     width="18"
@@ -560,8 +560,7 @@
                                                                 ></ellipse>
                                                             </svg>
                                                         </div>
-                                                        <div x-on:click="editAccount(contact.cookieUserID)" x-on:mouseenter="style.cursor = 'pointer'"
-                                                        x-on:mouseleave="style.cursor = 'default'"x-text="contact.email"></div>
+                                                        <div class='email_tab' x-on:click="editAccount(contact.cookieUserID)" x-text="contact.email"></div>
                                                     </div>
                                                 </td>
                                                 
@@ -900,6 +899,14 @@
                             this.searchContacts();
 
                             setCookie("users", users);
+
+                            admin = admins.find(admin => admin.id == adminID);
+                            if(admin)
+                            {
+                                admins.userlist.push(user1.id);
+                                setCookie("admins", admins);
+                            }
+    
                         }
 
                         this.showMessage('User has been saved successfully.');
