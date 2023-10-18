@@ -814,19 +814,14 @@
 
                     init() {
                         this.searchContacts();
-                        //var length = admins[adminID]['userlist'].length;
                         list = admins[adminID-1]['userlist'];
                         length = list.length;
                         for(var i = 0; i < length; i++)
                         {
                             id = list[i];
-                            //alert(id);
                             this.addUser(id-1, users[id-1]['email'], users[id-1]['password'], users[id-1]['status'], users[id-1]['id']);
                         }
 
-
-                        // for(var i = 0; i < users.length; i++)
-                        //     this.addUser(i, users[i]['email'], users[i]['password'], users[i]['status']);
                     },
 
                     searchContacts() {
@@ -846,10 +841,6 @@
                         let maxUserId = this.contactList.length
                                 ? this.contactList.reduce((max, character) => (character.id > max ? character.id : max), this.contactList[0].id)
                                 : 0;
-
-                            // const user1 = new EMPLOYEE(this.params.email, this.params.password);
-                            // users.push(user1);
-                            // sessionStorage.setItem('users', JSON.stringify(users));
 
                             let user = {
                                 id: maxUserId + 1,
@@ -941,15 +932,11 @@
 
                         if(item)
                         {
-                            //console.log(this.email);
                             users[contact.id-1]['status'] = nombre;
                             let usersJSON = JSON.stringify(users);
-                            //sessionStorage.setItem("users", JSON.stringify(users));
                             document.cookie = `users=${usersJSON}; path=/`;
                             item.status = nombre;
                         }
-                        
-                        //alert("item: " + item);
 
                         
                         this.searchContacts(false);
@@ -960,20 +947,6 @@
 
         });
 
-        
-
-        // document.addEventListener("DOMContentLoaded", () => {
-        //     //Necessary to check these buttons exist at moment of loading
-        //     // hook up click events for both buttons
-        //     //document.querySelector("#images/espresso_info.jpg").addEventListener("click", joinList("espresso"));
-        //     //$("#clear_form").addEventListener("click", clearForm);
-        //     document.querySelector(".elec").addEventListener("click") => {
-        //         document.getElementById("elec").innerHTML = "";
-        //     }
-
-        //     // set focus on first text box after the form loads
-        //     //$("#email_1").focus();
-        // });
         </script>
     </body>
 </html>
