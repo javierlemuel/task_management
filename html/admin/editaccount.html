@@ -386,14 +386,6 @@
                     <div>
                             
                         <div>
-                            <!-- <ul class="flex space-x-2 rtl:space-x-reverse">
-                                <li>
-                                    <a href="javascript:;" class="text-primary hover:underline">Users</a>
-                                </li>
-                                <li class="before:content-['/'] ltr:before:mr-1 rtl:before:ml-1">
-                                    <span>Account Settings</span>
-                                </li>
-                            </ul> -->
                             <div class="pt-5">
                                 <div class="mb-5 flex items-center justify-between">
                                     <h5 class="text-lg font-semibold dark:text-white-light">Settings</h5>
@@ -404,7 +396,7 @@
                                             <a
                                                 href="javascript:;"
                                                 class="flex gap-2 border-b border-transparent p-4 hover:border-primary hover:text-primary"
-                                                :class="{'!border-primary text-primary' : tab == 'home'}; loadInfo()"
+                                                :class="{'!border-primary text-primary' : tab === 'home'}; loadInfo();"
                                                 @click="tab='home'"
                                             >
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5">
@@ -423,7 +415,7 @@
                                             <a
                                                 href="javascript:;"
                                                 class="flex gap-2 border-b border-transparent p-4 hover:border-primary hover:text-primary"
-                                                :class="{'!border-primary text-primary' : tab == 'preferences'}"
+                                                :class="{'!border-primary text-primary' : tab === 'preferences'}"
                                                 @click="tab='preferences'"
                                             >
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5">
@@ -542,7 +534,7 @@
                                                                     </div>
                                                                     <div
                                                                         class="whitespace-nowrap rounded-md bg-primary-light py-0.5 px-2 font-semibold dark:bg-[#060818]"
-                                                                        x-text="allTasks && allTasks.filter((d) => d.status != 'trash').length-1"
+                                                                        x-text="filteredCountAll()"
                                                                     ></div>
                                                                 </button>
                                                                 <button
@@ -591,9 +583,9 @@
                                                                     </div>
                                                                     <div
                                                                         class="whitespace-nowrap rounded-md bg-primary-light py-0.5 px-2 font-semibold dark:bg-[#060818]"
-                                                                        x-text="allTasks && allTasks.filter((d) => d.status === 'Pending').length"
+                                                                        x-text="filteredCount('Pending')"
+                                                                        id="pendingtxt"
                                                                     >
-                                                                        2
                                                                     </div>
                                                                 </button>
                                                                 <button
@@ -621,7 +613,7 @@
                                                                     </div>
                                                                     <div
                                                                         class="whitespace-nowrap rounded-md bg-primary-light py-0.5 px-2 font-semibold dark:bg-[#060818]"
-                                                                        x-text="allTasks && allTasks.filter((d) => d.status === 'In Progress').length"
+                                                                        x-text="filteredCount('In Progress')"
                                                                     ></div>
                                                                 </button>
                                                                 <button
@@ -930,43 +922,7 @@
                                                                                                 </ul>
                                                                                             </div>
                                                                                         </template>
-                                                                                        <template x-if="task.tag">
-                                                                                            <div x-data="dropdown" @click.outside="open = false" class="dropdown">
-                                                                                                <button
-                                                                                                    type="button"
-                                                                                                    class="badge rounded-full capitalize hover:top-0 hover:text-white"
-                                                                                                    x-text="task.tag"
-                                                                                                    :class="{
-                                                                                                'badge-outline-success hover:bg-success': task.tag === 'team',
-                                                                                                'badge-outline-info hover:bg-info': task.tag === 'update',
-                                                                                                'text-white bg-success ': task.tag === 'team' && open,
-                                                                                                'text-white bg-info ': task.tag === 'update' && open,
-                                                                                            }"
-                                                                                                    @click="toggle"
-                                                                                                ></button>
-                                                                                                <ul
-                                                                                                    x-cloak
-                                                                                                    x-show="open"
-                                                                                                    x-transition
-                                                                                                    x-transition.duration.300ms
-                                                                                                    class="text-sm font-medium ltr:right-0 rtl:left-0"
-                                                                                                >
-                                                                                                    <li>
-                                                                                                        <button class="w-full text-success" @click="toggle,setTag(task, 'team')">
-                                                                                                            Team
-                                                                                                        </button>
-                                                                                                    </li>
-                                                                                                    <li>
-                                                                                                        <button class="w-full text-info" @click="toggle,setTag(task, 'update')">
-                                                                                                            Update
-                                                                                                        </button>
-                                                                                                    </li>
-                                                                                                    <li>
-                                                                                                        <button class="w-full" @click="toggle,setTag(task, '')">None</button>
-                                                                                                    </li>
-                                                                                                </ul>
-                                                                                            </div>
-                                                                                        </template>
+                                                                                        
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="w-1">
@@ -978,7 +934,7 @@
                                                                                 </td>
                                                                                 <td class="w-1">
                                                                                     <div class="flex w-max items-center justify-between">
-                                                                                        <div class="flex-shrink-0 ltr:mr-2.5 rtl:ml-2.5">
+                                                                                        <!-- <div class="flex-shrink-0 ltr:mr-2.5 rtl:ml-2.5">
                                                                                             <template x-if="task.path">
                                                                                                 <img
                                                                                                     :src="`assets/images/${task.path}`"
@@ -1021,7 +977,7 @@
                                                                                                     </svg>
                                                                                                 </div>
                                                                                             </template>
-                                                                                        </div>
+                                                                                        </div> -->
                                                                                         <div x-data="dropdown" @click.outside="open = false" class="dropdown">
                                                                                             <button type="button" @click="toggle">
                                                                                                 <svg
@@ -1133,93 +1089,7 @@
                                                                                                     
                                                                                                 </ul>
                                                                                             </template>
-                                                                                            <template x-if="selectedTab === 'trash'">
-                                                                                                <ul
-                                                                                                    x-cloak
-                                                                                                    x-show="open"
-                                                                                                    x-transition
-                                                                                                    x-transition.duration.300ms
-                                                                                                    class="w-44 ltr:right-0 rtl:left-0"
-                                                                                                >
-                                                                                                    <li>
-                                                                                                        <a
-                                                                                                            href="javascript:;"
-                                                                                                            @click="toggle, deleteTask(task, 'deletePermanent' )"
-                                                                                                        >
-                                                                                                            <svg
-                                                                                                                width="24"
-                                                                                                                height="24"
-                                                                                                                viewBox="0 0 24 24"
-                                                                                                                fill="none"
-                                                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                                                class="h-5 w-5 shrink-0 ltr:mr-2 rtl:ml-2"
-                                                                                                            >
-                                                                                                                <path
-                                                                                                                    d="M20.5001 6H3.5"
-                                                                                                                    stroke="currentColor"
-                                                                                                                    stroke-width="1.5"
-                                                                                                                    stroke-linecap="round"
-                                                                                                                ></path>
-                                                                                                                <path
-                                                                                                                    d="M18.8334 8.5L18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5"
-                                                                                                                    stroke="currentColor"
-                                                                                                                    stroke-width="1.5"
-                                                                                                                    stroke-linecap="round"
-                                                                                                                ></path>
-                                                                                                                <path
-                                                                                                                    opacity="0.5"
-                                                                                                                    d="M9.5 11L10 16"
-                                                                                                                    stroke="currentColor"
-                                                                                                                    stroke-width="1.5"
-                                                                                                                    stroke-linecap="round"
-                                                                                                                ></path>
-                                                                                                                <path
-                                                                                                                    opacity="0.5"
-                                                                                                                    d="M14.5 11L14 16"
-                                                                                                                    stroke="currentColor"
-                                                                                                                    stroke-width="1.5"
-                                                                                                                    stroke-linecap="round"
-                                                                                                                ></path>
-                                                                                                                <path
-                                                                                                                    opacity="0.5"
-                                                                                                                    d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6"
-                                                                                                                    stroke="currentColor"
-                                                                                                                    stroke-width="1.5"
-                                                                                                                ></path>
-                                                                                                            </svg>
-                                                                                                            Permanent Delete
-                                                                                                        </a>
-                                                                                                    </li>
-                                                                                                    <li>
-                                                                                                        <a href="javascript:;" @click="toggle, deleteTask(task, 'restore')">
-                                                                                                            <svg
-                                                                                                                width="24"
-                                                                                                                height="24"
-                                                                                                                viewBox="0 0 24 24"
-                                                                                                                fill="none"
-                                                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                                                class="h-5 w-5 shrink-0 ltr:mr-2 rtl:ml-2"
-                                                                                                            >
-                                                                                                                <g clip-path="url(#clip0_1276_6232)">
-                                                                                                                    <path
-                                                                                                                        d="M19.7285 10.9288C20.4413 13.5978 19.7507 16.5635 17.6569 18.6573C14.5327 21.7815 9.46736 21.7815 6.34316 18.6573C3.21897 15.5331 3.21897 10.4678 6.34316 7.3436C9.46736 4.21941 14.5327 4.21941 17.6569 7.3436L18.364 8.05071M18.364 8.05071H14.1213M18.364 8.05071V3.80807"
-                                                                                                                        stroke="currentColor"
-                                                                                                                        stroke-width="1.5"
-                                                                                                                        stroke-linecap="round"
-                                                                                                                        stroke-linejoin="round"
-                                                                                                                    ></path>
-                                                                                                                </g>
-                                                                                                                <defs>
-                                                                                                                    <clipPath id="clip0_1276_6232">
-                                                                                                                        <rect width="24" height="24" fill="white"></rect>
-                                                                                                                    </clipPath>
-                                                                                                                </defs>
-                                                                                                            </svg>
-                                                                                                            Restore Task
-                                                                                                        </a>
-                                                                                                    </li>
-                                                                                                </ul>
-                                                                                            </template>
+                                                                                            
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
@@ -1277,21 +1147,10 @@
                                                                         <label for="title">Title</label>
                                                                         <input id="title" type="text" placeholder="Enter Task Title" class="form-input" x-model="params.title" />
                                                                     </div>
-                                                                    <!-- <div class="mb-5">
-                                                                        <label for="assignee">Assignee</label>
-                                                                        <select id="assignee" class="form-select" x-model="params.assignee">
-                                                                            <option value="">Select Assignee</option>
-                                                                            <option value="John Smith">John Smith</option>
-                                                                            <option value="Kia Vega">Kia Vega</option>
-                                                                            <option value="Sandy Doe">Sandy Doe</option>
-                                                                            <option value="Jane Foster">Jane Foster</option>
-                                                                            <option value="Donna Frank">Donna Frank</option>
-                                                                        </select>
-                                                                    </div> -->
                                                                     <div class="mb-5 flex justify-between gap-4">
                                                                         <div class="flex-1">
-                                                                            <label for="tag">Status</label>
-                                                                            <select id="tag" class="form-select" x-model="params.tag">
+                                                                            <label for="status">Status</label>
+                                                                            <select id="status" class="form-select" x-model="params.status">
                                                                                 <option value="Pending">Pending</option>
                                                                                 <option value="In Progress">In Progress</option>
                                                                                 <option value="Completed">Completed</option>
@@ -1366,15 +1225,7 @@
                                                             }"
                                                                 ></div>
                     
-                                                                <div
-                                                                    x-show="selectedTask.tag"
-                                                                    x-text="selectedTask.tag"
-                                                                    class="badge rounded-3xl capitalize"
-                                                                    :class="{
-                                                                'badge-outline-success ': selectedTask.tag === 'team',
-                                                                'badge-outline-info ': selectedTask.tag === 'update',
-                                                            }"
-                                                                ></div>
+                                                                
                                                             </div>
                                                             <div class="p-5">
                                                                 <div class="prose text-base" x-html="selectedTask.description"></div>
@@ -1419,10 +1270,9 @@
                 title: '',
                 description: '',
                 descriptionText: '',
-                assignee: '',
                 path: '',
-                tag: '',
-                priority: 'low',
+                status: '',
+                priority: '',
             };
             document.addEventListener('alpine:init', () => {
                 // main section
@@ -1578,12 +1428,12 @@
                         this.initEditor();
                         const queryParams = new URLSearchParams(window.location.search);
                         const paramName = 'id';
-                        const user_id = queryParams.get(paramName);
+                        this.user_id = queryParams.get(paramName);
                         //alert(user_id);
 
                         for(var i = 0; i < tasks.length; i++){
                             //alert(tasks[i]['task_user']);
-                            if(tasks[i]['task_user'] == user_id)
+                            if(tasks[i]['task_user'] == this.user_id)
                             {
                                 this.addTask(tasks[i]['taskID'], tasks[i]['task_name'], tasks[i]['due_date'],
                                 tasks[i]['task_description'], tasks[i]['task_priority'], tasks[i]['task_status'],
@@ -1593,7 +1443,11 @@
                     },
                     initEditor() {
                         this.quillEditor = new Quill(this.$refs.editor, {
+                            //Set quill editor configuration, remove the arrows from toolbar of snow.
                             theme: 'snow',
+                            modules: {
+                                toolbar: false 
+                            },
                         });
                     },
                     searchTasks(isResetPage = true) {
@@ -1607,9 +1461,7 @@
                             res = this.allTasks.filter((d) => d.status != 'trash');
                         }
 
-                        if (this.selectedTab === 'team' || this.selectedTab === 'update') {
-                            res = res.filter((d) => d.tag === this.selectedTab);
-                        } else if (this.selectedTab === 'high' || this.selectedTab === 'medium' || this.selectedTab === 'low') {
+                        if (this.selectedTab === 'high' || this.selectedTab === 'medium' || this.selectedTab === 'low') {
                             res = res.filter((d) => d.priority === this.selectedTab);
                         }
                         this.filteredTasks = res.filter((d) => d.title?.toLowerCase().includes(this.searchTask));
@@ -1640,16 +1492,35 @@
                         item.priority = name;
 
                         tasks[task.id-1]['task_priority'] = name;
-                        data = JSON.stringify(tasks);
                        // document.cookie(`tasks=${data}; path=/`);
-                        this.setCookie("tasks", data);
+                        setCookie("tasks", tasks);
+                        let user = users.find(user => user.id == this.user_id);
+                        alert(this.user_id);
+                            if(users[this.user_id-1])
+                            {
+                                alert('user found');
+                                notif = `The task titled "${tasks[task.id-1]['task_name']}" has been changed of priority.`;
+                                users[this.user_id-1]['notifications'].push(notif);
+                                setCookie("users", users);
+                            }
+                       
                         this.searchTasks(false);
                     },
 
-                    setTag(task, name) {
+                    setstatus(task, name) {
                         let item = this.filteredTasks.find((d) => d.id === task.id);
-                        item.tag = name;
+                        item.status = name;
+                        
+                        let user = users.find(user => user.id == this.user_id);
+                            if(users[this.user_id-1])
+                            {
+                                notif = `The task titled "${tasks[task.id-1]['task_name']}" has been changed of status.`;
+                                users[this.user_id-1]['notifications'].push(notif);
+                                setCookie("users", users);
+                            }
+                        this.allTasks = [...this.allTasks];
                         this.searchTasks(false);
+
                     },
 
                     tabChanged(type) {
@@ -1677,6 +1548,14 @@
                         });
                     },
 
+                    filteredCount(type){
+                        return this.allTasks && this.allTasks.filter((d) => d.status === type).length
+                    },
+
+                    filteredCountAll(){
+                        return this.allTasks && this.allTasks.filter((d) => d.status != 'trash').length-1;
+                    },
+
                     addEditTask(task) {
                         this.isShowTaskMenu = false;
 
@@ -1686,7 +1565,11 @@
                         if (task) {
                             this.params = JSON.parse(JSON.stringify(task));
                             this.quillEditor.root.innerHTML = this.params.description;
+                            this.params.status = task.status; 
+                            this.params.priority = task.priority;
                         }
+
+
 
                         this.addTaskModal = true;
                     },
@@ -1704,11 +1587,11 @@
                             tasks[task.id-1]['task_user'] = "";
                             setCookie("tasks", JSON.stringify(tasks));
 
-                            let user = users.find(user => user.id == user_id);
-                            if(user)
+                            
+                            if(users[this.user_id-1])
                             {
                                 notif = `The task titled "${tasks[task.id-1]['task_name']}" has been removed`;
-                                user[user_id-1]['notifications'];
+                                users[this.user_id-1]['notifications'].push(notif);
                                 setCookie("users", users);
                             }
                         }
@@ -1732,7 +1615,6 @@
                             descriptionText: desc,
                             date: date,
                             priority: priority,
-                            assignee: userID,
                             status: status,
                         };
 
@@ -1756,12 +1638,21 @@
 
                                     tasks[d.id-1]['task_name'] = this.params.title;
                                     tasks[d.id-1]['task_description'] = d.descriptionText;
-                                    tasks[d.id-1]['task_status'] = this.params.tag;
+                                    tasks[d.id-1]['task_status'] = this.params.status;
                                     tasks[d.id-1]['task_priority'] = this.params.priority;
 
-                                    data = JSON.stringify(tasks);
-                                    this.setCookie("tasks", data);
-                                }
+                                    this.allTasks[d.id]['status'] = this.params.status;
+                                    this.allTasks = [...this.allTasks];
+                                    setCookie("tasks", tasks);
+
+                                    if(users[this.user_id-1])
+                                    {
+                                        notif = `The task titled "${tasks[d.id-1]['task_name']}" has been updated`;
+                                        users[this.user_id-1]['notifications'].push(notif);
+                                        setCookie("users", users);
+                                    }
+                                    }
+                                    //this.allTasks = [...this.allTasks];
                                 return d;
                             });
                         } else {
@@ -1779,8 +1670,17 @@
                             task.description = this.quillEditor.root.innerHTML;
                             task.descriptionText = this.quillEditor.getText();
                             task.date = monthNames[mm] + ', ' + dd + ' ' + yyyy;
+                           
 
                             this.allTasks.splice(0, 0, task);
+                            this.allTasks = [...this.allTasks];
+                            let user = users.find(user => user.id == this.user_id);
+                            if(users[this.user_id-1])
+                            {
+                                notif = `The task titled "${tasks[task.id-1]['task_name']}" has been added`;
+                                users[this.user_id-1]['notifications'].push(notif);
+                                setCookie("users", users);
+                            }
                             this.searchTasks();
                         }
 

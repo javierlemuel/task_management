@@ -43,7 +43,7 @@ function getCookie(cookieName) {
         return decodeURIComponent(value);
       }
     }
-    return null; // Cookie not found
+    return null;
   }
 
   function checkCookieExists(cookieName) {
@@ -51,10 +51,10 @@ function getCookie(cookieName) {
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i];
       if (cookie.startsWith(cookieName + '=')) {
-        return true; // Cookie found
+        return true; 
       }
     }
-    return false; // Cookie not found
+    return false;
   }
 
 function setCookie(name, value) {
