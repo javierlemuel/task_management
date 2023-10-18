@@ -1,6 +1,7 @@
 "use strict";
 
-function employeeLogin() {
+function employeeLogin(event) {
+  event.preventDefault();
   //get input from email and password inputs
   const email = $("#employeeEmail").val();
   const password = $("#employeePassword").val();
@@ -9,19 +10,22 @@ function employeeLogin() {
 
   //get stored user data
   let users = JSON.parse(getCookie("users"));
+  console.log(users)
   //console.log("stored user: ", users[0]);
 
-  const user = users.find(
-    (user) => user.email === email && user.password === password
-  );
+  const user = users.find(user => user.email === email && user.password === password);
   if (user) {
     console.log("login: ", user.password);
     alert("Welcome back " + email + "!");
+    sessionStorage.setItem("userID", user.id);
     //   // Create a session token (in a real application, make it more secure)
     //   const sessionToken = generateSessionToken();
     //   // Store the session token in a cookie
     //   setCookie("sessionToken", sessionToken, 1); // Expires in 1 day
-    //   return true; // Successful login
+    window.location.href = "index.html"
+    // return true; // Successful login
+    
+    
   } else {
     if (email === "" || email === "null" || email === "undefined") {
       alert("Username required.");
@@ -36,6 +40,14 @@ function employeeLogin() {
     }
   }
 }
+
+
+function logout(evt) {
+  evt.preventDefault();
+  sessionStorage.clear();
+  window.location.href = 'auth-cover-login.html';
+
+};
 
 $(document).ready(() => {
   if (!checkCookieExists("users")) {
