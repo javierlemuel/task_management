@@ -81,8 +81,10 @@ $(document).ready( () => {
         const task1 = new TASK(1, 2, "Create a website", "Create a riveting website that will change the world", "Nov, 10 2023", "medium"); 
         const task2 = new TASK(2, 2, "Get the admin a coffee", "Get your favorite administrator a hot black coffee", "Oct, 17 2023", "high");
         const task3 = new TASK(3, 2, "Take your vitamins", "Do not forget to drink all your healthy vitamins every morning", "Oct, 15 2023", "low");
+        const task4 = new TASK(4, 2, "Take your dog off the lawn", "Do not forget to drink all your healthy vitamins every morning", "Oct, 15 2023", "low");
+        const task5 = new TASK(5, 1, "Take your drugs", "Do not forget to drink all your healthy vitamins every morning", "Oct, 15 2023", "low");
 
-        var tasks = [task1, task2, task3];
+        var tasks = [task1, task2, task3, task4, task5];
 
 
         setCookie("tasks", tasks)
