@@ -64,7 +64,7 @@
     </div>
 
     <!-- start theme customizer section -->
-    <div x-data="customizer">
+    <!-- <div x-data="customizer">
         <div class="fixed inset-0 z-[51] hidden bg-[black]/60 px-4 transition-[display]"
             :class="{'!block': showCustomizer}" @click="showCustomizer = false"></div>
 
@@ -259,7 +259,7 @@
                 </div>
             </div>
         </nav>
-    </div>
+    </div> -->
     <!-- end theme customizer section -->
 
     <div class="main-container min-h-screen text-black dark:text-white-dark" :class="[$store.app.navbar]">
@@ -755,6 +755,9 @@
                                             </svg>
                                         </div>
                                         <h3 class="text-lg font-semibold ltr:ml-3 rtl:mr-3">Todo list</h3>
+                                        <!-- <button x-data="header" type="button" id="myButton" @click="myFunction()"
+                                            style="background-color: blue; color: white"> Add Notifications</button> -->
+
                                     </div>
                                 </div>
                                 <div class="mb-5 h-px w-full border-b border-[#e0e6ed] dark:border-[#1b2e4b]"></div>
@@ -1627,6 +1630,12 @@
                         message: '<strong class="text-sm mr-1">Anna Morgan</strong>Upload a file',
                         time: '9h Ago',
                     },
+                    {
+                        id: 4,
+                        profile: 'profile-16.jpeg',
+                        message: '<strong class="text-sm mr-1">Anna Morgan</strong>Upload a file',
+                        time: '9h Ago',
+                    },
                 ],
 
                 messages: [
@@ -1755,6 +1764,17 @@
                 removeMessage(value) {
                     this.messages = this.messages.filter((d) => d.id !== value);
                 },
+
+                myFunction() {
+                    const bodyNotification = {
+                        id: 6,
+                        profile: 'profile-16.jpeg',
+                        message: '<strong class="text-sm mr-1">Anna Morgan</strong>Upload a file',
+                        time: '9h Ago',
+                    }
+
+                    this.notifications.push(bodyNotification)
+                }
             }));
             //todolist
             Alpine.data('todolist', () => ({
@@ -2328,6 +2348,7 @@
                 },
             }));
         });
+
     </script>
 </body>
 
