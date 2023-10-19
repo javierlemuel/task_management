@@ -774,19 +774,7 @@
                                                                         @keyup="searchTasks()"
                                                                     />
                                                                     
-                                                                    <div class="absolute top-1/2 -translate-y-1/2 peer-focus:text-primary ltr:right-[11px] rtl:left-[11px]">
-                                                                        <svg
-                                                                            width="24"
-                                                                            height="24"
-                                                                            viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            class="h-4 w-4"
-                                                                        >
-                                                                            <circle cx="11.5" cy="11.5" r="9.5" stroke="currentColor" stroke-width="1.5" opacity="0.5"></circle>
-                                                                            <path d="M18.5 18.5L22 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                                                        </svg>
-                                                                    </div>
+                                                                    
                                                                 </div>
 
                                                                 <!-- BUTTON FOR ADDING THE TASK -->
@@ -1169,6 +1157,10 @@
                                                                         <label for="title">Title</label>
                                                                         <input id="title" type="text" placeholder="Enter Task Title" class="form-input" x-model="params.title" />
                                                                     </div>
+                                                                    <div class="mb-5">
+                                                                        <label for="duedate">Due Date</label>
+                                                                        <input id="duedate" class="form-date" type="date" x-model="params.date">
+                                                                    </div>
                                                                     <div class="mb-5 flex justify-between gap-4">
                                                                         <div class="flex-1">
                                                                             <label for="status">Status</label>
@@ -1181,7 +1173,7 @@
                                                                         <div class="flex-1">
                                                                             <label for="priority">Priority</label>
                                                                             <select id="priority" class="form-select" x-model="params.priority">
-                                                                                <option value="low">Low</option>
+                                                                                <option value="low" selected>Low</option>
                                                                                 <option value="medium">Medium</option>
                                                                                 <option value="high">High</option>
                                                                             </select>
@@ -1587,14 +1579,14 @@
 
                         this.quillEditor.root.innerHTML = '';
 
-                        if (task) {
+                        if (task.id) {
                             this.params = JSON.parse(JSON.stringify(task));
                             console.log(this.params)
                             this.quillEditor.root.innerHTML = this.params.description;
                             this.params.status = task.status; 
                             this.params.priority = task.priority;
-                            console.log("task.status ->",task.priority)
-                            console.log("task.priority ->",task.status)
+                            console.log("task.status ->",task.status)
+                            console.log("task.priority ->",task.priority)
                         }
 
 
@@ -1659,6 +1651,7 @@
                         if (this.params.id) {
                             //update task
                             this.pagedTasks = this.pagedTasks.map((d) => {
+                                //console.log("ENTERED UPDATE?")
                                 if (d.id === this.params.id) {
                                     d = this.params;
                                     d.description = this.quillEditor.root.innerHTML;
@@ -1685,23 +1678,48 @@
                             });
                         } else {
                             //add task
-                            const maxid = this.allTasks.length ? this.allTasks.reduce((max, obj) => (obj.id > max ? obj.id : max), this.allTasks[0].id) : 0;
+                            //console.log("ADDING TASK?");
+                            //const maxid = this.allTasks.length ? this.allTasks.reduce((max, obj) => (obj.id > max ? obj.id : max), this.allTasks[0].id) : 0;
 
-                            const today = new Date();
-                            const dd = String(today.getDate()).padStart(2, '0');
-                            const mm = String(today.getMonth());
-                            const yyyy = today.getFullYear();
-                            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                            // const today = new Date();
+                            // const dd = String(today.getDate()).padStart(2, '0');
+                            // const mm = String(today.getMonth());
+                            // const yyyy = today.getFullYear();
+                            // const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
                             let task = this.params;
+                            //console.log(task);
+                            let maxid = 0;
+                            if (this.allTasks.length > 0) 
+                                maxid = this.allTasks.reduce((max, obj) => (obj.id > max ? obj.id : max), this.allTasks[0].id);
+                            if (isNaN(maxid) || maxid === undefined) 
+                            maxid = 0;
                             task.id = maxid + 1;
+                            //task.name = this.params.title;
                             task.description = this.quillEditor.root.innerHTML;
                             task.descriptionText = this.quillEditor.getText();
-                            task.date = monthNames[mm] + ', ' + dd + ' ' + yyyy;
+                            //console.log(task.status + "   " + task.priority);
+                            if(!task.status)
+                                task.status = 'Pending';
+                            if(!task.priority)
+                                task.priority = 'low';
+                            //task.status = this.params.status;
+                            //task.priority = this.params.priority;
+                            //task.date = this.params.date;
+                            console.log(task);
+                            this.addTask(task.id, task.name, task.date, task.descriptionText, task.priority, task.status, this.user_id);
+
+                            newTask = {"taskID": task.id, "task_user": this.user_id, "task_name": task.title,
+                                        "task_description": task.descriptionText, "due_date": task.date,
+                                        "task_status": task.status, "task_priority": task.priority};
+                            tasks.push(newTask);
+                            setCookie("tasks", tasks);
+                            //tasks.push(task);
+                            //setCookie("tasks", )
                            
 
-                            this.allTasks.splice(0, 0, task);
-                            this.allTasks = [...this.allTasks];
+                            //this.allTasks.splice(0, 0, task);
+                            //this.allTasks = [...this.allTasks];
                             let user = users.find(user => user.id == this.user_id);
                             if(users[this.user_id-1])
                             {
@@ -1709,7 +1727,7 @@
                                 users[this.user_id-1]['notifications'].push(notif);
                                 setCookie("users", users);
                             }
-                            this.searchTasks();
+                            //this.searchTasks();
                         }
 
                         this.showMessage('Task has been saved successfully.');
