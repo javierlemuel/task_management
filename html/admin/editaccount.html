@@ -896,13 +896,13 @@
                                                                                                     class="badge rounded-full capitalize hover:top-0 hover:text-white"
                                                                                                     x-text="task.priority"
                                                                                                     :class="{
-                                                                                                        'badge-outline-primary hover:bg-primary': task.priority === 'medium',
-                                                                                                        'badge-outline-warning hover:bg-warning': task.priority === 'low',
-                                                                                                        'badge-outline-danger hover:bg-danger': task.priority === 'high',
-                                                                                                        'text-white bg-primary': task.priority === 'medium' && open,
-                                                                                                        'text-white bg-warning': task.priority === 'low' && open,
-                                                                                                        'text-white bg-danger': task.priority === 'high' && open,
-                                                                                                    }"
+                                                                                            'badge-outline-primary hover:bg-primary': task.priority === 'medium',
+                                                                                            'badge-outline-warning hover:bg-warning': task.priority === 'low',
+                                                                                            'badge-outline-danger hover:bg-danger': task.priority === 'high',
+                                                                                            'text-white bg-primary': task.priority === 'medium' && open,
+                                                                                            'text-white bg-warning': task.priority === 'low' && open,
+                                                                                            'text-white bg-danger': task.priority === 'high' && open,
+                                                                                        }"
                                                                                                     @click="toggle"
                                                                                                 ></button>
                                                                                                 <ul
@@ -930,11 +930,12 @@
                                                                                                     </li>
                                                                                                     <li>
                                                                                                         <button
-                                                                                                            class="w-full text-warning ltr:text-left rtl:text-right"
+                                                                                                            class="w-full text-primary ltr:text-left rtl:text-right"
                                                                                                             @click="toggle,setPriority(task, 'low')"
                                                                                                         >
                                                                                                             Low
                                                                                                         </button>
+                                                                                                        
                                                                                                     </li>
                                                                                                 </ul>
                                                                                             </div>
@@ -1507,6 +1508,8 @@
                         console.log(task.id);
                         console.log(item.id);
                         item.priority = name;
+                        console.log("priority task", name)
+                        
 
                         tasks[task.id-1]['task_priority'] = name;
                        // document.cookie(`tasks=${data}; path=/`);
@@ -1577,14 +1580,21 @@
                         this.isShowTaskMenu = false;
 
                         this.params = JSON.parse(JSON.stringify(defaultParams));
+
                         this.quillEditor.root.innerHTML = '';
 
                         if (task) {
                             this.params = JSON.parse(JSON.stringify(task));
+                            console.log(this.params)
                             this.quillEditor.root.innerHTML = this.params.description;
                             this.params.status = task.status; 
                             this.params.priority = task.priority;
+                            console.log("task.status ->",task.priority)
+                            console.log("task.priority ->",task.status)
                         }
+
+
+
                         this.addTaskModal = true;
                     },
 
