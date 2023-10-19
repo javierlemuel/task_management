@@ -599,7 +599,7 @@
                                                     stroke="currentColor" stroke-width="1.5" />
                                             </svg>
                                             Profile</a> 
-                                    </li> --> 
+                                    </li> -->
                                     <!-- <li>
                                         <a href="auth-boxed-lockscreen.html" class="dark:hover:text-white"
                                             @click="toggle">
@@ -876,7 +876,7 @@
                                             </div>
                                             <div class="whitespace-nowrap rounded-md bg-primary-light py-0.5 px-2 font-semibold dark:bg-[#060818]"
                                                 x-text="allTasks && allTasks.filter((d) => d.status === 'Completed').length">
-                                                
+
                                             </div>
                                         </button>
 
@@ -1609,58 +1609,56 @@
                     }
                 },
 
-                
+
 
                 messages: [
                 ],
 
 
-                
+
                 addMessages() {
-                        var admins = JSON.parse(getCookie("admins"));
-                        var adminID = JSON.parse(sessionStorage.getItem("adminID"));
-                        
-                        list = admins[adminID-1]['notifications'];
+                    var admins = JSON.parse(getCookie("admins"));
+                    var adminID = JSON.parse(sessionStorage.getItem("adminID"));
 
-                        for(var i = 0; i < list.length; i++)
-                        {
-                            let maxUserId = this.messages.length
-                                    ? this.messages.reduce((max, character) => (character.id > max ? character.id : max), this.messages[0].id)
-                                    : 0;
+                    list = admins[adminID - 1]['notifications'];
 
-                            let message = {
-                                id: maxUserId + 1,
-                                message: list[i],
-                            }
+                    for (var i = 0; i < list.length; i++) {
+                        let maxUserId = this.messages.length
+                            ? this.messages.reduce((max, character) => (character.id > max ? character.id : max), this.messages[0].id)
+                            : 0;
 
-                            this.messages.unshift(message);
+                        let message = {
+                            id: maxUserId + 1,
+                            message: list[i],
                         }
-                            
-                    },
 
-                    removeMessage(value) {
-                        this.messages = this.messages.filter((d) => d.id !== value);
-                        var admins = JSON.parse(getCookie("admins"));
+                        this.messages.unshift(message);
+                    }
 
-                        var adminID = JSON.parse(sessionStorage.getItem("adminID"));
-                        list = admins[adminID-1]['notifications'];
-                        //alert(list);
-                        //alert(value);
+                },
 
-                        for(var i = 0; i < list.length; i++)
-                        {
-                            if(i == value-1)
-                                list = list.splice(i, i);
-                        }
-                        //alert("List", + list);
+                removeMessage(value) {
+                    this.messages = this.messages.filter((d) => d.id !== value);
+                    var admins = JSON.parse(getCookie("admins"));
 
-                        admins[adminID-1]['notifications'] = list;
-                        setCookie("admins", admins);
+                    var adminID = JSON.parse(sessionStorage.getItem("adminID"));
+                    list = admins[adminID - 1]['notifications'];
+                    //alert(list);
+                    //alert(value);
+
+                    for (var i = 0; i < list.length; i++) {
+                        if (i == value - 1)
+                            list = list.splice(i, i);
+                    }
+                    //alert("List", + list);
+
+                    admins[adminID - 1]['notifications'] = list;
+                    setCookie("admins", admins);
 
 
 
-                    },
-                }));
+                },
+            }));
 
 
             //todolist
@@ -1669,56 +1667,55 @@
             let taskCookie = JSON.parse(getCookie('tasks'));
             console.log('task cookie:', taskCookie);
 
-           
+
             let tasks = taskCookie.filter(task => task.task_user === userID);
             console.log('tasks:', tasks);
 
-            
+
             Alpine.data('todolist', () => ({
-                    selectedTab: '',
-                    isShowTaskMenu: false,
-                    addTaskModal: false,
-                    viewTaskModal: false,
+                selectedTab: '',
+                isShowTaskMenu: false,
+                addTaskModal: false,
+                viewTaskModal: false,
 
-                    params: JSON.parse(JSON.stringify(defaultParams)),
-                    allTasks: [
-                        {
-                            
-                        },
-                    ],
-                    filteredTasks: [],
-                    pagedTasks: [],
-                    searchTask: '',
-                    selectedTask: defaultParams,
-                    maxid: 0,
+                params: JSON.parse(JSON.stringify(defaultParams)),
+                allTasks: [
+                    {
 
-                    pager: {
-                        currentPage: 1,
-                        totalPages: 0,
-                        pageSize: 10,
-                        startIndex: 0,
-                        endIndex: 0,
                     },
-                    quillEditor: null,
+                ],
+                filteredTasks: [],
+                pagedTasks: [],
+                searchTask: '',
+                selectedTask: defaultParams,
+                maxid: 0,
+
+                pager: {
+                    currentPage: 1,
+                    totalPages: 0,
+                    pageSize: 10,
+                    startIndex: 0,
+                    endIndex: 0,
+                },
+                quillEditor: null,
 
                 init() {
                     this.searchTasks();
                     this.initEditor();
                     console.log("esta en el init")
-                    
-                    for(var i = 0; i < tasks.length; i++){
+
+                    for (var i = 0; i < tasks.length; i++) {
                         console.log("esta en el for")
-                            //alert(tasks[i]['task_user']);
-                            if(tasks[i]['task_user'] == userID)
-                            {
-                                console.log("entro al if de add task");
-                                this.addTask(tasks[i]['taskID'], tasks[i]['task_name'], tasks[i]['due_date'],
+                        //alert(tasks[i]['task_user']);
+                        if (tasks[i]['task_user'] == userID) {
+                            console.log("entro al if de add task");
+                            this.addTask(tasks[i]['taskID'], tasks[i]['task_name'], tasks[i]['due_date'],
                                 tasks[i]['task_description'], tasks[i]['task_priority'], tasks[i]['task_status'],
                                 tasks[i]['task_user']);
-                            }
                         }
-                        
-                
+                    }
+
+
                 },
                 initEditor() {
                     this.quillEditor = new Quill(this.$refs.editor, {
@@ -1784,39 +1781,56 @@
                     let item = this.filteredTasks.find((d) => d.id === task.id);
                     item.status = item.status === 'Completed' ? '' : 'Completed';
                     let user = users.find(user => user.id == userID);
-                            if(users[userID-1])
-                            {
-                                notif = `The task titled "${tasks[task.id-1]['task_name']}" has been changed of status.`;
-                                users[this.userID-1]['notifications'].push(notif);
-                                setCookie("users", users);
-                            }
+                    if (users[userID - 1]) {
+                        notif = `The task titled "${tasks[task.id - 1]['task_name']}" has been changed of status.`;
+                        users[this.userID - 1]['notifications'].push(notif);
+                        setCookie("users", users);
+                    }
                     this.searchTasks(false);
                 },
 
                 setPending(task) {
                     let item = this.filteredTasks.find((d) => d.id === task.id);
                     item.status = item.status === 'Pending' ? '' : 'Pending';
+                    this.updateStatus(item, item.status)
+
                     let user = users.find(user => user.id == userID);
-                            if(users[userID-1])
-                            {
-                                notif = `The task titled "${tasks[task.id-1]['task_name']}" has been changed of status.`;
-                                users[this.userID-1]['notifications'].push(notif);
-                                setCookie("users", users);
-                            }
+                    if (users[userID - 1]) {
+                        notif = `The task titled "${tasks[task.id - 1]['task_name']}" has been changed of status.`;
+                        users[this.userID - 1]['notifications'].push(notif);
+                        setCookie("users", users);
+                    }
                     this.searchTasks(false);
                 },
 
                 setInProgress(task) {
                     let item = this.filteredTasks.find((d) => d.id === task.id);
                     item.status = item.status === 'In-Progress' ? 'Completed' : 'In-Progress';
+                    this.updateStatus(item, item.status)
                     let user = users.find(user => user.id == userID);
-                            if(users[userID-1])
-                            {
-                                notif = `The task titled "${tasks[task.id-1]['task_name']}" has been changed of status.`;
-                                users[this.userID-1]['notifications'].push(notif);
-                                setCookie("users", users);
-                            }
+                    if (users[userID - 1]) {
+                        notif = `The task titled "${tasks[task.id - 1]['task_name']}" has been changed of status.`;
+                        users[this.userID - 1]['notifications'].push(notif);
+                        setCookie("users", users);
+                    }
                     this.searchTasks(false);
+                },
+
+                updateStatus(task, status) {
+                    let userID = JSON.parse(sessionStorage.getItem('userID'));
+                    let taskCookie = JSON.parse(getCookie('tasks'));
+
+                    const filterByTitle = task.title
+                    const filterByDueDate = task.date
+
+                    const updatedCookies = taskCookie.map(task => {
+                        if (task.task_name === filterByTitle && task.due_date === filterByDueDate) {
+                            task.task_status = status;
+                        }
+                        return task;
+                    });
+
+                    setCookie("tasks", updatedCookies)
                 },
 
                 viewTask(item) {
@@ -1826,12 +1840,12 @@
                     });
                 },
 
-                filteredCount(type){
+                filteredCount(type) {
                     return this.allTasks && this.allTasks.filter((d) => d.status === type).length
                 },
 
-                filteredCountAll(){
-                    return this.allTasks && this.allTasks.filter((d) => d.status != 'trash').length-1;
+                filteredCountAll() {
+                    return this.allTasks && this.allTasks.filter((d) => d.status != 'trash').length - 1;
                 },
 
                 addEditTask(task) {
@@ -1849,26 +1863,26 @@
                 },
 
                 addTask(id, name, date, desc, priority, status, userID) {
-                        let maxid = 0;
-                        if (this.allTasks.length > 0) 
-                            maxid = this.allTasks.reduce((max, obj) => (obj.id > max ? obj.id : max), this.allTasks[0].id);
-                        if (isNaN(maxid) || maxid === undefined) 
-                            maxid = 0;
-                        //alert(maxid);
+                    let maxid = 0;
+                    if (this.allTasks.length > 0)
+                        maxid = this.allTasks.reduce((max, obj) => (obj.id > max ? obj.id : max), this.allTasks[0].id);
+                    if (isNaN(maxid) || maxid === undefined)
+                        maxid = 0;
+                    //alert(maxid);
 
-                        let task = {
-                            id: maxid + 1,
-                            title: name,
-                            description: desc,
-                            descriptionText: desc,
-                            date: date,
-                            priority: priority,
-                            status: status,
-                        };
+                    let task = {
+                        id: maxid + 1,
+                        title: name,
+                        description: desc,
+                        descriptionText: desc,
+                        date: date,
+                        priority: priority,
+                        status: status,
+                    };
 
-                        this.allTasks.splice(0, 0, task);
-                        this.searchTasks();
-                    },
+                    this.allTasks.splice(0, 0, task);
+                    this.searchTasks();
+                },
 
                 deleteTask(task, type) {
                     if (type === 'delete') {
