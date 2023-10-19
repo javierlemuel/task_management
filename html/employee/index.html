@@ -1781,6 +1781,8 @@
                 taskComplete(task) {
                     let item = this.filteredTasks.find((d) => d.id === task.id);
                     item.status = item.status === 'Completed' ? '' : 'Completed';
+                    this.updateStatus(item, item.status)
+
                     let user = users.find(user => user.id == userID);
                     if (users[userID - 1]) {
                         notif = `The task titled "${tasks[task.id - 1]['task_name']}" has been changed of status.`;
@@ -1807,7 +1809,7 @@
                 setInProgress(task) {
                     let item = this.filteredTasks.find((d) => d.id === task.id);
                     item.status = item.status === 'In-Progress' ? 'Completed' : 'In-Progress';
-                    this.updateStatus(item, item.status)
+                    this.updateStatus(item, item.status) // el item es el task que seleccionaste y el status se le pasa
                     let user = users.find(user => user.id == userID);
                     if (users[userID - 1]) {
                         notif = `The task titled "${tasks[task.id - 1]['task_name']}" has been changed of status.`;
@@ -1818,20 +1820,20 @@
                 },
 
                 updateStatus(task, status) {
-                    let userID = JSON.parse(sessionStorage.getItem('userID'));
-                    let taskCookie = JSON.parse(getCookie('tasks'));
+                    let userID = JSON.parse(sessionStorage.getItem('userID')); // Buscamos el userID que esta en el session storage
+                    let taskCookie = JSON.parse(getCookie('tasks')); // Buscamos todos los cookies
 
-                    const filterByTitle = task.title
-                    const filterByDueDate = task.date
+                    const filterByTitle = task.title // Filtramos por el titulo
+                    const filterByDueDate = task.date // Filtramos por el due date
 
                     const updatedCookies = taskCookie.map(task => {
                         if (task.task_name === filterByTitle && task.due_date === filterByDueDate) {
                             task.task_status = status;
                         }
-                        return task;
+                        return task; // Devuelve un Array, itera por todos los cookies y busca el filtro de title y date. Si el task hace match con el titulo y la fecha, se actualiza el status.
                     });
 
-                    setCookie("tasks", updatedCookies)
+                    setCookie("tasks", updatedCookies) // Se guarda
                 },
 
                 viewTask(item) {
