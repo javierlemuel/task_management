@@ -786,29 +786,8 @@
                                                                 </div>
 
                                                                 <!-- BUTTON FOR ADDING THE TASK -->
-                                                                <button type="button" class="btn btn-primary" @click="editadmin">
-                                                                    <!-- <svg
-                                                                        width="24"
-                                                                        height="24"
-                                                                        viewBox="0 0 24 24"
-                                                                        fill="none"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        class="h-5 w-5 ltr:mr-2 rtl:ml-2"
-                                                                    >
-                                                                        <circle cx="10" cy="6" r="4" stroke="currentColor" stroke-width="1.5" />
-                                                                        <path
-                                                                            opacity="0.5"
-                                                                            d="M18 17.5C18 19.9853 18 22 10 22C2 22 2 19.9853 2 17.5C2 15.0147 5.58172 13 10 13C14.4183 13 18 15.0147 18 17.5Z"
-                                                                            stroke="currentColor"
-                                                                            stroke-width="1.5"
-                                                                        />
-                                                                        <path
-                                                                            d="M21 10H19M19 10H17M19 10L19 8M19 10L19 12"
-                                                                            stroke="currentColor"
-                                                                            stroke-width="1.5"
-                                                                            stroke-linecap="round"
-                                                                        />
-                                                                    </svg> -->
+                                                                <button type="button" class="btn btn-primary" @click="addEditTask">
+                                                                   
                                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ltr:mr-2 rtl:ml-2">
                                                                         
                                                                         <path d="M3 5.25C3 4.00736 4.00736 3 5.25 3H18.75C19.9926 3 21 4.00736 21 5.25V12.0218C20.5368 11.7253 20.0335 11.4858 19.5 11.3135V5.25C19.5 4.83579 19.1642 4.5 18.75 4.5H5.25C4.83579 4.5 4.5 4.83579 4.5 5.25V18.75C4.5 19.1642 4.83579 19.5 5.25 19.5H11.3135C11.4858 20.0335 11.7253 20.5368 12.0218 21H5.25C4.00736 21 3 19.9926 3 18.75V5.25Z" fill="#ffffff" />
@@ -917,13 +896,13 @@
                                                                                                     class="badge rounded-full capitalize hover:top-0 hover:text-white"
                                                                                                     x-text="task.priority"
                                                                                                     :class="{
-                                                                                            'badge-outline-primary hover:bg-primary': task.priority === 'medium',
-                                                                                            'badge-outline-warning hover:bg-warning': task.priority === 'low',
-                                                                                            'badge-outline-danger hover:bg-danger': task.priority === 'high',
-                                                                                            'text-white bg-primary': task.priority === 'medium' && open,
-                                                                                            'text-white bg-warning': task.priority === 'low' && open,
-                                                                                            'text-white bg-danger': task.priority === 'high' && open,
-                                                                                        }"
+                                                                                                        'badge-outline-primary hover:bg-primary': task.priority === 'medium',
+                                                                                                        'badge-outline-warning hover:bg-warning': task.priority === 'low',
+                                                                                                        'badge-outline-danger hover:bg-danger': task.priority === 'high',
+                                                                                                        'text-white bg-primary': task.priority === 'medium' && open,
+                                                                                                        'text-white bg-warning': task.priority === 'low' && open,
+                                                                                                        'text-white bg-danger': task.priority === 'high' && open,
+                                                                                                    }"
                                                                                                     @click="toggle"
                                                                                                 ></button>
                                                                                                 <ul
@@ -1606,9 +1585,6 @@
                             this.params.status = task.status; 
                             this.params.priority = task.priority;
                         }
-
-
-
                         this.addTaskModal = true;
                     },
 
