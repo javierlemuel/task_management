@@ -816,7 +816,7 @@
                                                 <div class="ltr:ml-3 rtl:mr-3">All tasks</div>
                                             </div>
                                             <div class="whitespace-nowrap rounded-md bg-primary-light py-0.5 px-2 font-semibold dark:bg-[#060818]"
-                                                x-text="allTasks && allTasks.filter((d) => d.status != 'trash').length">
+                                                x-text="allTasks && allTasks.filter((d) => d.status != 'trash').length-1">
                                             </div>
                                         </button>
 
@@ -1735,7 +1735,7 @@
                     let allTasks = [];
                     console.log("tasks: ", tasks);
                     allTasks = tasks.filter(task => adminUserList.includes(task.task_user));
-                    
+
                     console.log("allTasks: ", allTasks);
                     allTasks.forEach(task => {
                         this.addTask(task.taskID, task.task_name, task.due_date,
