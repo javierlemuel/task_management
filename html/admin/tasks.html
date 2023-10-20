@@ -1689,8 +1689,13 @@
                 },
             }));
 
-            var cookie = getCookie("tasks");
-            tasks = JSON.parse(cookie);
+            let tasks = JSON.parse(getCookie("tasks"));
+            let admins = JSON.parse(getCookie("admins"));
+            var adminID = JSON.parse(sessionStorage.getItem("adminID"));
+            let users = JSON.parse(getCookie("users"));
+            
+            
+
             //todolist
             Alpine.data('todolist', () => ({
                 selectedTab: '',
@@ -1726,16 +1731,19 @@
                     const paramName = 'id';
                     this.user_id = queryParams.get(paramName);
                     //alert(user_id);
-
-                    for(var i = 0; i < tasks.length; i++){
-                        //alert(tasks[i]['task_user']);
-                       // if(tasks[i]['task_user'] == this.user_id)
-                        //{
-                            this.addTask(tasks[i]['taskID'], tasks[i]['task_name'], tasks[i]['due_date'],
-                            tasks[i]['task_description'], tasks[i]['task_priority'], tasks[i]['task_status'],
-                            tasks[i]['task_user']);
-                        //}
-                    }
+                    let adminUserList = admins[adminID-1].userlist;
+                    let allTasks = [];
+                    console.log("tasks: ", tasks);
+                    allTasks = tasks.filter(task => adminUserList.includes(task.task_user));
+                    
+                    console.log("allTasks: ", allTasks);
+                    allTasks.forEach(task => {
+                        this.addTask(task.taskID, task.task_name, task.due_date,
+                        task.task_description, task.task_priority, task.task_status,
+                        task.task_user);
+                    });
+                    
+                    
                 },
                 initEditor() {
                     this.quillEditor = new Quill(this.$refs.editor, {
