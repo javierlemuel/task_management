@@ -367,6 +367,26 @@
                                         </div>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="reports.html" class="group">
+                                        <div class="flex items-center">
+                                            <svg
+                                            class="shrink-0 group-hover:!text-primary"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <circle opacity="0.5" cx="15" cy="6" r="3" fill="currentColor" />
+                                            <ellipse opacity="0.5" cx="16" cy="17" rx="5" ry="3" fill="currentColor" />
+                                            <circle cx="9.00098" cy="6" r="4" fill="currentColor" />
+                                            <ellipse cx="9.00098" cy="17.001" rx="7" ry="4" fill="currentColor" />
+                                        </svg>
+                                            <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Reports</span>
+                                        </div>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                             
@@ -1094,13 +1114,14 @@
                                                                         <button type="button"
                                                                             class="badge rounded-full capitalize hover:top-0 hover:text-white"
                                                                             x-text="task.priority" :class="{
-                                                                    'badge-outline-primary hover:bg-primary': task.priority === 'medium',
-                                                                    'badge-outline-warning hover:bg-warning': task.priority === 'low',
-                                                                    'badge-outline-danger hover:bg-danger': task.priority === 'high',
-                                                                    'text-white bg-primary': task.priority === 'medium' && open,
-                                                                    'text-white bg-warning': task.priority === 'low' && open,
-                                                                    'text-white bg-danger': task.priority === 'high' && open,
-                                                                }" @click="toggle"></button>
+                                                                                    'badge-outline-primary hover:bg-primary': task.priority === 'medium',
+                                                                                    'badge-outline-warning hover:bg-warning': task.priority === 'low',
+                                                                                    'badge-outline-danger hover:bg-danger': task.priority === 'high',
+                                                                                    'text-white bg-primary': task.priority === 'medium' && open,
+                                                                                    'text-white bg-warning': task.priority === 'low' && open,
+                                                                                    'text-white bg-danger': task.priority === 'high' && open,
+                                                                         }" @click="toggle">
+                                                                        </button>
                                                                         <!-- <ul x-cloak x-show="open" x-transition
                                                                             x-transition.duration.300ms
                                                                             class="text-medium text-sm ltr:right-0 rtl:left-0">
@@ -1128,6 +1149,7 @@
                                                                         </ul> -->
                                                                     </div>
                                                                 </template>
+                                                                
                                                                 <template x-if="task.tag">
                                                                     <!-- <div x-data="dropdown" @click.outside="open = false"
                                                                         class="dropdown">
@@ -1217,117 +1239,92 @@
                                                                         </svg>
                                                                     </button>
                                                                     <template x-if="selectedTab !== 'trash'">
-                                                                        <ul x-cloak x-show="open" x-transition
+                                                                        <ul
+                                                                            x-cloak
+                                                                            x-show="open"
+                                                                            x-transition
                                                                             x-transition.duration.300ms
-                                                                            class="whitespace-nowrap ltr:right-0 rtl:left-0">
+                                                                            class="whitespace-nowrap ltr:right-0 rtl:left-0"
+                                                                        >
                                                                             <li>
-
-                                                                            </li>
-                                                                            <li>
-                                                                                <a href="javascript:;"
-                                                                                    @click="toggle,  deleteTask(task, 'delete' )">
-                                                                                    <svg width="24" height="24"
-                                                                                        viewBox="0 0 24 24" fill="none"
+                                                                                <a href="javascript:;" @click="toggle, addEditTask(task)">
+                                                                                    <svg
+                                                                                        width="24"
+                                                                                        height="24"
+                                                                                        viewBox="0 0 24 24"
+                                                                                        fill="none"
                                                                                         xmlns="http://www.w3.org/2000/svg"
-                                                                                        class="h-5 w-5 shrink-0 ltr:mr-2 rtl:ml-2">
-                                                                                        <path d="M20.5001 6H3.5"
+                                                                                        class="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2"
+                                                                                    >
+                                                                                        <path
+                                                                                            opacity="0.5"
+                                                                                            d="M4 22H20"
                                                                                             stroke="currentColor"
                                                                                             stroke-width="1.5"
-                                                                                            stroke-linecap="round">
-                                                                                        </path>
+                                                                                            stroke-linecap="round"
+                                                                                        />
+                                                                                        <path
+                                                                                            d="M14.6296 2.92142L13.8881 3.66293L7.07106 10.4799C6.60933 10.9416 6.37846 11.1725 6.17992 11.4271C5.94571 11.7273 5.74491 12.0522 5.58107 12.396C5.44219 12.6874 5.33894 12.9972 5.13245 13.6167L4.25745 16.2417L4.04356 16.8833C3.94194 17.1882 4.02128 17.5243 4.2485 17.7515C4.47573 17.9787 4.81182 18.0581 5.11667 17.9564L5.75834 17.7426L8.38334 16.8675L8.3834 16.8675C9.00284 16.6611 9.31256 16.5578 9.60398 16.4189C9.94775 16.2551 10.2727 16.0543 10.5729 15.8201C10.8275 15.6215 11.0583 15.3907 11.5201 14.929L11.5201 14.9289L18.3371 8.11195L19.0786 7.37044C20.3071 6.14188 20.3071 4.14999 19.0786 2.92142C17.85 1.69286 15.8581 1.69286 14.6296 2.92142Z"
+                                                                                            stroke="currentColor"
+                                                                                            stroke-width="1.5"
+                                                                                        />
+                                                                                        <path
+                                                                                            opacity="0.5"
+                                                                                            d="M13.8879 3.66406C13.8879 3.66406 13.9806 5.23976 15.3709 6.63008C16.7613 8.0204 18.337 8.11308 18.337 8.11308M5.75821 17.7437L4.25732 16.2428"
+                                                                                            stroke="currentColor"
+                                                                                            stroke-width="1.5"
+                                                                                        />
+                                                                                    </svg>
+                                                                                    Edit
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="javascript:;" @click="toggle,  deleteTask(task, 'delete' )">
+                                                                                    <svg
+                                                                                        width="24"
+                                                                                        height="24"
+                                                                                        viewBox="0 0 24 24"
+                                                                                        fill="none"
+                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                        class="h-5 w-5 shrink-0 ltr:mr-2 rtl:ml-2"
+                                                                                    >
+                                                                                        <path
+                                                                                            d="M20.5001 6H3.5"
+                                                                                            stroke="currentColor"
+                                                                                            stroke-width="1.5"
+                                                                                            stroke-linecap="round"
+                                                                                        ></path>
                                                                                         <path
                                                                                             d="M18.8334 8.5L18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5"
                                                                                             stroke="currentColor"
                                                                                             stroke-width="1.5"
-                                                                                            stroke-linecap="round">
-                                                                                        </path>
-                                                                                        <path opacity="0.5"
+                                                                                            stroke-linecap="round"
+                                                                                        ></path>
+                                                                                        <path
+                                                                                            opacity="0.5"
                                                                                             d="M9.5 11L10 16"
                                                                                             stroke="currentColor"
                                                                                             stroke-width="1.5"
-                                                                                            stroke-linecap="round">
-                                                                                        </path>
-                                                                                        <path opacity="0.5"
+                                                                                            stroke-linecap="round"
+                                                                                        ></path>
+                                                                                        <path
+                                                                                            opacity="0.5"
                                                                                             d="M14.5 11L14 16"
                                                                                             stroke="currentColor"
                                                                                             stroke-width="1.5"
-                                                                                            stroke-linecap="round">
-                                                                                        </path>
-                                                                                        <path opacity="0.5"
+                                                                                            stroke-linecap="round"
+                                                                                        ></path>
+                                                                                        <path
+                                                                                            opacity="0.5"
                                                                                             d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6"
                                                                                             stroke="currentColor"
-                                                                                            stroke-width="1.5"></path>
+                                                                                            stroke-width="1.5"
+                                                                                        ></path>
                                                                                     </svg>
-                                                                                    Delete</a>
+                                                                                Remove</a
+                                                                                >
                                                                             </li>
-                                                                            <li>
-                                                                                <a href="javascript:;"
-                                                                                    @click="toggle, setPending(task)">
-
-                                                                                    <svg width="20px" height="20px"
-                                                                                        viewBox="0 0 20 20" id="icon"
-                                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                                        class="h-5 w-5 shrink-0 ltr:mr-2 rtl:ml-2">
-                                                                                        <defs>
-                                                                                            <style>
-                                                                                                .cls-1 {
-                                                                                                    fill: none;
-                                                                                                }
-                                                                                            </style>
-                                                                                        </defs>
-                                                                                        <path cx="9" cy="16" r="2"
-                                                                                            d="M6.875 10a1.25 1.25 0 0 1 -1.25 1.25A1.25 1.25 0 0 1 4.375 10a1.25 1.25 0 0 1 2.5 0z" />
-                                                                                        <path cx="23" cy="16" r="2"
-                                                                                            d="M15.625 10a1.25 1.25 0 0 1 -1.25 1.25 1.25 1.25 0 0 1 -1.25 -1.25 1.25 1.25 0 0 1 2.5 0z" />
-                                                                                        <path cx="16" cy="16" r="2"
-                                                                                            d="M11.25 10A1.25 1.25 0 0 1 10 11.25 1.25 1.25 0 0 1 8.75 10a1.25 1.25 0 0 1 2.5 0z" />
-                                                                                        <path
-                                                                                            d="M10 18.75A8.75 8.75 0 1 1 18.75 10 8.76 8.76 0 0 1 10 18.75ZM10 2.5a7.5 7.5 0 1 0 7.5 7.5A7.509 7.509 0 0 0 10 2.5Z" />
-                                                                                        <path
-                                                                                            id="_Transparent_Rectangle_"
-                                                                                            data-name="&amp;amp;lt;Transparent Rectangle&amp;amp;gt;"
-                                                                                            class="cls-1" width="32"
-                                                                                            height="32"
-                                                                                            d="M0 0h20v20H0V0z" />
-                                                                                    </svg>
-
-                                                                                    <span
-                                                                                        x-text="task.status === 'pending' ? 'Not pending' : 'Pending'"></span>
-                                                                                </a>
-                                                                            </li>
-                                                                            <li>
-                                                                                <a href="javascript:;"
-                                                                                    @click="toggle, setInProgress(task)">
-                                                                                    <svg fill="#000000"
-                                                                                        class="h-5 w-5 shrink-0 ltr:mr-2 rtl:ml-2"
-                                                                                        height="24px" width="24px"
-                                                                                        version="1.1" id="XMLID_103_"
-                                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                                        viewBox="0 0 24 24"
-                                                                                        xml:space="preserve">
-                                                                                        <g id="in-progress">
-                                                                                            <g>
-                                                                                                <path
-                                                                                                    d="M23,24H1v-2h2.4c-1.6-5,1.6-7,3.7-8.4C8,13,8.9,12.5,8.9,12S8,10.9,7.1,10.4C5,9,1.8,7.1,3.4,2H1V0h22v2h-2.4
-                                                                                                    c1.6,5-1.6,7-3.7,8.4c-1,0.5-1.9,1.1-1.9,1.6s0.9,1.1,1.8,1.6c2.1,1.4,5.3,3.4,3.7,8.4H23V24z M5.6,22h12.8c1.6-4-0.5-5.3-2.6-6.7
-                                                                                                    C14.4,14.5,13,13.6,13,12c0-1.6,1.4-2.5,2.8-3.3C17.9,7.3,20,6,18.4,2H5.6C4,6,6.1,7.3,8.2,8.7C9.6,9.5,11,10.4,11,12
-                                                                                                    c0,1.6-1.4,2.5-2.8,3.3C6.1,16.7,4,18,5.6,22z" />
-                                                                                            </g>
-                                                                                            <g>
-                                                                                                <path
-                                                                                                    d="M16.8,23H7c-0.3-1.5,0.2-2.4,2.3-4.3c0.8-0.7,1.8-1.5,2.7-2.8c1,1.2,2,2.1,2.7,2.8C16.8,20.7,17.3,21,16.8,23z" />
-                                                                                            </g>
-                                                                                            <g>
-                                                                                                <path
-                                                                                                    d="M9.4,6c-0.7,1.3-0.7,1.3,0.9,2.1c0.5,0.2,1.1,0.5,1.6,0.9c0.5-0.4,1.2-0.7,1.6-0.9c1.7-0.8,1.7-0.8,1-2.1" />
-                                                                                            </g>
-                                                                                        </g>
-                                                                                    </svg>
-                                                                                    <span
-                                                                                        x-text="task.status === 'in-progress' ? 'Complete Task' : 'In-Progress'"></span>
-                                                                                </a>
-                                                                            </li>
+                                                                            
                                                                         </ul>
                                                                     </template>
                                                                     <template x-if="selectedTab === 'trash'">
