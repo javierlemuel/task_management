@@ -1709,7 +1709,7 @@
                             console.log(task);
                             this.addTask(task.id, task.name, task.date, task.descriptionText, task.priority, task.status, this.user_id);
 
-                            newTask = {"taskID": task.id, "task_user": this.user_id, "task_name": task.title,
+                            newTask = {"taskID": task.id, "task_user": parseInt(this.user_id), "task_name": task.title,
                                         "task_description": task.descriptionText, "due_date": task.date,
                                         "task_status": task.status, "task_priority": task.priority};
                             tasks.push(newTask);
@@ -1718,8 +1718,8 @@
                             //setCookie("tasks", )
                            
 
-                            //this.allTasks.splice(0, 0, task);
-                            //this.allTasks = [...this.allTasks];
+                            this.allTasks.splice(0, 0, task);
+                            this.allTasks = [...this.allTasks];
                             let user = users.find(user => user.id == this.user_id);
                             if(users[this.user_id-1])
                             {
@@ -1727,7 +1727,7 @@
                                 users[this.user_id-1]['notifications'].push(notif);
                                 setCookie("users", users);
                             }
-                            //this.searchTasks();
+                            this.searchTasks();
                         }
 
                         this.showMessage('Task has been saved successfully.');
