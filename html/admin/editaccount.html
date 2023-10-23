@@ -1175,16 +1175,16 @@
                                                                 <form @submit.prevent="saveTask">
                                                                     <div class="mb-5">
                                                                         <label for="title">Title</label>
-                                                                        <input id="title" type="text" placeholder="Enter Task Title" class="form-input" x-model="params.title" />
+                                                                        <input id="title" type="text" placeholder="Enter Task Title" class="form-input" x-model="params.title" required />
                                                                     </div>
                                                                     <div class="mb-5">
                                                                         <label for="duedate">Due Date</label>
-                                                                        <input id="duedate" class="form-date" type="date" x-model="params.date">
+                                                                        <input id="duedate" class="form-date" type="date" x-model="params.date" required>
                                                                     </div>
                                                                     <div class="mb-5 flex justify-between gap-4">
                                                                         <div class="flex-1">
                                                                             <label for="status">Status</label>
-                                                                            <select id="status" class="form-select" x-model="params.status">
+                                                                            <select id="status" class="form-select" x-model="params.status" required>
                                                                                 <option value="Pending">Pending</option>
                                                                                 <option value="In Progress">In Progress</option>
                                                                                 <option value="Completed">Completed</option>
@@ -1192,7 +1192,7 @@
                                                                         </div>
                                                                         <div class="flex-1">
                                                                             <label for="priority">Priority</label>
-                                                                            <select id="priority" class="form-select" x-model="params.priority">
+                                                                            <select id="priority" class="form-select" x-model="params.priority" required>
                                                                                 <option value="low" selected>Low</option>
                                                                                 <option value="medium">Medium</option>
                                                                                 <option value="high">High</option>
