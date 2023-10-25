@@ -1301,8 +1301,7 @@
                                                                         type="radio"
                                                                         class="form-radio text-info"
                                                                         name="badge"
-                                                                        value="info
-                                                                        "
+                                                                        value="info"
                                                                         x-model="params.type"
                                                                     />
                                                                     <span class="ltr:pl-2 rtl:pr-2">Travel</span>
@@ -1508,7 +1507,6 @@
                                 description:
                                     '',
                             }
-                           
                         ];
                     
                         
@@ -1545,13 +1543,6 @@
                             }
                         }
 
-
-
-
-
-
-
-
                         this.calendar.render();
 
                         this.$watch('$store.app.sidebar', () => {
@@ -1560,9 +1551,7 @@
                             }, 300);
                         });
                     },
-
-    
-
+                    
                     getMonth(dt, add = 0) {
                         let month = dt.getMonth() + 1 + add;
                         return dt.getMonth() < 10 ? '0' + month : month;
