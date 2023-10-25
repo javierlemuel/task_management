@@ -783,7 +783,7 @@
 
                 <!-- start footer section -->
                 <div class="mt-auto p-6 pt-0 text-center dark:text-white-dark ltr:sm:text-left rtl:sm:text-right">
-                    © <span id="footer-year">2022</span>. TechSpire All rights reserved.
+                    © <span id="footer-year">2023</span>. TechSpire All rights reserved.
                 </div>
                 <!-- end footer section -->
             </div>
@@ -1063,17 +1063,19 @@
                     },
                 }));
 
-                var tasks = JSON.parse(getCookie("tasks"));
+                var taskCookie = JSON.parse(getCookie("tasks"));
                 let userID = JSON.parse(sessionStorage.getItem("userID"));
 
+                let tasks = taskCookie.filter(task => task.task_user === userID);
                 const categoryCount = {
                     "Pending": 0,
-                    "In Progress": 0,
+                    "In-Progress": 0,
                     "Completed": 0
                 };
 
                 tasks.forEach(task => {
                     const category = task.task_status;
+                    console.log(task.task_status)
 
                     if (categoryCount[category]) {
                         categoryCount[category]++;
@@ -1084,7 +1086,7 @@
                 });
                  
                 for(cat in categoryCount){
-                    console.log("awio");
+                    console.log("cat");
                     if (cat === "undefined" || cat === "null"){
                         cat = 0;
                         console.log("category count: ", cat);
@@ -1292,7 +1294,7 @@
                     // sales by category
                     get salesByCategoryOptions() {
                         return {
-                            series: [categoryCount["Pending"], categoryCount["In Progress"], categoryCount["Completed"]],
+                            series: [categoryCount["Pending"], categoryCount["In-Progress"], categoryCount["Completed"]],
                             chart: {
                                 type: 'donut',
                                 height: 460,
@@ -1356,7 +1358,7 @@
                                 },
                             },
                             //
-                            labels: ['Pending', 'In Progress', 'Completed'],
+                            labels: ['Pending', 'In-Progress', 'Completed'],
                             states: {
                                 hover: {
                                     filter: {

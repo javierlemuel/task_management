@@ -1051,7 +1051,7 @@
 
                 const categoryCount = {
                     "Pending": 0,
-                    "In Progress": 0,
+                    "In-Progress": 0,
                     "Completed": 0
                 };
                 tasks.forEach(task => {
@@ -1274,7 +1274,7 @@
                     // sales by category
                     get salesByCategoryOptions() {
                         return {
-                            series: [categoryCount["Pending"], categoryCount["In Progress"], categoryCount["Completed"]],
+                            series: [categoryCount["Pending"], categoryCount["In-Progress"], categoryCount["Completed"]],
                             chart: {
                                 type: 'donut',
                                 height: 460,
@@ -1338,7 +1338,7 @@
                                 },
                             },
                             //
-                            labels: ['Pending', 'In Progress', 'Completed'],
+                            labels: ['Pending', 'In-Progress', 'Completed'],
                             states: {
                                 hover: {
                                     filter: {
