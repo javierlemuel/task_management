@@ -1301,7 +1301,8 @@
                                                                         type="radio"
                                                                         class="form-radio text-info"
                                                                         name="badge"
-                                                                        value="info"
+                                                                        value="info
+                                                                        "
                                                                         x-model="params.type"
                                                                     />
                                                                     <span class="ltr:pl-2 rtl:pr-2">Travel</span>
@@ -1470,6 +1471,7 @@
                 
                 //calendar
                 Alpine.data('calendar', () => ({
+                    isShowTaskMenu: false,
                     defaultParams: {
                         id: null,
                         title: '',
@@ -1499,109 +1501,14 @@
                         this.events = [
                             {
                                 id: 1,
-                                title: 'All Day Event',
+                                title: '',
                                 start: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-01T14:30:00',
                                 end: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-02T14:30:00',
-                                className: 'danger',
+                                className: '',
                                 description:
-                                    'Aenean fermentum quam vel sapien rutrum cursus. Vestibulum imperdiet finibus odio, nec tincidunt felis facilisis eu.',
-                            },
-                            {
-                                id: 2,
-                                title: 'Site Visit',
-                                start: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-07T19:30:00',
-                                end: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-08T14:30:00',
-                                className: 'primary',
-                                description: 'Etiam a odio eget enim aliquet laoreet. Vivamus auctor nunc ultrices varius lobortis.',
-                            },
-                            {
-                                id: 3,
-                                title: 'Product Lunching Event',
-                                start: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-17T14:30:00',
-                                end: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-18T14:30:00',
-                                className: 'info',
-                                description:
-                                    'Proin et consectetur nibh. Mauris et mollis purus. Ut nec tincidunt lacus. Nam at rutrum justo, vitae egestas dolor.',
-                            },
-                            {
-                                id: 4,
-                                title: 'Meeting',
-                                start: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-12T10:30:00',
-                                end: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-13T10:30:00',
-                                className: 'danger',
-                                description: 'Mauris ut mauris aliquam, fringilla sapien et, dignissim nisl. Pellentesque ornare velit non mollis fringilla.',
-                            },
-                            {
-                                id: 5,
-                                title: 'Lunch',
-                                start: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-12T15:00:00',
-                                end: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-13T15:00:00',
-                                className: 'info',
-                                description: 'Integer fermentum bibendum elit in egestas. Interdum et malesuada fames ac ante ipsum primis in faucibus.',
-                            },
-                            {
-                                id: 6,
-                                title: 'Conference',
-                                start: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-12T21:30:00',
-                                end: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-13T21:30:00',
-                                className: 'success',
-                                description:
-                                    'Curabitur facilisis vel elit sed dapibus. Nunc sagittis ex nec ante facilisis, sed sodales purus rhoncus. Donec est sapien, porttitor et feugiat sed, eleifend quis sapien. Sed sit amet maximus dolor.',
-                            },
-                            {
-                                id: 7,
-                                title: 'Happy Hour',
-                                start: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-12T05:30:00',
-                                end: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-13T05:30:00',
-                                className: 'info',
-                                description:
-                                    ' odio lectus, porttitor molestie scelerisque blandit, hendrerit sed ex. Aenean malesuada iaculis erat, vitae blandit nisl accumsan ut.',
-                            },
-                            {
-                                id: 8,
-                                title: 'Dinner',
-                                start: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-12T20:00:00',
-                                end: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-13T20:00:00',
-                                className: 'danger',
-                                description:
-                                    'Sed purus urna, aliquam et pharetra ut, efficitur id mi. Pellentesque ut convallis velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                            },
-                            {
-                                id: 9,
-                                title: 'Birthday Party',
-                                start: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-27T20:00:00',
-                                end: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-28T20:00:00',
-                                className: 'success',
-                                description:
-                                    'Sed purus urna, aliquam et pharetra ut, efficitur id mi. Pellentesque ut convallis velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                            },
-                            {
-                                id: 10,
-                                title: 'New Talent Event',
-                                start: this.now.getFullYear() + '-' + this.getMonth(this.now, 1) + '-24T08:12:14',
-                                end: this.now.getFullYear() + '-' + this.getMonth(this.now, 1) + '-27T22:20:20',
-                                className: 'danger',
-                                description:
-                                    'Sed purus urna, aliquam et pharetra ut, efficitur id mi. Pellentesque ut convallis velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                            },
-                            {
-                                id: 11,
-                                title: 'Other new',
-                                start: this.now.getFullYear() + '-' + this.getMonth(this.now, -1) + '-13T08:12:14',
-                                end: this.now.getFullYear() + '-' + this.getMonth(this.now, -1) + '-16T22:20:20',
-                                className: 'primary',
-                                description:
-                                    'Pellentesque ut convallis velit. Sed purus urna, aliquam et pharetra ut, efficitur id mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                            },
-                            {
-                                id: 13,
-                                title: 'Upcoming Event',
-                                start: this.now.getFullYear() + '-' + this.getMonth(this.now, 1) + '-15T08:12:14',
-                                end: this.now.getFullYear() + '-' + this.getMonth(this.now, 1) + '-18T22:20:20',
-                                className: 'primary',
-                                description:
-                                    'Pellentesque ut convallis velit. Sed purus urna, aliquam et pharetra ut, efficitur id mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                            },
+                                    '',
+                            }
+                           
                         ];
                     
                         
@@ -1617,14 +1524,34 @@
                             dayMaxEvents: true,
                             selectable: true,
                             droppable: true,
-                            eventClick: (event) => {
-                                this.editEvent(event);
-                            },
-                            select: (event) => {
-                                this.editDate(event);
-                            },
+                            // eventClick: (event) => {
+                            //     this.editEvent(event);
+                            //     console.log("I clicked1");
+                            // },
+                            // select: (event) => {
+                            //     this.addEditTask(event);
+                            //     console.log("I clicked2");
+                            // },
                             events: this.events,
                         });
+
+                        for (var i = 0; i < tasks.length; i++) {
+                            console.log("DENTRO DEL FOR")
+                            //alert(tasks[i]['task_user']);
+                            if (tasks[i]['task_user'] == userID) {
+                                console.log("entro al if de add task");
+                                this.addEvent(tasks[i]['taskID'], tasks[i]['task_name'], tasks[i]['due_date'],
+                                    tasks[i]['task_description'],  tasks[i]['task_status']);
+                            }
+                        }
+
+
+
+
+
+
+
+
                         this.calendar.render();
 
                         this.$watch('$store.app.sidebar', () => {
@@ -1634,32 +1561,34 @@
                         });
                     },
 
+    
+
                     getMonth(dt, add = 0) {
                         let month = dt.getMonth() + 1 + add;
                         return dt.getMonth() < 10 ? '0' + month : month;
                     },
 
-                    editEvent(data) {
-                        this.params = JSON.parse(JSON.stringify(this.defaultParams));
-                        if (data) {
-                            let obj = JSON.parse(JSON.stringify(data.event));
-                            this.params = {
-                                id: obj.id ? obj.id : null,
-                                title: obj.title ? obj.title : null,
-                                start: this.dateFormat(obj.start),
-                                end: this.dateFormat(obj.end),
-                                type: obj.classNames ? obj.classNames[0] : 'primary',
-                                description: obj.extendedProps ? obj.extendedProps.description : '',
-                            };
-                            this.minStartDate = new Date();
-                            this.minEndDate = this.dateFormat(obj.start);
-                        } else {
-                            this.minStartDate = new Date();
-                            this.minEndDate = new Date();
-                        }
+                    // editEvent(data) {
+                    //     this.params = JSON.parse(JSON.stringify(this.defaultParams));
+                    //     if (data) {
+                    //         let obj = JSON.parse(JSON.stringify(data.event));
+                    //         this.params = {
+                    //             id: obj.id ? obj.id : null,
+                    //             title: obj.title ? obj.title : null,
+                    //             start: this.dateFormat(obj.start),
+                    //             end: this.dateFormat(obj.end),
+                    //             type: obj.classNames ? obj.classNames[0] : 'primary',
+                    //             description: obj.extendedProps ? obj.extendedProps.description : '',
+                    //         };
+                    //         this.minStartDate = new Date();
+                    //         this.minEndDate = this.dateFormat(obj.start);
+                    //     } else {
+                    //         this.minStartDate = new Date();
+                    //         this.minEndDate = new Date();
+                    //     }
 
-                        this.isAddEventModal = true;
-                    },
+                    //     this.isAddEventModal = true;
+                    // },
 
                     editDate(data) {
                         let obj = {
@@ -1681,6 +1610,31 @@
                         return dt;
                     },
 
+                    addEvent(id, name, date, desc, status){
+                            let maxEventId = 0;
+                            if (this.events) {
+                                maxEventId = this.events.reduce((max, character) => (character.id > max ? character.id : max), this.events[0].id);
+                            }
+
+                          
+                            let event = {
+                                id: maxEventId + 1,
+                                title: name,
+                                description: desc,
+                                start: date,
+                                end: date,
+                                className: this.params.type
+                            };
+                            console.log(event)
+                            this.events.push(event);
+
+                        
+                        this.calendar.getEventSources()[0].refetch(); //refresh Calendar
+                        // this.showMessage('Event has been saved successfully.');
+                        this.isAddEventModal = false;
+                    },
+
+                
                     saveEvent() {
                         if (!this.params.title) {
                             return true;

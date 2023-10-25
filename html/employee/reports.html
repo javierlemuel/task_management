@@ -813,7 +813,7 @@
                         this.addMessages();
                     },
 
-                    messages: [
+                messages: [
                 ],
 
                 addMessages() {
@@ -1071,9 +1071,10 @@
                     "In Progress": 0,
                     "Completed": 0
                 };
+
                 tasks.forEach(task => {
                     const category = task.task_status;
-                    //console.log("categories: ", category);
+
                     if (categoryCount[category]) {
                         categoryCount[category]++;
                         //console.log("category count: ", categoryCount[category]);
