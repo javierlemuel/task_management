@@ -726,8 +726,8 @@
                                         <button
                                             type="button"
                                             class="flex h-10 w-full items-center justify-between rounded-md p-2 font-medium hover:bg-white-dark/10 hover:text-primary dark:hover:bg-[#181F32] dark:hover:text-primary"
-                                            :class="{ 'bg-gray-100 dark:text-primary text-primary dark:bg-[#181F32]': selectedTab === 'In Progress' }"
-                                            @click="tabChanged('In Progress')"
+                                            :class="{ 'bg-gray-100 dark:text-primary text-primary dark:bg-[#181F32]': selectedTab === 'In-Progress' }"
+                                            @click="tabChanged('In-Progress')"
                                         >
                                             <div class="flex items-center">
                                                 <svg
@@ -744,11 +744,11 @@
                                                         stroke-width="1.5"
                                                     />
                                                 </svg>
-                                                <div class="ltr:ml-3 rtl:mr-3">In Progress</div>
+                                                <div class="ltr:ml-3 rtl:mr-3">In-Progress</div>
                                             </div>
                                             <div
                                                 class="whitespace-nowrap rounded-md bg-primary-light py-0.5 px-2 font-semibold dark:bg-[#060818]"
-                                                x-text="filteredCount('In Progress')"
+                                                x-text="filteredCount('In-Progress')"
                                             ></div>
                                         </button>
                                         <button
@@ -1292,7 +1292,7 @@
                                                     <label for="status">Status</label>
                                                     <select id="status" class="form-select" x-model="params.status">
                                                         <option value="Pending">Pending</option>
-                                                        <option value="In Progress">In Progress</option>
+                                                        <option value="In-Progress">In-Progress</option>
                                                         <option value="Completed">Completed</option>
                                                     </select>
                                                 </div>
@@ -1585,7 +1585,7 @@
                         this.pager.currentPage = 1;
                     }
                     let res;
-                    if (this.selectedTab === 'Pending' || this.selectedTab === 'In Progress' || this.selectedTab === 'Completed') {
+                    if (this.selectedTab === 'Pending' || this.selectedTab === 'In-Progress' || this.selectedTab === 'Completed') {
                         res = this.allTasks.filter((d) => d.status === this.selectedTab);
                     } else {
                         res = this.allTasks.filter((d) => d.status != 'trash');
