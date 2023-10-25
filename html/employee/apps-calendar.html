@@ -1161,7 +1161,11 @@
                                     <div class="mb-4 sm:mb-0">
                                         <div class="text-center text-lg font-semibold ltr:sm:text-left rtl:sm:text-right">Calendar</div>
                                         <div class="mt-2 flex flex-wrap items-center justify-center sm:justify-start">
-                                            <div class="flex items-center ltr:mr-4 rtl:ml-4">
+                                            
+                                            
+                                            
+                                            <!--  THIS WILL BE USED, IT JUST DOENST WORK :( -->
+                                            <!-- <div class="flex items-center ltr:mr-4 rtl:ml-4">
                                                 <div class="h-2.5 w-2.5 rounded-sm bg-primary ltr:mr-2 rtl:ml-2"></div>
                                                 <div>Pending</div>
                                             </div>
@@ -1172,14 +1176,14 @@
                                             <div class="flex items-center ltr:mr-4 rtl:ml-4">
                                                 <div class="h-2.5 w-2.5 rounded-sm bg-success ltr:mr-2 rtl:ml-2"></div>
                                                 <div>Completed</div>
-                                            </div>
+                                            </div> -->
                                             <!-- <div class="flex items-center">
                                                 <div class="h-2.5 w-2.5 rounded-sm bg-danger ltr:mr-2 rtl:ml-2"></div>
                                                 <div>Important</div>
                                             </div> -->
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary" @click="editEvent()">
+                                    <!-- <button type="button" class="btn btn-primary" @click="editEvent()">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="24px"
@@ -1196,7 +1200,7 @@
                                             <line x1="5" y1="12" x2="19" y2="12"></line>
                                         </svg>
                                         Create Event
-                                    </button>
+                                    </button> -->
                                     <div class="fixed inset-0 z-[999] hidden overflow-y-auto bg-[black]/60" :class="isAddEventModal && '!block'">
                                         <div class="flex min-h-screen items-center justify-center px-4" @click.self="isAddEventModal = false">
                                             <div
