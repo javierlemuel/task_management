@@ -872,6 +872,7 @@
                             };
                             this.contactList.splice(0, 0, user);
                             this.searchContacts();
+                            
                     },
 
                     saveUser() {
@@ -897,6 +898,7 @@
                                 : 0;
 
                             const user1 = new EMPLOYEE(users.length + 1, this.params.email, this.params.password);
+                            console.log("user 1: ", user1);
                             users.push(user1);
 
                             let user = {
@@ -914,7 +916,8 @@
                             admin = admins.find(admin => admin.id == adminID);
                             if(admin)
                             {
-                                admins.userlist.push(user1.id);
+                                console.log("Aqui: ", admin);
+                                admins[adminID-1].userlist.push(user1.id);
                                 setCookie("admins", admins);
                             }
     

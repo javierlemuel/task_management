@@ -1557,9 +1557,12 @@
                     const paramName = 'id';
                     this.user_id = queryParams.get(paramName);
                     //alert(user_id);
+                    //get users assigend to the admin
                     let adminUserList = admins[adminID-1].userlist;
                     let allTasks = [];
                     console.log("tasks: ", tasks);
+                    
+                    //get all tasks from those users
                     allTasks = tasks.filter(task => adminUserList.includes(task.task_user));
 
                     console.log("allTasks: ", allTasks);
