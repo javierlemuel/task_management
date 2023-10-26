@@ -156,7 +156,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="admins.html" class="group">
+                                    <a href="admin_accounts.html" class="group">
                                         <div class="flex items-center">
                                             <svg
                                             class="shrink-0 group-hover:!text-primary"
@@ -172,26 +172,6 @@
                                             <ellipse cx="9.00098" cy="17.001" rx="7" ry="4" fill="currentColor" />
                                         </svg>
                                             <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Administrators</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="reports.html" class="group">
-                                        <div class="flex items-center">
-                                            <svg
-                                            class="shrink-0 group-hover:!text-primary"
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <circle opacity="0.5" cx="15" cy="6" r="3" fill="currentColor" />
-                                            <ellipse opacity="0.5" cx="16" cy="17" rx="5" ry="3" fill="currentColor" />
-                                            <circle cx="9.00098" cy="6" r="4" fill="currentColor" />
-                                            <ellipse cx="9.00098" cy="17.001" rx="7" ry="4" fill="currentColor" />
-                                        </svg>
-                                            <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Reports</span>
                                         </div>
                                     </a>
                                 </li>
@@ -1175,16 +1155,16 @@
                                                                 <form @submit.prevent="saveTask">
                                                                     <div class="mb-5">
                                                                         <label for="title">Title</label>
-                                                                        <input id="title" type="text" placeholder="Enter Task Title" class="form-input" x-model="params.title" required />
+                                                                        <input id="title" type="text" placeholder="Enter Task Title" class="form-input" x-model="params.title" />
                                                                     </div>
                                                                     <div class="mb-5">
                                                                         <label for="duedate">Due Date</label>
-                                                                        <input id="duedate" class="form-date" type="date" x-model="params.date" required>
+                                                                        <input id="duedate" class="form-date" type="date" x-model="params.date">
                                                                     </div>
                                                                     <div class="mb-5 flex justify-between gap-4">
                                                                         <div class="flex-1">
                                                                             <label for="status">Status</label>
-                                                                            <select id="status" class="form-select" x-model="params.status" required>
+                                                                            <select id="status" class="form-select" x-model="params.status">
                                                                                 <option value="Pending">Pending</option>
                                                                                 <option value="In Progress">In Progress</option>
                                                                                 <option value="Completed">Completed</option>
@@ -1192,7 +1172,7 @@
                                                                         </div>
                                                                         <div class="flex-1">
                                                                             <label for="priority">Priority</label>
-                                                                            <select id="priority" class="form-select" x-model="params.priority" required>
+                                                                            <select id="priority" class="form-select" x-model="params.priority">
                                                                                 <option value="low" selected>Low</option>
                                                                                 <option value="medium">Medium</option>
                                                                                 <option value="high">High</option>
@@ -1659,6 +1639,7 @@
                         };
 
                         this.allTasks.splice(0, 0, task);
+                        this.allTasks = [...this.allTasks];
                         this.searchTasks();
                     },
 
@@ -1727,7 +1708,7 @@
                             //task.priority = this.params.priority;
                             //task.date = this.params.date;
                             console.log(task);
-                            this.addTask(task.id, task.name, task.date, task.descriptionText, task.priority, task.status, this.user_id);
+                            this.addTask(task.id, task.title, task.date, task.descriptionText, task.priority, task.status, this.user_id);
 
                             newTask = {"taskID": task.id, "task_user": parseInt(this.user_id), "task_name": task.title,
                                         "task_description": task.descriptionText, "due_date": task.date,
@@ -1738,8 +1719,9 @@
                             //setCookie("tasks", )
                            
 
-                            this.allTasks.splice(0, 0, task);
-                            this.allTasks = [...this.allTasks];
+                            //this.allTasks.splice(0, 0, task);
+                            //this.allTasks = [...this.allTasks];
+                            console.log(this.allTasks);
                             let user = users.find(user => user.id == this.user_id);
                             if(users[this.user_id-1])
                             {
