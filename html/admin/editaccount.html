@@ -1409,6 +1409,19 @@
 
                 var cookie = getCookie("tasks");
                 tasks = JSON.parse(cookie);
+                const queryParams = new URLSearchParams(window.location.search);
+                const paramName = 'id';
+                const user_id = queryParams.get(paramName);
+                console.log(tasks)
+                console.log(user_id)
+
+                var tasks = tasks.filter(function(task) {
+                    return task.task_user === parseInt(user_id);
+                });
+
+                console.log(tasks)
+
+
                 //todolist
                 Alpine.data('todolist', () => ({
                     selectedTab: '',
@@ -1440,9 +1453,7 @@
                     init() {
                         this.searchTasks();
                         this.initEditor();
-                        const queryParams = new URLSearchParams(window.location.search);
-                        const paramName = 'id';
-                        this.user_id = queryParams.get(paramName);
+                        this.user_id = user_id;
                         //alert(user_id);
 
                         for(var i = 0; i < tasks.length; i++){
@@ -1507,14 +1518,31 @@
                         console.log("priority task", name)
                         
 
+                        console.log(tasks[task.id-1])
                         tasks[task.id-1]['task_priority'] = name;
                        // document.cookie(`tasks=${data}; path=/`);
-                        setCookie("tasks", tasks);
+                        cookieTasks = JSON.parse(getCookie("tasks"));
+                        
+
+                        console.log(item.id + " " + this.user_id);
+                        cookieTasks.forEach(function(cookieTask) {
+                                // Check if taskID and task_user match
+                                    //console.log(cookieTask.taskID + " " + cookieTask.task_user);
+                                    //console.log(item.id + " " + user_id);
+                                if (cookieTask.taskID == item.id && cookieTask.task_user == user_id) {
+                                    // Replace the local task with the cookie task
+                                    //console.log(cookieTask.task_name);
+                                    cookieTask.task_priority = name;
+                                    //console.log(cookieTask.task_priority);
+                                }
+                        });
+
+                        setCookie("tasks", cookieTasks);
                         let user = users.find(user => user.id == this.user_id);
-                        alert(this.user_id);
+                        //alert(this.user_id);
                             if(users[this.user_id-1])
                             {
-                                alert('user found');
+                                //alert('user found');
                                 notif = `The task titled "${tasks[task.id-1]['task_name']}" has been changed of priority.`;
                                 users[this.user_id-1]['notifications'].push(notif);
                                 setCookie("users", users);
@@ -1638,6 +1666,8 @@
                             status: status,
                         };
 
+                        console.log("task " + task);
+
                         this.allTasks.splice(0, 0, task);
                         this.allTasks = [...this.allTasks];
                         this.searchTasks();
@@ -1652,7 +1682,7 @@
                         if (this.params.id) {
                             //update task
                             this.pagedTasks = this.pagedTasks.map((d) => {
-                                //console.log("ENTERED UPDATE?")
+                                console.log("ENTERED UPDATE?")
                                 if (d.id === this.params.id) {
                                     d = this.params;
                                     d.description = this.quillEditor.root.innerHTML;
@@ -1662,10 +1692,32 @@
                                     tasks[d.id-1]['task_description'] = d.descriptionText;
                                     tasks[d.id-1]['task_status'] = this.params.status;
                                     tasks[d.id-1]['task_priority'] = this.params.priority;
+                                    console.log(d.id);
 
                                     this.allTasks[d.id]['status'] = this.params.status;
                                     this.allTasks = [...this.allTasks];
-                                    setCookie("tasks", tasks);
+
+                                    cookieTasks = JSON.parse(getCookie("tasks"));
+                                    console.log(cookieTasks);
+
+                                    id = d.id;
+                                    //u_id = this.user_id;
+                    
+                                    cookieTasks.forEach(function(cookieTask) {
+                                            // Check if taskID and task_user match
+                                            console.log(id + " " + user_id);
+                                            if (cookieTask.taskID == id && cookieTask.task_user == user_id) {
+                                                console.log(cookieTask);
+                                                // Replace the local task with the cookie task
+                                                cookieTask.task_name = tasks[id-1]['task_name'];
+                                                cookieTask.task_description = tasks[id-1]['task_description'];
+                                                cookieTask.task_status = tasks[id-1]['task_status'];
+                                                cookieTask.task_priority = tasks[id-1]['task_priority'];
+                                                console.log('cookietask: ' + cookieTask);
+                                            }
+                                    });
+                                    console.log(cookieTasks);
+                                    setCookie("tasks", cookieTasks);
 
                                     if(users[this.user_id-1])
                                     {
