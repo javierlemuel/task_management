@@ -343,20 +343,16 @@
                                 <li class="nav-item">
                                     <a href="reports.html" class="group">
                                         <div class="flex items-center">
-                                            <svg
-                                            class="shrink-0 group-hover:!text-primary"
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <circle opacity="0.5" cx="15" cy="6" r="3" fill="currentColor" />
-                                            <ellipse opacity="0.5" cx="16" cy="17" rx="5" ry="3" fill="currentColor" />
-                                            <circle cx="9.00098" cy="6" r="4" fill="currentColor" />
-                                            <ellipse cx="9.00098" cy="17.001" rx="7" ry="4" fill="currentColor" />
-                                        </svg>
-                                            <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Reports</span>
+                                            <svg class="shrink-0 group-hover:!text-primary" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle opacity="0.5" cx="15" cy="6" r="3" fill="currentColor" />
+                                                <ellipse opacity="0.5" cx="16" cy="17" rx="5" ry="3"
+                                                    fill="currentColor" />
+                                                <circle cx="9.00098" cy="6" r="4" fill="currentColor" />
+                                                <ellipse cx="9.00098" cy="17.001" rx="7" ry="4" fill="currentColor" />
+                                            </svg>
+                                            <span
+                                                class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Reports</span>
                                         </div>
                                     </a>
                                 </li>
@@ -904,30 +900,7 @@
 
 
 
-                                        <button type="button"
-                                            class="flex h-10 w-full items-center justify-between rounded-md p-2 font-medium hover:bg-white-dark/10 hover:text-primary dark:hover:bg-[#181F32] dark:hover:text-primary"
-                                            :class="{ 'bg-gray-100 dark:text-primary text-primary dark:bg-[#181F32]': selectedTab === 'trash' }"
-                                            @click="tabChanged('trash')">
-                                            <div class="flex items-center">
-                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0">
-                                                    <path d="M20.5001 6H3.5" stroke="currentColor" stroke-width="1.5"
-                                                        stroke-linecap="round" />
-                                                    <path
-                                                        d="M18.8334 8.5L18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5"
-                                                        stroke="currentColor" stroke-width="1.5"
-                                                        stroke-linecap="round" />
-                                                    <path opacity="0.5" d="M9.5 11L10 16" stroke="currentColor"
-                                                        stroke-width="1.5" stroke-linecap="round" />
-                                                    <path opacity="0.5" d="M14.5 11L14 16" stroke="currentColor"
-                                                        stroke-width="1.5" stroke-linecap="round" />
-                                                    <path opacity="0.5"
-                                                        d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6"
-                                                        stroke="currentColor" stroke-width="1.5" />
-                                                </svg>
-                                                <div class="ltr:ml-3 rtl:mr-3">Trash</div>
-                                            </div>
-                                        </button>
+
                                         <div class="h-px w-full border-b border-[#e0e6ed] dark:border-[#1b2e4b]"></div>
                                         <div class="px-1 py-3 text-white-dark">Tags</div>
                                         <!-- <button type="button"
@@ -1636,9 +1609,28 @@
                             }
                         }
                     }
+
+                    //Add Notification on Init (Ruben)
+                    let userID = JSON.parse(sessionStorage.getItem('userID'));
+                    let taskCookie = JSON.parse(getCookie('tasks'));
+                    let tasks = taskCookie.filter(task => task.task_user === userID);  // filtrando por el userID 
+
+                    const pendingNotifications = tasks.filter(task => task.task_status === "Pending") // Escogiendo el task por el status pending
+
+                    pendingNotifications.forEach((task, index) => {
+                        this.notifications.push({
+                            id: index,
+                            profile: 'user-profile.jpeg',
+                            message: `<span class="text-sm mr-1">New pending task</span><strong class="text-sm mr-1">${task.task_name} </strong>`,
+                        })
+                    })
+
                 },
 
 
+                notifications: [
+
+                ],
 
                 messages: [
                 ],
@@ -1693,6 +1685,7 @@
             //todolist
 
             let users = JSON.parse(getCookie('users'));
+            console.log('Users: ', users)
             let userID = JSON.parse(sessionStorage.getItem('userID'));
             let taskCookie = JSON.parse(getCookie('tasks'));
             console.log('task cookie:', taskCookie);
@@ -1851,7 +1844,7 @@
                         y += 60; // Adjust vertical position for the next entry
                     });
 
-                    // Save the PDF with a specific name
+                    // Save the PDF 
                     doc.save('task-report.pdf');
                 },
 
