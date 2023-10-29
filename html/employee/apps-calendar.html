@@ -1394,17 +1394,26 @@
                     },
                 }));
                 
+
+                // Grab user cookies
                 let users = JSON.parse(getCookie('users'));
+
+                // Grab userID from session storage
                 let userID = JSON.parse(sessionStorage.getItem('userID'));
+
+                // Grab cookies tasks
                 let taskCookie = JSON.parse(getCookie('tasks'));
-                // console.log('task cookie:', taskCookie);
+                
+                // Grab cookies from only that user
                 let tasks = taskCookie.filter(task => task.task_user === userID);
-                console.log('tasks:', tasks);
+                // console.log('tasks:', tasks);
                 
                 //calendar
                 Alpine.data('calendar', () => ({
                     isShowTaskMenu: false,
                     defaultParams: {
+
+                        //Default paramenters that  will be used for creating the calendar event
                         id: null,
                         title: '',
                         start: '',
@@ -1428,10 +1437,14 @@
                     events: [],
                     init() {
 
-                        console.log("INSIDE THE INIT")
+                        // console.log("INSIDE THE INIT")
                     
+                        //Initialization of the calendar, this will be called everytime the page is loaded
+                        //This is a default initialization, for some reason if i removed it, the calendar didnt work
                         this.events = [
                             {
+
+
                                 id: 1,
                                 title: '',
                                 start: this.now.getFullYear() + '-' + this.getMonth(this.now) + '-01T14:30:00',
@@ -1443,7 +1456,9 @@
                         ];
                     
                         
+
                         var calendarEl = document.getElementById('calendar');
+                        // Creating the calendar
                         this.calendar = new FullCalendar.Calendar(calendarEl, {
                             initialView: 'dayGridMonth',
                             headerToolbar: {
@@ -1467,10 +1482,11 @@
                         });
 
                         for (var i = 0; i < tasks.length; i++) {
-                            console.log("DENTRO DEL FOR")
-                            //alert(tasks[i]['task_user']);
+                            // console.log("DENTRO DEL FOR")
+                            
+                            // Adding tasksto event []
                             if (tasks[i]['task_user'] == userID) {
-                                console.log("entro al if de add task");
+                                // console.log("entro al if de add task");
                                 this.addEvent(tasks[i]['taskID'], tasks[i]['task_name'], tasks[i]['due_date'],
                                     tasks[i]['task_description'],  tasks[i]['task_status']);
                             }
@@ -1532,6 +1548,7 @@
                         return dt;
                     },
 
+                    // Helper function to add tasks from the filtered cookies into the events array of objects
                     addEvent(id, name, date, desc, status){
                             let maxEventId = 0;
                             if (this.events) {
@@ -1539,6 +1556,7 @@
                             }
 
                           
+                            // Direcitng data
                             let event = {
                                 id: maxEventId + 1,
                                 title: name,
