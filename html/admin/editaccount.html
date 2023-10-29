@@ -1543,29 +1543,20 @@
 
                         console.log(tasks[task.id-1])
                         tasks[task.id-1]['task_priority'] = name;
-                       // document.cookie(`tasks=${data}; path=/`);
                         cookieTasks = JSON.parse(getCookie("tasks"));
                         
 
                         console.log(item.id + " " + this.user_id);
                         cookieTasks.forEach(function(cookieTask) {
-                                // Check if taskID and task_user match
-                                    //console.log(cookieTask.taskID + " " + cookieTask.task_user);
-                                    //console.log(item.id + " " + user_id);
                                 if (cookieTask.taskID == item.id && cookieTask.task_user == user_id) {
-                                    // Replace the local task with the cookie task
-                                    //console.log(cookieTask.task_name);
                                     cookieTask.task_priority = name;
-                                    //console.log(cookieTask.task_priority);
                                 }
                         });
 
                         setCookie("tasks", cookieTasks);
                         let user = users.find(user => user.id == this.user_id);
-                        //alert(this.user_id);
                             if(users[this.user_id-1])
                             {
-                                //alert('user found');
                                 notif = `The task titled "${tasks[task.id-1]['task_name']}" has been changed of priority.`;
                                 users[this.user_id-1]['notifications'].push(notif);
                                 setCookie("users", users);

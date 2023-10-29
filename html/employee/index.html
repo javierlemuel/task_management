@@ -1048,7 +1048,7 @@
                                                                     'text-white bg-warning': task.priority === 'low' && open,
                                                                     'text-white bg-danger': task.priority === 'high' && open,
                                                                 }" @click="toggle"></button>
-                                                                        <!-- <ul x-cloak x-show="open" x-transition
+                                                                        <ul x-cloak x-show="open" x-transition
                                                                             x-transition.duration.300ms
                                                                             class="text-medium text-sm ltr:right-0 rtl:left-0">
                                                                             <li>
@@ -1072,7 +1072,7 @@
                                                                                     Low
                                                                                 </button>
                                                                             </li>
-                                                                        </ul> -->
+                                                                        </ul>
                                                                     </div>
                                                                 </template>
                                                                 <template x-if="task.tag">
@@ -1591,16 +1591,7 @@
                     let taskCookie = JSON.parse(getCookie('tasks'));
                     let tasks = taskCookie.filter(task => task.task_user === userID);  // filtrando por el userID 
 
-                    // const pendingNotifications = tasks.filter(task => task.task_status === "Pending") // Escogiendo el task por el status pending
-
-                    // pendingNotifications.forEach((task, index) => {
-                    //     this.notifications.push({
-                    //         id: index,
-                    //         profile: 'user-profile.jpeg',
-                    //         message: `<span class="text-sm mr-1">New pending task</span><strong class="text-sm mr-1">${task.task_name} </strong>`,
-                    //     })
-                    // })
-
+                    
                     this.addMessages();
 
                 },
@@ -1777,7 +1768,6 @@
                     cookieTasks = JSON.parse(getCookie("tasks"));
                     
 
-                    //console.log(item.id + " " + userID);
                     cookieTasks.forEach(function(cookieTask) {
                             if (cookieTask.taskID == item.id && cookieTask.task_user == userID) {
                                 cookieTask.task_priority = name;
