@@ -582,28 +582,17 @@
                                 </ul>
                             </div>
                             <div class="dropdown flex-shrink-0" x-data="dropdown" @click.outside="open = false">
-                                <a href="javascript:;" class="group relative" @click="toggle()">
-                                    <span><img
-                                            class="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100"
-                                            src="assets/images/user-profile.jpeg" alt="image" /></span>
+                                <a href="javascript:;" class="group relative block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60" @click="toggle()">
+                                    <span> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5">
+                                        <circle cx="12" cy="6" r="4" stroke="currentColor" stroke-width="1.5" />
+                                        <ellipse opacity="0.5" cx="12" cy="17" rx="7" ry="4" stroke="currentColor" stroke-width="1.5" />
+                                    </svg>
+                                  </span>
                                 </a>
                                 <ul x-cloak x-show="open" x-transition x-transition.duration.300ms
                                     class="top-11 w-[230px] !py-0 font-semibold text-dark ltr:right-0 rtl:left-0 dark:text-white-dark dark:text-white-light/90">
                                     <li>
                                         <div class="flex items-center px-4 py-4">
-                                            <div class="flex-none">
-                                                <img class="h-10 w-10 rounded-md object-cover"
-                                                    src="assets/images/user-profile.jpeg" alt="image" />
-                                            </div>
-                                            <div class="truncate ltr:pl-4 rtl:pr-4">
-                                                <h4 class="text-base">
-                                                    John Doe
-                                                    <!-- <span
-                                                        class="rounded bg-success-light px-1 text-xs text-success ltr:ml-2 rtl:ml-2">Pro</span> -->
-                                                </h4>
-                                                <a class="text-black/60 hover:text-primary dark:text-dark-light/60 dark:hover:text-white"
-                                                    href="javascript:;">johndoe@gmail.com</a>
-                                            </div>
                                         </div>
                                     </li>
                                     <!-- <li>
@@ -1072,7 +1061,7 @@
                                                                     'text-white bg-warning': task.priority === 'low' && open,
                                                                     'text-white bg-danger': task.priority === 'high' && open,
                                                                 }" @click="toggle"></button>
-                                                                        <!-- <ul x-cloak x-show="open" x-transition
+                                                                        <ul x-cloak x-show="open" x-transition
                                                                             x-transition.duration.300ms
                                                                             class="text-medium text-sm ltr:right-0 rtl:left-0">
                                                                             <li>
@@ -1096,7 +1085,7 @@
                                                                                     Low
                                                                                 </button>
                                                                             </li>
-                                                                        </ul> -->
+                                                                        </ul>
                                                                     </div>
                                                                 </template>
                                                                 <template x-if="task.tag">
@@ -1687,7 +1676,18 @@
             let users = JSON.parse(getCookie('users'));
             console.log('Users: ', users)
             let userID = JSON.parse(sessionStorage.getItem('userID'));
+            console.log('User ID: ', userID);
+            let user = users.filter(u => u.id === userID);
+            console.log('User: ', user);
+            if (user)
+                console.log("user: " + user[0].email);
+            else   
+                console.log("user not found");
             let taskCookie = JSON.parse(getCookie('tasks'));
+
+            const admins = JSON.parse(getCookie('admins'));
+            const adminID = getAdminIdByUserId(admins, userID);
+
             console.log('task cookie:', taskCookie);
 
 
@@ -1784,6 +1784,27 @@
                 setPriority(task, name) {
                     let item = this.filteredTasks.find((d) => d.id === task.id);
                     item.priority = name;
+                    tasks[task.id-1]['task_priority'] = name;
+
+                    cookieTasks = JSON.parse(getCookie("tasks"));
+                    
+
+                    //console.log(item.id + " " + userID);
+                    cookieTasks.forEach(function(cookieTask) {
+                            if (cookieTask.taskID == item.id && cookieTask.task_user == userID) {
+                                cookieTask.task_priority = name;
+                            }
+                    });
+
+                    setCookie("tasks", cookieTasks);
+                    let admin = admins.find(admin => admin.id == adminID);
+
+                        if(admin)
+                        {
+                            notif = `${user[0].email} has changed the task titled "${tasks[task.id-1]['task_name']}" to priority: ${name}.`;
+                            admins[adminID-1]['notifications'].push(notif);
+                            setCookie("admins", admins);
+                        }
                     this.searchTasks(false);
                 },
 
@@ -1808,9 +1829,19 @@
                     let user = users.find(user => user.id == userID);
                     if (users[userID - 1]) {
                         notif = `The task titled "${tasks[task.id - 1]['task_name']}" has been changed of status.`;
-                        users[this.userID - 1]['notifications'].push(notif);
+                        users[userID - 1]['notifications'].push(notif);
                         setCookie("users", users);
                     }
+
+                    let admin = admins.find(admin => admin.id == adminID);
+
+                        if(admin)
+                        {
+                            notif = `${user.email} has changed the task titled "${tasks[task.id-1]['task_name']}" to status: Completed.`;
+                            admins[adminID-1]['notifications'].push(notif);
+                            setCookie("admins", admins);
+                        }
+
                     this.searchTasks(false);
                 },
 
@@ -1856,9 +1887,10 @@
                     let user = users.find(user => user.id == userID);
                     if (users[userID - 1]) {
                         notif = `The task titled "${tasks[task.id - 1]['task_name']}" has been changed of status.`;
-                        users[this.userID - 1]['notifications'].push(notif);
+                        users[userID - 1]['notifications'].push(notif);
                         setCookie("users", users);
                     }
+
                     this.searchTasks(false);
                 },
 
@@ -1869,9 +1901,19 @@
                     let user = users.find(user => user.id == userID);
                     if (users[userID - 1]) {
                         notif = `The task titled "${tasks[task.id - 1]['task_name']}" has been changed of status.`;
-                        users[this.userID - 1]['notifications'].push(notif);
+                        users[userID - 1]['notifications'].push(notif);
                         setCookie("users", users);
                     }
+
+                    let admin = admins.find(admin => admin.id == adminID);
+
+                        if(admin)
+                        {
+                            notif = `${user.email} has changed the task titled "${tasks[task.id-1]['task_name']}" to status: In Progress.`;
+                            admins[adminID-1]['notifications'].push(notif);
+                            setCookie("admins", admins);
+                        }
+
                     this.searchTasks(false);
                 },
 

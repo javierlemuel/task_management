@@ -58,3 +58,13 @@ function setCookie(name, value) {
   value = JSON.stringify(value);
   document.cookie = name + "=" + value + ";path=/";
 }
+
+function getAdminIdByUserId(admins, userID) {
+  for (let i = 0; i < admins.length; i++) {
+    const admin = admins[i];
+    if (admin.userlist.includes(userID)) {
+      return admin.id;
+    }
+  }
+  return null;
+}
