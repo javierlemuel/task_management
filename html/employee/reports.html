@@ -16,6 +16,8 @@
         <script defer src="assets/js/popper.min.js"></script>
         <script defer src="assets/js/tippy-bundle.umd.min.js"></script>
         <script defer src="assets/js/sweetalert.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     </head>
 
     <body
@@ -759,6 +761,9 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="assets/js/classes.js"></script>
         <script src="assets/js/test.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+
 
         <script>
             document.addEventListener('alpine:init', () => {
@@ -1006,6 +1011,40 @@
                             this.revenueChart.updateOptions(this.revenueChartOptions);
                         });
                     },
+                    generatePDF() {
+                        console.log("enter generatepdf");
+
+                        let userID = JSON.parse(sessionStorage.getItem('userID'));
+                        let users = JSON.parse(getCookie('users'));
+                        let user = users.filter(user => {
+                            return user.id === userID
+                        })
+
+                        let tasks = taskCookie.filter(task => task.task_user === userID);
+                        console.log('tasks', tasks);
+                        const doc = new jsPDF();
+                        doc.setFont('helvetica'); // Set the font (or another font)
+                        doc.setFontSize(12); // Set the font size
+                        doc.text('Task Report', 10, 10);
+                        doc.text(`User: ${user[0].email}`, 10, 20);
+
+
+
+
+                        // Format and add data to the PDF
+                        let y = 40;
+                        tasks.forEach(task => {
+                            doc.text(`Task Name: ${task.task_name}`, 10, y);
+                            doc.text(`Description: ${task.task_description.replace(/\s+/g, ' ')}`, 10, y + 10);
+                            doc.text(`Due Date: ${task.due_date}`, 10, y + 20);
+                            doc.text(`Status: ${task.task_status}`, 10, y + 30);
+                            doc.text(`Priority: ${task.task_priority}`, 10, y + 40);
+                            y += 60; // Adjust vertical position for the next entry
+                        });
+
+                        // Save the PDF 
+                        doc.save('task-report.pdf');
+                        },
 
                     // revenue
                     get revenueChartOptions() {
