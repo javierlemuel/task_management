@@ -1109,6 +1109,8 @@
                             //get the admin user list
                             let adminUserList = admins[adminID-1].userlist;
                             let users = allUsers.filter(user => adminUserList.includes(user.id));
+
+                            
                            
                             //create new pdf document
                             const doc = new jsPDF();
@@ -1328,17 +1330,28 @@
 
                     // sales by category
                     get salesByCategoryOptions() {
+                        let allUsers = JSON.parse(getCookie('users'));
+                        let admins = JSON.parse(getCookie("admins"));
+                        let adminID = JSON.parse(sessionStorage.getItem("adminID"));
 
-                        tasks.forEach(task => {
-                            const category = task.task_status;
-                            //console.log("categories: ", category);
-                            if (categoryCount[category]) {
-                                categoryCount[category]++;
-                                //console.log("category count: ", categoryCount[category]);
-                            } else {
-                                categoryCount[category] = 1;
-                            }
-                        });
+                        //get the admin user list
+                        let adminUserList = admins[adminID-1].userlist;
+                        let users = allUsers.filter(user => adminUserList.includes(user.id));
+
+
+                        users.forEach(user => {
+                            let userTasks = tasks.filter(task => task.task_user === user.id)
+                            userTasks.forEach(task => {
+                                const category = task.task_status;
+                                //console.log("categories: ", category);
+                                if (categoryCount[category]) {
+                                    categoryCount[category]++;
+                                    //console.log("category count: ", categoryCount[category]);
+                                } else {
+                                    categoryCount[category] = 1;
+                                }
+                            });
+                        })
 
                         for(cat in categoryCount){
                             if (cat === "undefined" || cat === "null"){

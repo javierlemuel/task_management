@@ -1715,6 +1715,7 @@
                                     tasks[d.id-1]['task_description'] = d.descriptionText;
                                     tasks[d.id-1]['task_status'] = this.params.status;
                                     tasks[d.id-1]['task_priority'] = this.params.priority;
+                                    tasks[d.id-1]['due_date'] = this.params.date;
                                     console.log(d.id);
 
                                     this.allTasks[d.id]['status'] = this.params.status;
@@ -1736,6 +1737,7 @@
                                                 cookieTask.task_description = tasks[id-1]['task_description'];
                                                 cookieTask.task_status = tasks[id-1]['task_status'];
                                                 cookieTask.task_priority = tasks[id-1]['task_priority'];
+                                                cookieTask.due_date = tasks[id-1]['due_date'];
                                                 console.log('cookietask: ' + cookieTask);
                                             }
                                     });
