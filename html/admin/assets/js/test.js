@@ -6,11 +6,9 @@ function adminLogin(evt) {
     const email = $("#Email").val();
     const password = $("#Password").val();
     console.log("email: ", email);
-    console.log("pass: ", password);
 
     //get stored user data
     let admins = JSON.parse(getCookie("admins"));
-    //console.log("stored admin: ", admins[0]);
 
     const admin = admins.find(admin => admin.email == email && admin.password == password);
     if (admin) {
@@ -18,11 +16,7 @@ function adminLogin(evt) {
         alert("Welcome back "+ email + "!");
         sessionStorage.setItem("adminID", admin.id);
         window.location.href = "accounts.html";
-    //   // Create a session token (in a real application, make it more secure)
-    //   const sessionToken = generateSessionToken();
-    //   // Store the session token in a cookie
-    //   setCookie("sessionToken", sessionToken, 1); // Expires in 1 day
-    //   return true; // Successful login
+
     } else {
         if (email === "" || email === "null" || email === "undefined") {
           alert("Username required.");
@@ -55,11 +49,13 @@ $(document).ready( () => {
 
         var admins = [admin1, admin2];
         admins[0]['userlist'].push(1);
+        admins[0]['userlist'].push(3);
+        admins[0]['userlist'].push(5);
         admins[1]['userlist'].push(2);
+        admins[1]['userlist'].push(4);
 
     //create admin cookie
     setCookie("admins", admins);
-    //document.cookie = `admins=${admins}; path=/`;
     }
     
 
@@ -68,27 +64,29 @@ $(document).ready( () => {
     {
         const user1 = new EMPLOYEE(1, "ernesto@gmail.com", "ernestin");
         const user2 = new EMPLOYEE(2, "elenagomez@gmail.com", "passelena");
+        const user3 = new EMPLOYEE(3, "reynaldodiaz@gmail.com", "reyelmejor");
+        const user4 = new EMPLOYEE(4, "javiermelendez@gmail.com", "javier1234");
+        const user5 = new EMPLOYEE(5, "mariarios@gmail.com", "mariabros");
 
-        var users = [user1, user2];
+        var users = [user1, user2, user3, user4, user5];
 
 
         setCookie("users", users);
-        //document.cookie = `users=${users}; path=/`;
     }
 
     if(!checkCookieExists("tasks"))
     {
-        const task1 = new TASK(1, 2, "Create a website", "Create a riveting website that will change the world", "2023-11-10", "medium"); 
-        const task2 = new TASK(1, 1, "Get the admin a coffee", "Get your favorite administrator a hot black coffee", "2023-10-17", "high");
-        const task3 = new TASK(2, 2, "Take your vitamins", "Do not forget to drink all your healthy vitamins every morning", "2023-10-15", "low");
-        const task4 = new TASK(3, 2, "Take your dog off the lawn", "Do not forget to drink all your healthy vitamins every morning", "2023-10-15", "low");
-        const task5 = new TASK(2, 1, "Do your homework", "Do not forget to drink all your healthy vitamins every morning", "2023-10-15", "low");
+        const task1 = new TASK(1, 2, "Create a web component", "Create a riveting web component that will change the world", "2023-11-15", "high"); 
+        const task2 = new TASK(1, 1, "Get the admin a coffee", "Get your favorite administrator a hot black coffee", "2023-11-02", "medium");
+        const task3 = new TASK(2, 2, "Cybertech Meeting", "Do not forget to book the meeting for next week!", "2023-11-07", "medium");
+        const task4 = new TASK(3, 2, "USB Order", "Order the package of USBs specified at the meeting", "2023-11-10", "low");
+        const task5 = new TASK(2, 1, "Call designers for development meeting", "Do not forget to contact the designers from the \
+        development team for our upcoming meeting", "2023-11-02", "high");
 
         var tasks = [task1, task2, task3, task4, task5];
 
 
         setCookie("tasks", tasks)
-        //document.cookie = `tasks=${tasks}; path=/`;
     }
 
     $("#loginBtn").click(adminLogin);  
