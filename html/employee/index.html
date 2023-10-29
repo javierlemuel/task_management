@@ -1061,15 +1061,15 @@
                                                                     'text-white bg-warning': task.priority === 'low' && open,
                                                                     'text-white bg-danger': task.priority === 'high' && open,
                                                                 }" @click="toggle"></button>
-                                                                        <ul x-cloak x-show="open" x-transition
+                                                                        <!-- <ul x-cloak x-show="open" x-transition
                                                                             x-transition.duration.300ms
                                                                             class="text-medium text-sm ltr:right-0 rtl:left-0">
                                                                             <li>
-                                                                                 <button
+                                                                                  <button
                                                                                     class="w-full text-danger ltr:text-left rtl:text-right"
                                                                                     @click="toggle,setPriority(task, 'high')">
                                                                                     High
-                                                                                </button> 
+                                                                                </button>  
                                                                             </li>
                                                                             <li>
                                                                                 <button
@@ -1085,7 +1085,7 @@
                                                                                     Low
                                                                                 </button>
                                                                             </li>
-                                                                        </ul>
+                                                                        </ul> -->
                                                                     </div>
                                                                 </template>
                                                                 <template x-if="task.tag">
@@ -1183,7 +1183,7 @@
                                                                             <li>
 
                                                                             </li>
-                                                                            <li>
+                                                                            <!-- <li>
                                                                                 <a href="javascript:;"
                                                                                     @click="toggle,  deleteTask(task, 'delete' )">
                                                                                     <svg width="24" height="24"
@@ -1219,7 +1219,7 @@
                                                                                             stroke-width="1.5"></path>
                                                                                     </svg>
                                                                                     Delete</a>
-                                                                            </li>
+                                                                            </li> -->
                                                                             <li>
                                                                                 <a href="javascript:;"
                                                                                     @click="toggle, setPending(task)">
@@ -1417,7 +1417,7 @@
                                                     <option value="Donna Frank">Donna Frank</option>
                                                 </select>
                                             </div>
-                                            <div class="mb-5 flex justify-between gap-4">
+                                            <!-- <div class="mb-5 flex justify-between gap-4">
                                                 <div class="flex-1">
                                                     <label for="tag">Tag</label>
                                                     <select id="tag" class="form-select" x-model="params.tag">
@@ -1435,7 +1435,7 @@
                                                         <option value="high">High</option>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="mb-5">
                                                 <label>Description</label>
                                                 <div x-ref="editor"></div>
