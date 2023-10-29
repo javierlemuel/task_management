@@ -1805,12 +1805,6 @@
                     this.updateStatus(item, item.status)
 
                     let user = users.find(user => user.id == userID);
-                    if (users[userID - 1]) {
-                        notif = `The task titled "${tasks[task.id - 1]['task_name']}" has been changed of status.`;
-                        users[userID - 1]['notifications'].push(notif);
-                        setCookie("users", users);
-                    }
-
                     let admin = admins.find(admin => admin.id == adminID);
 
                         if(admin)
@@ -1863,11 +1857,14 @@
                     this.updateStatus(item, item.status)
 
                     let user = users.find(user => user.id == userID);
-                    if (users[userID - 1]) {
-                        notif = `The task titled "${tasks[task.id - 1]['task_name']}" has been changed of status.`;
-                        users[userID - 1]['notifications'].push(notif);
-                        setCookie("users", users);
-                    }
+                    let admin = admins.find(admin => admin.id == adminID);
+
+                        if(admin)
+                        {
+                            notif = `${user[0].email} has changed the task titled "${tasks[task.id-1]['task_name']}" to priority: ${name}.`;
+                            admins[adminID-1]['notifications'].push(notif);
+                            setCookie("admins", admins);
+                        }
 
                     this.searchTasks(false);
                 },
@@ -1877,11 +1874,6 @@
                     item.status = item.status === 'In-Progress' ? 'Completed' : 'In-Progress';
                     this.updateStatus(item, item.status) // el item es el task que seleccionaste y el status se le pasa
                     let user = users.find(user => user.id == userID);
-                    if (users[userID - 1]) {
-                        notif = `The task titled "${tasks[task.id - 1]['task_name']}" has been changed of status.`;
-                        users[userID - 1]['notifications'].push(notif);
-                        setCookie("users", users);
-                    }
 
                     let admin = admins.find(admin => admin.id == adminID);
 

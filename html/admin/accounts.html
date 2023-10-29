@@ -466,7 +466,7 @@
                                                 </button>
                                                 <h3
                                                     class="bg-[#fbfbfb] py-3 text-lg font-medium ltr:pl-5 ltr:pr-[50px] rtl:pr-5 rtl:pl-[50px] dark:bg-[#121c2c]"
-                                                    x-text="params.id ? 'Editar estudiante' : 'Crear estudiante'"
+                                                    x-text="params.id ? 'Editar estudiante' : 'Create employee'"
                                                 ></h3>
                                                 <div class="p-5">
                                                     <form @submit.prevent="saveUser">
@@ -835,11 +835,13 @@
                     init() {
                         this.searchContacts();
                         list = admins[adminID-1]['userlist'];
+                        console.log(list);
                         length = list.length;
                         for(var i = 0; i < length; i++)
                         {
                             id = list[i];
-                            this.addUser(id-1, users[id-1]['email'], users[id-1]['password'], users[id-1]['status'], users[id-1]['id']);
+                            console.log(users[id-1]['email']);
+                            this.addUser(id, users[id-1]['email'], users[id-1]['password'], users[id-1]['status'], users[id-1]['id']);
                         }
 
                     },

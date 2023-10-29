@@ -15,17 +15,16 @@ function employeeLogin(event) {
 
   const user = users.find(user => user.email === email && user.password === password);
   if (user) {
-    console.log("login: ", user.password);
-    alert("Welcome back " + email + "!");
-    sessionStorage.setItem("userID", user.id);
-    //   // Create a session token (in a real application, make it more secure)
-    //   const sessionToken = generateSessionToken();
-    //   // Store the session token in a cookie
-    //   setCookie("sessionToken", sessionToken, 1); // Expires in 1 day
-    window.location.href = "index.html"
-    // return true; // Successful login
-    
-    
+    if(user.status == 'inactive')
+      alert("Account inactive. Please contact an admin.");
+    else{
+      console.log("login: ", user.password);
+      alert("Welcome back " + email + "!");
+      sessionStorage.setItem("userID", user.id);
+
+      window.location.href = "index.html";
+    } 
+   
   } else {
     if (email === "" || email === "null" || email === "undefined") {
       alert("Username required.");

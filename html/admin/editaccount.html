@@ -462,7 +462,7 @@
                                                         </div>
                                                         <div>
                                                             <label for="password">Password</label>
-                                                            <input id="password" type="text" placeholder="" class="form-input" />
+                                                            <input id="password" type="password" placeholder="" class="form-input" />
                                                         </div>
                                                         <div>
                                                             <label for="status">Status</label>
@@ -945,7 +945,7 @@
                                                                                                     </li>
                                                                                                     <li>
                                                                                                         <button
-                                                                                                            class="w-full text-primary ltr:text-left rtl:text-right"
+                                                                                                            class="w-full text-warning ltr:text-left rtl:text-right"
                                                                                                             @click="toggle,setPriority(task, 'low')"
                                                                                                         >
                                                                                                             Low
@@ -1178,11 +1178,11 @@
                                                                 <form @submit.prevent="saveTask">
                                                                     <div class="mb-5">
                                                                         <label for="title">Title</label>
-                                                                        <input id="title" type="text" placeholder="Enter Task Title" class="form-input" x-model="params.title" />
+                                                                        <input id="title" required type="text" placeholder="Enter Task Title" class="form-input" x-model="params.title" />
                                                                     </div>
                                                                     <div class="mb-5">
                                                                         <label for="duedate">Due Date</label>
-                                                                        <input id="duedate" class="form-date" type="date" x-model="params.date">
+                                                                        <input id="duedate" required class="form-date" type="date" x-model="params.date">
                                                                     </div>
                                                                     <div class="mb-5 flex justify-between gap-4">
                                                                         <div class="flex-1">
@@ -1647,7 +1647,7 @@
                             }
 
                             tasks[task.id-1]['task_user'] = "";
-                            setCookie("tasks", JSON.stringify(tasks));
+                            setCookie("tasks", tasks);
 
                             
                             if(users[this.user_id-1])
@@ -1668,7 +1668,6 @@
                             maxid = this.allTasks.reduce((max, obj) => (obj.id > max ? obj.id : max), this.allTasks[0].id);
                         if (isNaN(maxid) || maxid === undefined) 
                             maxid = 0;
-                        //alert(maxid);
 
                         let task = {
                             id: maxid + 1,
@@ -1764,17 +1763,20 @@
                             console.log(task);
                             this.addTask(task.id, task.title, task.date, task.descriptionText, task.priority, task.status, this.user_id);
 
+                            cookieTasks = getCookie("tasks");
+                            cookieTasks = JSON.parse(cookieTasks);
+
                             newTask = {"taskID": task.id, "task_user": parseInt(this.user_id), "task_name": task.title,
                                         "task_description": task.descriptionText, "due_date": task.date,
                                         "task_status": task.status, "task_priority": task.priority};
-                            tasks.push(newTask);
-                            setCookie("tasks", tasks);
+                            cookieTasks.push(newTask);
+                            setCookie("tasks", cookieTasks);
 
                             console.log(this.allTasks);
                             let user = users.find(user => user.id == this.user_id);
                             if(users[this.user_id-1])
                             {
-                                notif = `The task titled "${tasks[task.id-1]['task_name']}" has been added`;
+                                notif = `The task titled "${cookieTasks[task.id-1]['task_name']}" has been added`;
                                 users[this.user_id-1]['notifications'].push(notif);
                                 setCookie("users", users);
                             }
