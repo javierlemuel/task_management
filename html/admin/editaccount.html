@@ -1751,39 +1751,25 @@
                                         setCookie("users", users);
                                     }
                                     }
-                                    //this.allTasks = [...this.allTasks];
                                 return d;
                             });
                         } else {
-                            //add task
-                            //console.log("ADDING TASK?");
-                            //const maxid = this.allTasks.length ? this.allTasks.reduce((max, obj) => (obj.id > max ? obj.id : max), this.allTasks[0].id) : 0;
-
-                            // const today = new Date();
-                            // const dd = String(today.getDate()).padStart(2, '0');
-                            // const mm = String(today.getMonth());
-                            // const yyyy = today.getFullYear();
-                            // const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
                             let task = this.params;
-                            //console.log(task);
                             let maxid = 0;
                             if (this.allTasks.length > 0) 
                                 maxid = this.allTasks.reduce((max, obj) => (obj.id > max ? obj.id : max), this.allTasks[0].id);
                             if (isNaN(maxid) || maxid === undefined) 
                             maxid = 0;
                             task.id = maxid + 1;
-                            //task.name = this.params.title;
                             task.description = this.quillEditor.root.innerHTML;
                             task.descriptionText = this.quillEditor.getText();
-                            //console.log(task.status + "   " + task.priority);
+
                             if(!task.status)
                                 task.status = 'Pending';
                             if(!task.priority)
                                 task.priority = 'low';
-                            //task.status = this.params.status;
-                            //task.priority = this.params.priority;
-                            //task.date = this.params.date;
+
                             console.log(task);
                             this.addTask(task.id, task.title, task.date, task.descriptionText, task.priority, task.status, this.user_id);
 
@@ -1792,12 +1778,7 @@
                                         "task_status": task.status, "task_priority": task.priority};
                             tasks.push(newTask);
                             setCookie("tasks", tasks);
-                            //tasks.push(task);
-                            //setCookie("tasks", )
-                           
 
-                            //this.allTasks.splice(0, 0, task);
-                            //this.allTasks = [...this.allTasks];
                             console.log(this.allTasks);
                             let user = users.find(user => user.id == this.user_id);
                             if(users[this.user_id-1])
@@ -1832,15 +1813,10 @@
             $("document").ready(() => {
             const queryParams = new URLSearchParams(window.location.search);
 
-            // Get the value of 'paramName'
             const paramName = 'id';
             const user_id = queryParams.get(paramName);
             sessionStorage.setItem("uid",JSON.stringify(user_id));
 
-            // var cookie = getCookie("users");
-            // users = JSON.parse(cookie);
-
-           //
             loadInfo();
         });
 

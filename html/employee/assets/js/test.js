@@ -57,9 +57,7 @@ $(document).ready( () => {
         admins[0]['userlist'].push(1);
         admins[1]['userlist'].push(2);
 
-    //create admin cookie
     setCookie("admins", admins);
-    //document.cookie = `admins=${admins}; path=/`;
     }
     
 
@@ -73,7 +71,6 @@ $(document).ready( () => {
 
 
         setCookie("users", users);
-        //document.cookie = `users=${users}; path=/`;
     }
 
     if(!checkCookieExists("tasks"))
@@ -88,7 +85,6 @@ $(document).ready( () => {
 
 
         setCookie("tasks", tasks)
-        //document.cookie = `tasks=${tasks}; path=/`;
     }
 
     $("#loginBtn").click(adminLogin);  
