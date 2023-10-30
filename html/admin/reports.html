@@ -958,7 +958,9 @@
 
                             //get the admin user list
                             let adminUserList = admins[adminID-1].userlist;
-                            let users = allUsers.filter(user => adminUserList.includes(user.id));
+                            let users = allUsers.filter((user) => adminUserList.includes(user.id));
+
+                            console.log(users);
 
      
                             //create new pdf document
@@ -980,18 +982,20 @@
                                  // Format and add data to the PDF
                                  
                                  userTasks.forEach(task => {
-                                    if (y >= pageHeight)
+                                    if (y + 80 >= pageHeight)
                                     {
                                       doc.addPage();
-                                      y = 0 // Restart height position
+                                      y = 20; // Restart height position
                                     }
                                      doc.text(`Task Name: ${task.task_name}`, 20, y + 30);
                                      doc.text(`Description: ${task.task_description.replace(/\s+/g, ' ')}`, 20, y + 40);
                                      doc.text(`Due Date: ${task.due_date}`, 20, y + 50);
                                      doc.text(`Status: ${task.task_status}`, 20, y + 60);
                                      doc.text(`Priority: ${task.task_priority}`, 20, y + 70);
-                                     y += 70; // Adjust vertical position for the next entry
+                                     y += 60; // Adjust vertical position for the next entry
                                  });
+                                
+                                 y += 20;
                             })
                             doc.save('task-report.pdf');
                         },
