@@ -89,13 +89,16 @@ $(document).ready( () => {
         setCookie("tasks", tasks)
     }
 
+    //Head to relevant function if logging in or out.
     $("#loginBtn").click(adminLogin);  
     $("#logoutbtn").click(logout);
 
+    //Show alert when editing employee account info.
     $("#savebtn").click(function() {
         alert("Account information has been saved!");
     });
 
+    //Display pointer cursor when moving over an employee account's email
     $(".email_tab").mouseover(function() {
         $(".email_tab").css("cursor", "pointer");
     });

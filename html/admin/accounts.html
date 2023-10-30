@@ -273,6 +273,7 @@
                                             </span> <!---->
                                         </template>
                                     </a>
+                                    <!--Notifications-->
                                     <ul
                                         x-cloak
                                         x-show="open"
@@ -403,7 +404,6 @@
                 <div class="animate__animated p-6" :class="[$store.app.animation]">
                     <!-- start main content section -->
                     <div>
-                            <!-- start main content section -->
                 <div x-data="contacts">
                     <div class="flex flex-wrap items-center justify-between gap-4">
                         <h2 class="text-xl">Employee Accounts</h2>
@@ -541,9 +541,6 @@
                                             <tr>
                                                 <td>
                                                     <div class="flex w-max items-center">
-                                                        <!-- <div class="flex-none mr-3">
-                                                <div class="p-1 bg-white-dark/30 rounded-full"><img class="h-8 w-8 rounded-full object-cover" src="assets/images/user-profile.jpeg" /></div>
-                                            </div> -->
                                                         <div x-show="contact.path" class="w-max">
                                                             <img
                                                                 :src="`assets/images/${contact.path}`"
@@ -638,8 +635,6 @@
                     </div>
             <!-- end main content section -->
 
-                        
-                    <!-- end main content section -->
 
                 </div>
 
@@ -725,9 +720,11 @@
                         this.addMessages();
                     },
 
+                    //Notifications array
                     messages: [
                     ],
 
+                    //Add notifications to array from cookie
                     addMessages() {
                         var admins = JSON.parse(getCookie("admins"));
                         var adminID = JSON.parse(sessionStorage.getItem("adminID"));
@@ -750,22 +747,19 @@
                             
                     },
 
+                    //Remove a notification
                     removeMessage(value) {
                         this.messages = this.messages.filter((d) => d.id !== value);
                         var admins = JSON.parse(getCookie("admins"));
 
                         var adminID = JSON.parse(sessionStorage.getItem("adminID"));
                         list = admins[adminID-1]['notifications'];
-                        //alert(list);
-                        //alert(value);
 
                         for(var i = 0; i < list.length; i++)
                         {
                             if(i == value-1)
                                 list = list.splice(i, i);
                         }
-                        //alert("List", + list);
-
                         admins[adminID-1]['notifications'] = list;
                         setCookie("admins", admins);
 
@@ -773,11 +767,9 @@
                 }));
             });
         
+        //Redirect to employee account given their ID
         const editAccount = (id) => {  
-            //alert(id);  
             var uid = id;
-            //alert(uid);
-
             const newUrl = `editaccount.html?id=${uid}`;
 
             // Redirect to the new URL

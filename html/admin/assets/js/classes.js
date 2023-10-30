@@ -1,3 +1,5 @@
+//Classes from which our cookies will be made of
+
 class ADMIN {
     constructor(id, email, pass) {
         this.id = id;
@@ -35,6 +37,8 @@ class TASK {
 
 }
 
+
+//Functions for cookie handling
 function getCookie(cookieName) {
     const cookies = document.cookie.split(';');
     for (const cookie of cookies) {

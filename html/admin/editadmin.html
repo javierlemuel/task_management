@@ -406,14 +406,6 @@
                     <div>
                             
                         <div>
-                            <!-- <ul class="flex space-x-2 rtl:space-x-reverse">
-                                <li>
-                                    <a href="javascript:;" class="text-primary hover:underline">admins</a>
-                                </li>
-                                <li class="before:content-['/'] ltr:before:mr-1 rtl:before:ml-1">
-                                    <span>Account Settings</span>
-                                </li>
-                            </ul> -->
                             <div class="pt-5">
                                 <div class="mb-5 flex items-center justify-between">
                                     <h5 class="text-lg font-semibold dark:text-white-light">Settings</h5>
@@ -576,6 +568,7 @@
                         this.addMessages();
                     },
 
+                    //Notifications
                     messages: [
                     ],
 
@@ -607,15 +600,12 @@
 
                         var adminID = JSON.parse(sessionStorage.getItem("adminID"));
                         list = admins[adminID-1]['notifications'];
-                        //alert(list);
-                        //alert(value);
 
                         for(var i = 0; i < list.length; i++)
                         {
                             if(i == value-1)
                                 list = list.splice(i, i);
                         }
-                        //alert("List", + list);
 
                         admins[adminID-1]['notifications'] = list;
                         setCookie("admins", admins);
@@ -665,7 +655,6 @@
                         const queryParams = new URLSearchParams(window.location.search);
                         const paramName = 'id';
                         const admin_id = queryParams.get(paramName);
-                        //alert(admin_id);
 
                         
                     },
@@ -709,6 +698,7 @@
                 }));
             });
 
+            //On document load, get the adminID from query parameters and load info onto HTML
             $("document").ready(() => {
             const queryParams = new URLSearchParams(window.location.search);
 
@@ -717,14 +707,11 @@
             const admin_id = queryParams.get(paramName);
             sessionStorage.setItem("uid",JSON.stringify(admin_id));
 
-            // var cookie = getCookie("admins");
-            // admins = JSON.parse(cookie);
-
-           //
             loadInfo();
         });
 
         const loadInfo = () => {
+            //Load admin info from cookie onto HTML display
             const id = JSON.parse(sessionStorage.getItem("uid"));
 
             var cookie = getCookie("admins");

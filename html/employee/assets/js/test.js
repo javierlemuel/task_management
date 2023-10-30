@@ -1,41 +1,6 @@
 "use strict";
 
-function adminLogin(evt) {
-    evt.preventDefault();
-    //get input from email and password inputs
-    const email = $("#Email").val();
-    const password = $("#Password").val();
-    console.log("email: ", email);
-    console.log("pass: ", password);
-
-    //get stored user data
-    let admins = JSON.parse(getCookie("admins"));
-    //console.log("stored admin: ", admins[0]);
-
-    const admin = admins.find(admin => admin.email == email && admin.password == password);
-    if (admin) {
-        console.log("login: ", admin.password);
-        alert("Welcome back "+ email + "!");
-        sessionStorage.setItem("adminID", admin.id);
-        window.location.href = "accounts.html";
-    //   // Create a session token (in a real application, make it more secure)
-    //   const sessionToken = generateSessionToken();
-    //   // Store the session token in a cookie
-    //   setCookie("sessionToken", sessionToken, 1); // Expires in 1 day
-    //   return true; // Successful login
-    } else {
-        if (email === "" || email === "null" || email === "undefined") {
-          alert("Username required.");
-        } else if (password === "" || password === "null" || password === "undefined") {
-          alert("Password required.");
-        } else {
-          alert("Invalid email or password. Please try again.");
-        }
-      }
-    
-      
-  };
-
+//redirect to login if logging out
 function logout(evt) {
     evt.preventDefault();
     sessionStorage.clear();
@@ -45,7 +10,7 @@ function logout(evt) {
 
 $(document).ready( () => {
 
-    
+    //initialize cookies if lost or not found
 
     if(!checkCookieExists("admins"))
     {
@@ -87,21 +52,8 @@ $(document).ready( () => {
         setCookie("tasks", tasks)
     }
 
-    $("#loginBtn").click(adminLogin);  
+    //Go to logout function if clicked on log out button
     $("#logoutbtn").click(logout);
-
-    $("#savebtn").click(function() {
-        alert("Account information has been saved!");
-    });
-
-    $(".email_tab").mouseover(function() {
-        $(".email_tab").css("cursor", "pointer");
-    });
-
-    $(".email_tab").mouseout(function() {
-      $(".email_tab").css("cursor", "default");
-  });
-
 
 });
 

@@ -6,19 +6,18 @@ function employeeLogin(event) {
   const email = $("#employeeEmail").val();
   const password = $("#employeePassword").val();
   console.log("email: ", email);
-  console.log("pass: ", password);
 
   //get stored user data
   let users = JSON.parse(getCookie("users"));
-  console.log(users)
-  //console.log("stored user: ", users[0]);
 
+  //Out of all users, identify the one matching our credentials
   const user = users.find(user => user.email === email && user.password === password);
   if (user) {
-    if(user.status == 'inactive')
+    if(user.status == 'inactive') //Do not permit entry if user account is inactive
       alert("Account inactive. Please contact an admin.");
     else{
-      console.log("login: ", user.password);
+      //If user found, redirect to landing page
+      console.log("Login: ", user.email);
       alert("Welcome back " + email + "!");
       sessionStorage.setItem("userID", user.id);
 
@@ -26,6 +25,7 @@ function employeeLogin(event) {
     } 
    
   } else {
+    //Error handling for incorrect credentials or empty fields
     if (email === "" || email === "null" || email === "undefined") {
       alert("Username required.");
     } else if (
@@ -44,24 +44,41 @@ function employeeLogin(event) {
 function logout(evt) {
   evt.preventDefault();
   sessionStorage.clear();
-  window.location.href = 'auth-cover-login.html';
+  window.location.href = 'login.html';
 
 };
 
 $(document).ready(() => {
-  if (!checkCookieExists("users")) {
-    const user1 = new EMPLOYEE(1, "ernesto@gmail.com", "ernestin");
-    const user2 = new EMPLOYEE(2, "elenagomez@gmail.com", "passelena");
 
-    var users = [user1, user2];
+  //Initialize cookies if they got deleted for whatever reason or don't exist
+  //call classes from classes.js
+  if(!checkCookieExists("admins"))
+    {
+        const admin1 = new ADMIN(1, "javier.quinones3@upr.edu", "pass1234");
+        const admin2 = new ADMIN(2, "natasha.ramos8@upr.edu", "enterpass");
+        admin1.notifications.push("Elena has finished a task!");
 
-    users = JSON.stringify(users);
+        var admins = [admin1, admin2];
+        admins[0]['userlist'].push(1);
+        admins[1]['userlist'].push(2);
 
-    document.cookie = `users=${users}; path=/`;
-  }
+    setCookie("admins", admins);
+    }
 
-  if (!checkCookieExists("tasks")) {
-    const task1 = new TASK(1, 2, "Create a website", "Create a riveting website that will change the world", "2023-11-10", "medium"); 
+    if(!checkCookieExists("users"))
+    {
+        const user1 = new EMPLOYEE(1, "ernesto@gmail.com", "ernestin");
+        const user2 = new EMPLOYEE(2, "elenagomez@gmail.com", "passelena");
+
+        var users = [user1, user2];
+
+
+        setCookie("users", users);
+    }
+
+    if(!checkCookieExists("tasks"))
+    {
+        const task1 = new TASK(1, 2, "Create a website", "Create a riveting website that will change the world", "2023-11-10", "medium"); 
         const task2 = new TASK(1, 1, "Get the admin a coffee", "Get your favorite administrator a hot black coffee", "2023-10-17", "high");
         const task3 = new TASK(2, 2, "Take your vitamins", "Do not forget to drink all your healthy vitamins every morning", "2023-10-15", "low");
         const task4 = new TASK(3, 2, "Take your dog off the lawn", "Do not forget to drink all your healthy vitamins every morning", "2023-10-15", "low");
@@ -69,8 +86,10 @@ $(document).ready(() => {
 
         var tasks = [task1, task2, task3, task4, task5];
 
-        setCookie("tasks", tasks)
-  }
 
+        setCookie("tasks", tasks)
+    }
+
+    //Go to login function if clicked on login 
   $("#employeeLoginBtn").click(employeeLogin);
 });
