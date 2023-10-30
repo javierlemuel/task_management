@@ -458,6 +458,7 @@
                                                     <div class="grid flex-1 grid-cols-1 gap-5 sm:grid-cols-2">
                                                         <div>
                                                             <label for="email">Email Address</label>
+                                                            <input type="hidden" id="uid">
                                                             <input id="email" type="text" placeholder="" class="form-input" />
                                                         </div>
                                                         <div>
@@ -1751,6 +1752,7 @@
             users = JSON.parse(cookie);
 
             $("#email").val(users[id-1]['email']);
+            $("#uid").val(id);
             $("#password").val(users[id-1]['password']);
             let status = users[id-1]['status'];
             let html = "";

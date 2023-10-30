@@ -95,7 +95,59 @@ $(document).ready( () => {
 
     //Show alert when editing employee account info.
     $("#savebtn").click(function() {
+        var uid = $("#uid").val();
+        var email = $("#email").val();
+        var password = $("#password").val();
+        var status = $("#status").val().toLowerCase();;
+
+        // Get the user
+        var usersCookie = getCookie('users');
+        var users = JSON.parse(usersCookie);
+
+        // Find the user with the matching id
+        var user = users.find(user => user.id === parseInt(uid));
+
+        if (user) {
+            // Update user data
+            user.email = email;
+            user.password = password;
+            user.status = status;
+        }
+
+        // Save the updated users array back to the 'users' cookie
+        setCookie('users', users);
+
+
         alert("Account information has been saved!");
+    });
+
+    $("#saveBtnA").click(function()
+    {
+        var uid = $("#uid").val();
+        var email = $("#email").val();
+        var password = $("#password").val();
+        var status = $("#status").val().toLowerCase();
+
+        // Get the admin
+        var adminsCookie = getCookie('admins');
+        var admins = JSON.parse(adminsCookie);
+
+        // Find the user with the matching id
+        var admin = admins.find(admin => admin.id === parseInt(uid));
+
+        if (admin) {
+            // Update admin data
+            admin.email = email;
+            admin.password = password;
+            admin.status = status;
+        }
+
+        // Save the updated admin array back to the 'admins' cookie
+        setCookie('admins', admins);
+
+
+        alert("Account information has been saved!");
+
     });
 
     //Display pointer cursor when moving over an employee account's email

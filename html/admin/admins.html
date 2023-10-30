@@ -466,7 +466,7 @@
                                                 </button>
                                                 <h3
                                                     class="bg-[#fbfbfb] py-3 text-lg font-medium ltr:pl-5 ltr:pr-[50px] rtl:pr-5 rtl:pl-[50px] dark:bg-[#121c2c]"
-                                                    x-text="params.id ? 'Editar estudiante' : 'Crear estudiante'"
+                                                    x-text="params.id ? 'Editar estudiante' : 'Create admin'"
                                                 ></h3>
                                                 <div class="p-5">
                                                     <form @submit.prevent="saveadmin">
@@ -541,9 +541,6 @@
                                             <tr>
                                                 <td>
                                                     <div class="flex w-max items-center">
-                                                        <!-- <div class="flex-none mr-3">
-                                                <div class="p-1 bg-white-dark/30 rounded-full"><img class="h-8 w-8 rounded-full object-cover" src="assets/images/admin-profile.jpeg" /></div>
-                                            </div> -->
                                                         <div x-show="contact.path" class="w-max">
                                                             <img
                                                                 :src="`assets/images/${contact.path}`"
@@ -580,8 +577,7 @@
                                                                 ></ellipse>
                                                             </svg>
                                                         </div>
-                                                        <div x-on:click="editAccount(contact.id)" x-on:mouseenter="style.cursor = 'pointer'"
-                                                        x-on:mouseleave="style.cursor = 'default'"x-text="contact.email"></div>
+                                                        <div class='email_tab' x-on:click="editAccount(contact.id)" x-text="contact.email"></div>
                                                     </div>
                                                 </td>
                                                 
