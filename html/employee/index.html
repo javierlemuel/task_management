@@ -1047,8 +1047,8 @@
                                                                     'text-white bg-primary': task.priority === 'medium' && open,
                                                                     'text-white bg-warning': task.priority === 'low' && open,
                                                                     'text-white bg-danger': task.priority === 'high' && open,
-                                                                }" @click="toggle"></button>
-                                                                        <ul x-cloak x-show="open" x-transition
+                                                                }" ></button>
+                                                                        <!-- <ul x-cloak x-show="open" x-transition
                                                                             x-transition.duration.300ms
                                                                             class="text-medium text-sm ltr:right-0 rtl:left-0">
                                                                             <li>
@@ -1072,7 +1072,7 @@
                                                                                     Low
                                                                                 </button>
                                                                             </li>
-                                                                        </ul>
+                                                                        </ul> -->
                                                                     </div>
                                                                 </template>
                                                                 <template x-if="task.tag">
