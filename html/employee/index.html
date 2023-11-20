@@ -1346,6 +1346,9 @@
             let users = JSON.parse(getCookie('users'));
             let userID = JSON.parse(sessionStorage.getItem('userID'));
             let user = users.filter(u => u.id === userID);
+
+
+        
             console.log('User: ', user);
             if (user)
                 console.log("user: " + user[0].email);
@@ -1357,6 +1360,23 @@
             const adminID = getAdminIdByUserId(admins, userID);
 
             let tasks = taskCookie.filter(task => task.task_user === userID);
+
+        // fetch("/employee/getEmployees")
+        // .then((response) => {
+        //     console.log("inside the fetch in the index",response);
+        //     return response.json();
+        // })
+        // .then((data) => {
+
+        //     await.data.users.forEach(user);
+        //     // await.data.employees.forEach(employee);
+        //     console.log(data);
+
+
+        // })
+        // .catch((error) => {
+        //   console.error("Error:", error);
+        // });
 
             Alpine.data('todolist', () => ({
                 selectedTab: '',

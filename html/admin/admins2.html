@@ -792,7 +792,7 @@
             var cookie = getCookie("admins");
             admins = JSON.parse(cookie);
 
-            fetch("/admin/getAdmins")
+        fetch("/admin/getAdmins")
         .then((response) => {
           return response.json();
         })
@@ -800,11 +800,11 @@
 
             await.data.admins.forEach(admin)
             // await cursor.forEach(admin => {
-      //   console.log(admin.email);
-      //   console.log(admin.password);
-      //   console.log(admin.adminID);
-      //   // ... and so on
-      // });
+            //   console.log(admin.email);
+            //   console.log(admin.password);
+            //   console.log(admin.adminID);
+            //   // ... and so on
+            // });
 
         })
         .catch((error) => {
