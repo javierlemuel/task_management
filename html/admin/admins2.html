@@ -715,33 +715,33 @@
                             }
                         }
 
-                        this.addMessages();
+                            //this.addMessages();
                     },
 
                     messages: [
                     ],
 
-                    addMessages() {
-                        var admins = JSON.parse(getCookie("admins"));
-                        var adminID = JSON.parse(sessionStorage.getItem("adminID"));
+                    // addMessages() {
+                    //     var admins = JSON.parse(getCookie("admins"));
+                    //     var adminID = JSON.parse(sessionStorage.getItem("adminID"));
                         
-                        list = admins[adminID-1]['notifications'];
+                    //     list = admins[adminID-1]['notifications'];
 
-                        for(var i = 0; i < list.length; i++)
-                        {
-                            let maxUserId = this.messages.length
-                                    ? this.messages.reduce((max, character) => (character.id > max ? character.id : max), this.messages[0].id)
-                                    : 0;
+                    //     for(var i = 0; i < list.length; i++)
+                    //     {
+                    //         let maxUserId = this.messages.length
+                    //                 ? this.messages.reduce((max, character) => (character.id > max ? character.id : max), this.messages[0].id)
+                    //                 : 0;
 
-                            let message = {
-                                id: maxUserId + 1,
-                                message: list[i],
-                            }
+                    //         let message = {
+                    //             id: maxUserId + 1,
+                    //             message: list[i],
+                    //         }
 
-                            this.messages.unshift(message);
-                        }
+                    //         this.messages.unshift(message);
+                    //     }
                             
-                    },
+                    // },
 
                     removeMessage(value) {
                         this.messages = this.messages.filter((d) => d.id !== value);
@@ -883,9 +883,9 @@
                             this.searchContacts();
                     },
 
-                    async saveadmin() {
-                        let admins = await fetchData();
-                        await console.log("init admins: ", admins); 
+                    saveadmin() {
+                        //let admins = await fetchData();
+                        //await console.log("init admins: ", admins); 
 
                         if (!this.params.email) {
                             this.showMessage('Email is required.', 'error');
@@ -902,15 +902,17 @@
                             admin.email = this.params.email;
                             admin.password = this.params.password;
                             admin.status = 'active';
+                        
                         } else {
                             //add admin
                             let maxadminId = this.contactList.length
                                 ? this.contactList.reduce((max, character) => (character.id > max ? character.id : max), this.contactList[0].id)
                                 : 0;
 
-                            const admin1 = new EMPLOYEE(admins.length + 1, this.params.email, this.params.password);
-                            admins.push(admin1);
-
+                            //const admin1 = new EMPLOYEE(admins.length + 1, this.params.email, this.params.password);
+                            //admins.push(admin1);
+                            console.log("email: ", this.params.email);
+                            console.log("pass: ", this.params.password);
                             let admin = {
                                 id: maxadminId + 1,
                                 path: 'profile-35.png',
@@ -921,7 +923,36 @@
                             this.contactList.splice(0, 0, admin);
                             this.searchContacts();
 
-                            this.setCookie("admins", JSON.stringify(admins));
+                            //this.setCookie("admins", JSON.stringify(admins));
+
+                             // Send the data to the server using Fetch API
+                            fetch("/admin/createAdmin", {
+                              method: "POST",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({
+                                email: this.params.email,
+                                password: this.params.password,
+                              }),
+                            })
+                            .then((response) => {
+                              return response.json();
+                            })
+                            .then((data) => {
+                              // Handle the response from the server
+                              if (data.redirect) {
+                          // Redirect to the specified URL
+                                window.location.href = data.redirect;
+                              }
+                              else{
+                                // Display the response in a window.alert
+                                window.alert(data.error || "A new admin has been created");
+                              }
+                            })
+                            .catch((error) => {
+                              console.error("Error:", error);
+                            });
                         }
 
                         this.showMessage('admin has been saved successfully.');
