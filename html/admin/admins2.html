@@ -789,28 +789,33 @@
                 },
             }));
 
-            var cookie = getCookie("admins");
-            admins = JSON.parse(cookie);
+        //function to fetch admin data
+        async function fetchData() {
+            try {
+              const response = await fetch('/admin/getAdmins'); 
+              if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+              }
+              let data = await response.json();
+              return data.admins;
+            } catch (error) {
+              console.error('Error fetching data:', error);
+              throw error;
+            }
+          }        
 
-        fetch("/admin/getAdmins")
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
+        // fetch("/admin/getAdmins")
+        // .then(async(response) => {
+        //   res = await response.json();
+        //   adminsArray = await res.admins;
+        //   console.log(adminsArray);
+          
+        // })
+        // .catch((error) => {
+        //   console.error("Error:", error);
+        // });
 
-            await.data.admins.forEach(admin)
-            // await cursor.forEach(admin => {
-            //   console.log(admin.email);
-            //   console.log(admin.password);
-            //   console.log(admin.adminID);
-            //   // ... and so on
-            // });
-
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-
+        //console.log("admins: ", admins);      
 
             //contacts
             Alpine.data('contacts', () => ({
@@ -836,8 +841,10 @@
                         
                     ],
 
-                    init() {
-                        this.searchContacts();
+                    async init() {
+                        this.searchContacts();   
+                        let admins = await fetchData();
+                        await console.log("init admins: ", admins);                 
 
                         for(var i = 0; i < admins.length; i++)
                             this.addadmin(i, admins[i]['email'], admins[i]['password'], admins[i]['status']);
@@ -876,7 +883,10 @@
                             this.searchContacts();
                     },
 
-                    saveadmin() {
+                    async saveadmin() {
+                        let admins = await fetchData();
+                        await console.log("init admins: ", admins); 
+
                         if (!this.params.email) {
                             this.showMessage('Email is required.', 'error');
                             return true;
@@ -938,7 +948,9 @@
                         });
                     },
 
-                    setStatus(contact, nombre) {
+                async setStatus(contact, nombre) {
+                    let admins = await fetchData();
+                    await console.log("init admins: ", admins); 
                         let item = this.filterdContactsList.find((d) => {
                             return d.id === contact.id;
                             
@@ -957,7 +969,8 @@
                     },
 
                     
-                }));
+            }));
+           
 
         });
         </script>

@@ -93,29 +93,26 @@ user.post('/login', async function(req, res) {
 })
 
 user.get('/getAdmins', async (req, res) => {
-    const client = new MongoClient('mongodb://0.0.0.0:27017');
-      //let data = readFrom("data.json");
+  const client = new MongoClient('mongodb://0.0.0.0:27017');
 
-      //Connect to DB named 'task_management' and collection named 'users'
+  try {
+      //conncet to db
       await client.connect();
       const database = client.db('task_management');
       const usersCollection = database.collection('admins');
-      console.log("DB connect");
+      console.log('DB connected');
 
-      // Alternatively, if using a cursor
-      const cursor = usersCollection.find({});
+      //get admins
+      const admins = await usersCollection.find({}).toArray();
 
-      res.json({admins: cursor});
-      // await cursor.forEach(admin => {
-      //   console.log(admin.email);
-      //   console.log(admin.password);
-      //   console.log(admin.adminID);
-      //   // ... and so on
-      // });
-
-
-
-})
+      res.json({ admins });
+  } catch (error) {
+      console.error('Error retrieving admins:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  } finally {
+      await client.close();
+  }
+});
 
 
 
