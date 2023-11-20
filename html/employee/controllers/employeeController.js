@@ -6,7 +6,7 @@ const fs = require("fs");
 const user = express();
 user.use(bodyParser.json());
 const path = require('path'); 
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // Number of salt rounds for bcrypt hashing
 module.exports = user;
@@ -35,10 +35,11 @@ async function comparePassword(plaintextPassword, hash) {
 user.use(express.json());
 
 user.get('/new-route', (req, res) => {
+  console.log("inside the new route function")
   //console.log('entered new route');
   //res.type('html').sendFile(path.join(__dirname, '..', 'test.html'));
   //console.log(path.join(__dirname, '..', 'admins2.html'));
-  res.type('html').sendFile(path.join(__dirname, '..', 'index.html'));
+  res.type('html').sendFile(path.join(__dirname, '..', 'index2.html'));
   console.log(__dirname);
 })
 
@@ -60,10 +61,10 @@ user.post('/login', async function(req, res) {
       await client.connect();
       const database = client.db('task_management');
       const usersCollection = database.collection('employees');
-      console.log("DB connect");
+      console.log("DB connect login");
 
       const employee = await usersCollection.findOne({ email });
-
+      // console.log(employee)
       if(employee)
       {
           let result = comparePassword(String(password), String(employee['password']));
@@ -74,19 +75,6 @@ user.post('/login', async function(req, res) {
           }
       }
 
-      // let admins = data.admins;
-      // let adminExists = Object.values(admins).some(admin => admin.email === email && admin.password === password);
-
-      // if (adminExists) {
-      //   console.log("Succesful log in!");
-      //     console.log('building path');
-
-      //     // Set the content type explicitly to text/html
-      //     console.log('heading to html');
-      //     res.json({ redirect: '/admin/new-route' });
-      //     console.log('after html');
-
-      // } 
       else {
         console.log("Username or password is incorrect");
       }
@@ -104,6 +92,7 @@ user.get('/getEmployees', async (req, res) => {
       const database = client.db('task_management');
       const usersCollection = database.collection('employees');
       console.log("DB connect");
+      console.log(usersCollection)
 
       // Alternatively, if using a cursor
       const cursor = usersCollection.find({});
@@ -116,7 +105,32 @@ user.get('/getEmployees', async (req, res) => {
       //   // ... and so on
       // });
 
+})
 
+user.get('/getEmployeeTasks', async (req, res) => {
+  const client = new MongoClient('mongodb://0.0.0.0:27017');
+
+    //Connect to DB named 'task_management' and collection named 'employees'
+    await client.connect();
+    const database = client.db('task_management');
+    const employeeCollection = database.collection('employees');
+    console.log("DB connect");
+   
+    // Grab the specific employee who is logged in to boot up their tasks
+    const employeeId = new ObjectId("655a5b8c70fc2aea0f9a523a")
+    const employee = await employeeCollection.findOne({"_id": employeeId});
+    // console.log("employee:" , employee)
+    const employeeTasks = employee.tasks
+
+    // const tasks =  await cursor.toArray()
+    // console.log(employeeTasks)
+    res.json(employeeTasks);
+    // await cursor.forEach(admin => {
+    //   console.log(admin.email);
+    //   console.log(admin.password);
+    //   console.log(admin.adminID);
+    //   // ... and so on
+    // });
 
 })
 
@@ -172,53 +186,3 @@ user.post('/register', (req, res) => {
   }
 
 })
-
-
-// user.post('/register', async (req, res) => {
-
-//   //const client = new MongoClient('mongodb://localhost:27017');
-
-//   try {
-
-//       let email = req.body.email; 
-//       let password = req.body.password;
-
-//       email = email.trim();
-//       password = password.trim();
-
-//       if(email != "" && password != "")
-//       {
-//           // client.connect();
-//           // const database = client.db('test');
-//           // const usersCollection = database.collection('users');
-
-//           // const user = await usersCollection.findOne({ email });
-
-//           if (user) {
-
-//               //if user found, cookie message = username/email already exists
-//               res.send('Email already exists!');
-//               //res.cookie('message', 'Email already exists!');
-//           } else {
-//               //insert query
-//               res.send('Account created!');
-//           }
-//       }
-//       else
-//       {
-//           res.send('Email and password cannot be empty!');
-//           //res.cookie('message', 'Email and password cannot be empty!');
-//       }
-
-//       //res.redirect('/landingPage.html');
-      
-
-//   } catch (err) {
-//       res.send(err);
-//       //console.error(err);
-//    } //finally {
-//       //await client.close();
-//   //}
-  
-// })
-
