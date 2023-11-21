@@ -1339,49 +1339,49 @@
                 },
             }));
 
-            // This fetches the task ids.
-            fetch("/employee/getEmployeeTasks")
-            .then((response) => {
-                console.log("inside the fetch in the index", response);
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data);
-                let tasks = data
-                console.log(tasks);
-                // await data.employees.forEach(employee);
+        
+            
+           // This fetches the task ids.
+        //    fetch("/employee/getEmployeeTasks")
+        //     .then((response) => {
+        //         console.log("inside the fetch in the index", response);
+        //         return response.json();
+        //     })
+        //     .then((data) => {
+        //         console.log(data);
+        //         let tasks = data
+        //         console.log(tasks);
+        //         // await data.employees.forEach(employee);
                
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
+        //     })
+        //     .catch((error) => {
+        //         console.error("Error:", error);
+        //     });
 
 
-
-            // //todolist
-
-            //Variables for the functions to utilize
-            let users = JSON.parse(getCookie('users'));
-            let userID = JSON.parse(sessionStorage.getItem('userID'));
-            let user = users.filter(u => u.id === userID);
-
+            async function fetchData() {
+                try {
+                    const response = await fetch("/employee/getEmployeeTasks");
+                    console.log("inside the fetch in the index", response);
+                    const data = await response.json();
+                    // console.log(data);
+                    return data;
+                    // If you have a function named 'employee' and want to handle each employee
+                    // data.employees.forEach(employee);
+                    
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+            }
 
         
-            console.log('User: ', user);
-            if (user)
-                console.log("user: " + user[0].email);
-            else   
-                console.log("user not found");
-            let taskCookie = JSON.parse(getCookie('tasks'));
+            let tasks =  fetchData();
+            console.log(tasks)
 
-            const admins = JSON.parse(getCookie('admins'));
-            const adminID = getAdminIdByUserId(admins, userID);
-
-            let tasks = taskCookie.filter(task => task.task_user === userID);
-
-            
           
 
+           
+           
 
             Alpine.data('todolist', () => ({
                 selectedTab: '',
@@ -1390,6 +1390,7 @@
                 viewTaskModal: false,
 
                 params: JSON.parse(JSON.stringify(defaultParams)),
+
                 //Tasks array
                 allTasks: [
                     {
@@ -1411,22 +1412,42 @@
                 },
                 quillEditor: null,
 
-                init() {
-                    this.searchTasks();
-                    this.initEditor();
+                async init(){
+                    // this.searchTasks();
+                    // this.initEditor();
+                    console.log("inside the init")
+                    let tasks = await fetchData();
+                    console.log(tasks)
 
-                    console.log("init tasks:", tasks);
                     //Add to tasks array from tasks cookie
                     for (var i = 0; i < tasks.length; i++) {
-                        if (tasks[i]['task_user'] == userID) {
-                            this.addTask(tasks[i]['taskID'], tasks[i]['task_name'], tasks[i]['due_date'],
-                                tasks[i]['task_description'], tasks[i]['task_priority'], tasks[i]['task_status'],
-                                tasks[i]['task_user']);
-                        }
+                        this.addTask(tasks[i]['_id'], tasks[i]['title'], tasks[i]['due_date'],
+                            tasks[i]['description'], tasks[i]['priority'], tasks[i]['status'],
+                            tasks[i]['655a5b8c70fc2aea0f9a523a']);
+                            
                     }
 
-
                 },
+
+                // init() {
+
+                   
+                //     // this.searchTasks();
+                //     // this.initEditor();
+
+                //     // //Add to tasks array from tasks cookie
+                //     // for (var i = 0; i < tasks.length; i++) {
+                //     //     if (tasks[i]['task_user'] == userID) {
+                //     //         this.addTask(tasks[i]['taskID'], tasks[i]['task_name'], tasks[i]['due_date'],
+                //     //             tasks[i]['task_description'], tasks[i]['task_priority'], tasks[i]['task_status'],
+                //     //             tasks[i]['task_user']);
+                //     //     }
+                //     // }
+
+
+                // },
+
+              
                 initEditor() {
                     this.quillEditor = new Quill(this.$refs.editor, {
                         theme: 'snow',
