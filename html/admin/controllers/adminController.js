@@ -35,6 +35,7 @@ user.use(express.json());
 
 user.get('/new-route', (req, res) => {
   res.type('html').sendFile(path.join(__dirname, '..', 'accounts.html'));
+<<<<<<< Updated upstream
 })
 
 user.get('/adminsPage', (req, res) => {
@@ -44,6 +45,13 @@ user.get('/adminsPage', (req, res) => {
 user.get('/employeesPage', (req, res) => {
   res.type('html').sendFile(path.join(__dirname, '..', 'accounts.html'));
 })
+=======
+})
+
+user.get('/admins', (req, res) => {
+  res.type('html').sendFile(path.join(__dirname, '..', 'admins2.html'));
+});
+>>>>>>> Stashed changes
 
 user.post('/login', async function(req, res) {
 
@@ -170,6 +178,7 @@ user.post("/getEmployees", async (req, res) => {
       const cursor = await usersCollection.find({ admin: adminID }).toArray();
       const employeeIDs = cursor.map(doc => doc.employees);
       const employeesArray = [];
+      await console.log("IDs: " , cursor);
 
       for (const employeeId of employeeIDs[0]) {
         //const employeeObjectId = new ObjectId(employeeId);
