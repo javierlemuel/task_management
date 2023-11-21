@@ -34,7 +34,15 @@ async function comparePassword(plaintextPassword, hash) {
 user.use(express.json());
 
 user.get('/new-route', (req, res) => {
+  res.type('html').sendFile(path.join(__dirname, '..', 'accounts.html'));
+})
+
+user.get('/adminsPage', (req, res) => {
   res.type('html').sendFile(path.join(__dirname, '..', 'admins2.html'));
+})
+
+user.get('/employeesPage', (req, res) => {
+  res.type('html').sendFile(path.join(__dirname, '..', 'accounts.html'));
 })
 
 user.post('/login', async function(req, res) {
