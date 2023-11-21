@@ -1340,43 +1340,42 @@
             }));
 
         
+     
+          
             
-           // This fetches the task ids.
-        //    fetch("/employee/getEmployeeTasks")
-        //     .then((response) => {
-        //         console.log("inside the fetch in the index", response);
-        //         return response.json();
-        //     })
-        //     .then((data) => {
-        //         console.log(data);
-        //         let tasks = data
-        //         console.log(tasks);
-        //         // await data.employees.forEach(employee);
-               
-        //     })
-        //     .catch((error) => {
-        //         console.error("Error:", error);
-        //     });
-
-
+          // Function tha fetches the data from the database so igt can be used down bellow in the alpine
             async function fetchData() {
                 try {
-                    const response = await fetch("/employee/getEmployeeTasks");
+
+                    // Grabing the ID cookie from browser
+                    const employeeId = document.cookie
+                    //Parsing the cookie
+                        .split('; ')
+                        .find(row => row.startsWith('employeeID='))
+                        .split('=')[1];
+                    
+                    // console.log(employeeId)
+
+                    // Sending the cookie in the header for the teq in /getEmployeeTasks
+                    const response = await fetch("/employee/getEmployeeTasks", {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // Include the cookie in the headers
+                            'Cookie': `employeeID=${employeeId}`
+                          
+                        },
+                    });
+
                     console.log("inside the fetch in the index", response);
                     const data = await response.json();
-                    // console.log(data);
                     return data;
-                    // If you have a function named 'employee' and want to handle each employee
-                    // data.employees.forEach(employee);
-                    
+
                 } catch (error) {
                     console.error("Error:", error);
                 }
             }
 
-        
-            // let tasks =  fetchData();
-            // console.log(tasks)
 
           
 

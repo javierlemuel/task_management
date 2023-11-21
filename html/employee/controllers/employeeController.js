@@ -55,7 +55,7 @@ user.post('/login', async function(req, res) {
         res.status(400).json({ error: "Both email and password are required." });
     } else {
       const client = new MongoClient('mongodb://0.0.0.0:27017');
-      //let data = readFrom("data.json");
+      
 
       //Connect to DB named 'task_management' and collection named 'employees
       await client.connect();
@@ -64,14 +64,13 @@ user.post('/login', async function(req, res) {
       console.log("DB connect login");
 
       const employee = await usersCollection.findOne({ email });
-      // console.log(employee._id.toString())
+   
 
-      // Need to save this in some place
-      // const employeeID = employee._id.toString()
-      // console.log(employeeID);
+      // Extracting the employeeID 
+      const employeeID = employee._id.toString()
+      console.log("employeeID: ", employeeID);
 
-     
-     
+  
 
       if(employee)
       {
@@ -79,8 +78,8 @@ user.post('/login', async function(req, res) {
           if(result)
           {
             console.log("Succesful log in!");
-            // res.cookie("employeeID", employee._id.toString())
-            // console.log("employeeID stored in res.cookie", res.cookie)
+            res.cookie("employeeID", employeeID, { path: '/employee/getEmployeeTasks', secure: true })
+            console.log("employeeID stored in res.cookie")
             res.json({ redirect: '/employee/new-route'});
            
         
@@ -126,25 +125,36 @@ user.post('/login', async function(req, res) {
 // })
 
 user.get('/getEmployeeTasks', async (req, res) => {
-
-  
-  // employeeID = req.body.employeeID;
-  // employeeID = new ObjectId(employeeID);
-  // console.log("/getEmployeeTasks", employeeID);
+ 
   
   const client = new MongoClient('mongodb://0.0.0.0:27017');
   
 
   try {
+
+    // Grab the cookies sent in the response header from the index/fetch
+      const cookies = req.headers.cookie.split(';').map(cookie => cookie.trim());
+      const employeeIdCookie = cookies.find(cookie => cookie.startsWith('employeeID='));
+      
+      //If cookie dont exist
+      if (!employeeIdCookie) {
+        res.status(401).json({ error: 'Unauthorized' });
+        return;
+      }
+
+      //Spliting the id from "employeeID="
+      const employeeID = employeeIdCookie.split('=')[1];
+    
       await client.connect();
 
       const database = client.db('task_management');
       const employeeCollection = database.collection('employees');
       const taskCollection = database.collection('tasks');
 
-      // Grab the specific employee who is logged in to retrieve their tasks
-      const employeeId = new ObjectId("655a5b8c70fc2aea0f9a523a");
+      // Convert the employeeID into an object ID so the database can use it
+      const employeeId = new ObjectId(employeeID);
       // console.log(employeeId)
+
       const employee = await employeeCollection.findOne({ "_id": employeeId });
 
       // Retrieve detailed task information for each task ID
