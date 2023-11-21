@@ -68,6 +68,9 @@ user.post('/login', async function(req, res) {
 
       // Need to save this in some place
       // const employeeID = employee._id.toString()
+      // console.log(employeeID);
+
+     
      
 
       if(employee)
@@ -76,8 +79,11 @@ user.post('/login', async function(req, res) {
           if(result)
           {
             console.log("Succesful log in!");
-            res.json({ redirect: '/employee/new-route' });
-            
+            // res.cookie("employeeID", employee._id.toString())
+            // console.log("employeeID stored in res.cookie", res.cookie)
+            res.json({ redirect: '/employee/new-route'});
+           
+        
           }
       }
 
@@ -120,6 +126,12 @@ user.post('/login', async function(req, res) {
 // })
 
 user.get('/getEmployeeTasks', async (req, res) => {
+
+  
+  // employeeID = req.body.employeeID;
+  // employeeID = new ObjectId(employeeID);
+  // console.log("/getEmployeeTasks", employeeID);
+  
   const client = new MongoClient('mongodb://0.0.0.0:27017');
   
 
@@ -132,6 +144,7 @@ user.get('/getEmployeeTasks', async (req, res) => {
 
       // Grab the specific employee who is logged in to retrieve their tasks
       const employeeId = new ObjectId("655a5b8c70fc2aea0f9a523a");
+      // console.log(employeeId)
       const employee = await employeeCollection.findOne({ "_id": employeeId });
 
       // Retrieve detailed task information for each task ID

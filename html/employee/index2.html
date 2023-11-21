@@ -1280,13 +1280,13 @@
                         }
                     }
 
-                    //Add Notification on Init (Ruben)
-                    let userID = JSON.parse(sessionStorage.getItem('userID'));
-                    let taskCookie = JSON.parse(getCookie('tasks'));
-                    let tasks = taskCookie.filter(task => task.task_user === userID);  // filtrando por el userID 
+                    // //Add Notification on Init (Ruben)
+                    // let userID = JSON.parse(sessionStorage.getItem('userID'));
+                    // let taskCookie = JSON.parse(getCookie('tasks'));
+                    // let tasks = taskCookie.filter(task => task.task_user === userID);  // filtrando por el userID 
 
                     
-                    this.addMessages();
+                    // this.addMessages();
 
                 },
 
@@ -1296,47 +1296,47 @@
 
 
                 //Add notifications from cookie
-                addMessages() {
-                    let users = JSON.parse(getCookie('users'));
-                    let userID = JSON.parse(sessionStorage.getItem('userID'));
-                    var admins = JSON.parse(getCookie("admins"));
-                    var adminID = JSON.parse(sessionStorage.getItem("adminID"));
+                // addMessages() {
+                //     let users = JSON.parse(getCookie('users'));
+                //     let userID = JSON.parse(sessionStorage.getItem('userID'));
+                //     var admins = JSON.parse(getCookie("admins"));
+                //     var adminID = JSON.parse(sessionStorage.getItem("adminID"));
 
-                    list = users[userID - 1]['notifications'];
+                //     list = users[userID - 1]['notifications'];
 
-                    for (var i = 0; i < list.length; i++) {
-                        let maxUserId = this.messages.length
-                            ? this.messages.reduce((max, character) => (character.id > max ? character.id : max), this.messages[0].id)
-                            : 0;
+                //     for (var i = 0; i < list.length; i++) {
+                //         let maxUserId = this.messages.length
+                //             ? this.messages.reduce((max, character) => (character.id > max ? character.id : max), this.messages[0].id)
+                //             : 0;
 
-                        let message = {
-                            id: maxUserId + 1,
-                            message: list[i],
-                        }
+                //         let message = {
+                //             id: maxUserId + 1,
+                //             message: list[i],
+                //         }
 
-                        this.messages.unshift(message);
-                    }
+                //         this.messages.unshift(message);
+                //     }
 
-                },
+                // },
 
-                removeMessage(value) {
-                    let users = JSON.parse(getCookie('users'));
-                    let userID = JSON.parse(sessionStorage.getItem('userID'));
-                    this.messages = this.messages.filter((d) => d.id !== value);
-                    var admins = JSON.parse(getCookie("admins"));
+                // removeMessage(value) {
+                //     let users = JSON.parse(getCookie('users'));
+                //     let userID = JSON.parse(sessionStorage.getItem('userID'));
+                //     this.messages = this.messages.filter((d) => d.id !== value);
+                //     var admins = JSON.parse(getCookie("admins"));
 
-                    var adminID = JSON.parse(sessionStorage.getItem("adminID"));
-                    list = users[userID - 1]['notifications'];
+                //     var adminID = JSON.parse(sessionStorage.getItem("adminID"));
+                //     list = users[userID - 1]['notifications'];
 
-                    for (var i = 0; i < list.length; i++) {
-                        if (i == value - 1)
-                            list = list.splice(i, i);
-                    }
+                //     for (var i = 0; i < list.length; i++) {
+                //         if (i == value - 1)
+                //             list = list.splice(i, i);
+                //     }
 
-                    users[userID - 1]['notifications'] = list;
-                    setCookie("users", users);
+                //     users[userID - 1]['notifications'] = list;
+                //     setCookie("users", users);
 
-                },
+                // },
             }));
 
         
@@ -1375,8 +1375,8 @@
             }
 
         
-            let tasks =  fetchData();
-            console.log(tasks)
+            // let tasks =  fetchData();
+            // console.log(tasks)
 
           
 
